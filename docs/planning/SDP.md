@@ -1,219 +1,250 @@
-# Software Development Plan (SDP)
+@plan "Define and refine the development approach for Tauri v2, AIM-inspired desktop application with MCP integration"
+<!-- cascade-run:
+  - lint-check
+  - style-guide
+  - vulnerability-scan
+-->
 
-@plan "Define development approach for Tauri-based AIM-inspired desktop application"
+# Software Development Plan (SDP)
 
 ## Document Control
 - **Document Title:** Software Development Plan
-- **Document Version:** 1.1.0
+- **Document Version:** 1.2.0
 - **Date:** 2025-02-18
 - **Status:** Draft
-- **Author:** Preston Sparks & Cascade AI
-
-<!-- cascade-run: lint-check style-guide -->
+- **Author:** Preston Sparks & ChatGPT o1
 
 ## Table of Contents
-1. [Introduction](#introduction)
-2. [Project Organization](#project-organization)
-3. [Management Process](#management-process)
-4. [Technical Process](#technical-process)
-5. [Supporting Process](#supporting-process)
+1. [Introduction](#introduction)  
+2. [Project Organization](#project-organization)  
+3. [Management Process](#management-process)  
+4. [Technical Process](#technical-process)  
+5. [Supporting Process](#supporting-process)  
 6. [Documentation Plan](#documentation-plan)
+
+---
 
 ## 1. Introduction
 
 ### 1.1 Purpose
-@validate "Ensure alignment with AIM-inspired UI/UX and MCP integration requirements"
-This Software Development Plan (SDP) outlines the development approach for a cross-platform desktop application using the Tauri framework, featuring an AIM-inspired UI/UX and comprehensive AI integration through the Model Context Protocol (MCP).
+@validate "Ensure alignment with Tauri v2, AIM-inspired UI/UX, and MCP integration requirements"
+
+This **Software Development Plan (SDP)** outlines the development approach for a **cross-platform desktop application** built on **Tauri v2** with an **AIM-inspired** UI/UX, and **multi-model AI integration** via the **Model Context Protocol (MCP)**. 
 
 ### 1.2 Scope
-This plan encompasses:
-- Cross-platform development (Windows, macOS, Linux)
-- Local AI inference capabilities
-- External AI model integration via MCP
-- AIM-inspired UI/UX implementation
-- Security and encryption standards
-- Testing and deployment procedures
+This plan covers:
+- Cross-platform deployment (Windows, macOS, Linux)  
+- **Local** AI inference (Rust-based ONNX or NLP)  
+- **Remote** AI model integration via MCP  
+- Tauri v2’s **ACL-based** security  
+- AIM-inspired UI, real-time chat workflows  
+- Testing, QA, and deployment procedures
 
 ### 1.3 References
-- [project-overview.md](../project-overview.md) - Primary Project Specification
-- [SDD.md](./SDD.md) - Software Design Document
-- [cascade-guidelines.md](../windsurf/cascade-guidelines.md) - AI Documentation Guidelines
+- [project-overview.md](../project-overview.md) - Main Project Specification  
+- [SDD.md](./SDD.md) - Software Design Document  
+- [cascade-guidelines.md](../windsurf/cascade-guidelines.md) - AI Documentation & Workflow Guidelines  
+
+---
 
 ## 2. Project Organization
 
 ### 2.1 Project Structure
 @enforce "Maintain consistent directory structure and naming conventions"
-```
-quick-bots/ 
-├── src/ 
-│   ├── frontend/        # Next.js frontend 
-│   │   ├── components/  # React components (AIM-inspired UI) 
-│   │   ├── mcp/         # MCP client implementation 
-│   │   ├── ai/          # Local AI inference 
-│   │   └── security/    # Encryption and security 
-│   ├── backend/         # Rust backend 
-│   │   ├── mcp/         # MCP server implementations 
-│   │   ├── ai/          # AI model integration 
-│   │   └── crypto/      # Cryptographic operations 
-│   └── shared/          # Shared types and utilities 
-├── docs/                # Documentation 
-├── tests/               # Test suites 
-└── scripts/             # Build and utility scripts
+
+```plaintext
+quickbots-desktop-app/
+├── apps/
+│   └── frontend/         # Next.js (output: 'export'), AIM-inspired UI
+│       ├── components/   # React components
+│       ├── lib/
+│       │   └── mcp.ts    # MCP client calls
+│       ├── styles/       # CSS/Tailwind
+│       └── pages/        # Next.js pages
+├── src-tauri/
+│   ├── src/
+│   │   ├── commands/     # Tauri commands
+│   │   ├── mcp/          # MCP server(s), resource management
+│   │   ├── security/     # ACL, encryption, credential vault
+│   │   ├── ai/           # Local AI integration
+│   │   └── main.rs       # Tauri entry point
+│   └── Cargo.toml
+├── docs/                 # Documentation
+├── tests/                # Test suites, E2E, integration
+└── .windsurfrules        # Cascade AI rules, memory config
 ```
 
 ### 2.2 Roles and Responsibilities
 @enforce "Define clear role boundaries and responsibilities"
-- **Development Team:** Core implementation
-- **MCP Specialist:** AI integration architecture
-- **Security Engineer:** Encryption and compliance
-- **UI/UX Designer:** AIM-inspired interface
-- **QA Team:** Testing and validation
-- **DevOps:** Deployment and infrastructure
+
+- **Development Team**: Implements Tauri commands, Next.js UI, and MCP logic  
+- **MCP Specialist**: Oversees AI integration (local + remote), ensures protocol compliance  
+- **Security Engineer**: Maintains Tauri ACL, encryption, compliance checks  
+- **UI/UX Designer**: Crafts AIM-like layouts, status indicators, chat flows  
+- **QA Team**: Executes test plans (unit, integration, E2E), verifies security  
+- **DevOps**: CI/CD pipelines, cross-platform builds, release packaging
+
+---
 
 ## 3. Management Process
 
 ### 3.1 Milestones and Timeline
-@phase "Define implementation phases with clear deliverables"
+@phase "Implement Tauri v2 + Next.js + MCP in sequential phases"
 
-1. **Foundation (Week 1-2)**
-   - Tauri framework setup
-   - Next.js configuration
-   - MCP integration initialization
-   - Basic UI scaffolding
+1. **Foundation (Weeks 1–2)**  
+   - Initialize Tauri v2 + Next.js (static export)  
+   - Add `mcp_rust_sdk` to Cargo.toml  
+   - Create minimal “Hello MCP” command  
+   - Basic AIM-style UI scaffolding (login screen, buddy list layout)
 
-2. **Core Features (Week 3-4)**
-   - AIM-inspired login screen
-   - Contact list implementation
-   - Chat window development
-   - Local storage setup
+2. **Core Features (Weeks 3–4)**  
+   - Implement local AI commands (e.g., ONNX-based text analysis)  
+   - Expand buddy list to show agent statuses via MCP  
+   - Integrate Tauri ACL for security  
+   - Store user preferences or settings with `tauri-plugin-store`
 
-3. **AI Integration (Week 5-6)**
-   - MCP client/server setup
-   - Local AI inference
-   - External model integration
-   - Context management system
+3. **AI Integration (Weeks 5–6)**  
+   - Connect to external AI models (OpenAI, Anthropic, etc.) via MCP  
+   - Context management system (session-based)  
+   - Resource discovery and tool execution  
+   - “Chat Window” with multi-model support
 
-4. **Security Implementation (Week 7-8)**
-   - Encryption standards
-   - Secure storage
-   - Resource sandboxing
-   - Compliance validation
+4. **Security Implementation (Weeks 7–8)**  
+   - Encryption standards (ring, AES-based)  
+   - Resource sandboxing for local AI tools  
+   - Tauri v2 ACL finalization (restrict commands by user or window)  
+   - Audit logging, vulnerability scans
 
-5. **Testing & Optimization (Week 9-10)**
-   - Cross-platform testing
-   - Performance optimization
-   - Security auditing
-   - UI/UX refinement
+5. **Testing & Optimization (Weeks 9–10)**  
+   - Cross-platform E2E tests (Playwright, mcp-mock-server)  
+   - Performance profiling with criterion, flamegraphs  
+   - Security auditing (cargo-audit, OWASP ZAP)  
+   - UI/UX refinement (buddy list usability checks)
 
-6. **Deployment (Week 11-12)**
-   - Release packaging
-   - Documentation
-   - Deployment testing
-   - Production readiness
+6. **Deployment (Weeks 11–12)**  
+   - Build + packaging for Windows, macOS, Linux  
+   - Documentation finalization  
+   - Automated updates (tauri-plugin-updater)  
+   - Production readiness checks
 
 ### 3.2 Risk Management
-@validate "Identify and mitigate potential risks"
+@validate "Identify and mitigate potential risks promptly"
 
-1. **Technical Risks**
-   - Cross-platform compatibility
-   - AI model performance
-   - MCP integration complexity
-   - Security vulnerabilities
+1. **Technical Risks**  
+   - Tauri v2 updates or API changes  
+   - Complex MCP usage (multiple AI models)  
+   - Cross-platform UI inconsistencies  
+   - Resource usage for large AI workloads
 
-2. **Mitigation Strategies**
-   - Regular cross-platform testing
-   - AI performance benchmarking
-   - MCP compliance testing
-   - Security audits
-   - Resource usage monitoring
+2. **Mitigation Strategies**  
+   - Pin Tauri v2 versions or track release notes  
+   - Gradual MCP expansions, frequent testing  
+   - Regular cross-platform checks (macOS, Windows, Linux)  
+   - Caching or streaming for heavy AI tasks
+
+---
 
 ## 4. Technical Process
 
 ### 4.1 Development Environment
-@enforce "Standardize development environment"
-- VS Code with Tauri extensions
-- Rust toolchain
-- Node.js and npm
-- MCP development kit
-- Security testing tools
-- Cross-platform testing VMs
+@enforce "Standardize on rust-analyzer, Node.js LTS, Tauri CLI"
+
+- **VS Code** with:
+  - Tauri extension  
+  - rust-analyzer  
+  - ESLint + Prettier  
+- **Rust** stable toolchain  
+- **Node.js** LTS (for Next.js)  
+- **Docker** or VMs for multi-OS testing  
+- **MCP Dev Kit** (mcp_rust_sdk, mcp-mock-server, etc.)
 
 ### 4.2 Development Standards
-@enforce "Follow framework-specific best practices"
+@enforce "Apply code formatting, security scanning, and AI-friendly structure"
 
-1. **Code Standards**
-   - Rust: rustfmt and clippy
-   - TypeScript: ESLint + Prettier
-   - MCP: Protocol specifications
-   - Security: OWASP guidelines
+1. **Coding Conventions**  
+   - Rust: rustfmt + clippy  
+   - TypeScript: ESLint + Prettier  
+   - MCP: Follow official JSON-RPC or SSE spec  
+   - Security: Tauri ACL, secure endpoints
 
-2. **Version Control**
-   - Feature branching
-   - Semantic versioning
-   - Security review process
-   - Automated testing
+2. **Version Control**  
+   - Git branching (feature, hotfix)  
+   - Semantic commits, cargo-release + semantic-release for versioning  
+   - Automated checks (CI) for merges
 
-3. **Testing Requirements**
-   - Unit testing (80% coverage)
-   - Integration testing
-   - Security testing
-   - Performance testing
-   - Cross-platform validation
+3. **Testing Requirements**  
+   - Unit tests: 80% coverage or higher  
+   - Integration tests (MCP flows, local AI calls)  
+   - E2E tests with buddy list + chat windows  
+   - Security testing (OWASP ZAP, cargo-audit)
 
 ### 4.3 Build Process
-@enforce "Implement secure build pipeline"
+@enforce "Implement secure build pipeline with AI-friendly triggers"
 
-1. **Development Build**
-   - Hot reloading
-   - Debug logging
-   - Mock AI services
-   - Local MCP servers
+1. **Development Build**  
+   - Next.js dev mode (`npm run dev`)  
+   - Tauri dev server (`cargo tauri dev`)  
+   - Mock AI or minimal local AI commands  
+   - Potential `.retry` steps if build fails
 
-2. **Production Build**
-   - Optimization
-   - Security hardening
-   - Resource bundling
-   - Cross-platform packaging
+2. **Production Build**  
+   - `npm run build && npm run export` for Next.js  
+   - `cargo tauri build` for platform binaries  
+   - CSP + ACL checks in `tauri.conf.json`  
+   - Minimization and code signing (optional)
+
+---
 
 ## 5. Supporting Process
 
 ### 5.1 Configuration Management
-@enforce "Maintain secure configuration practices"
-- Environment management
-- Feature flags
-- Security policies
-- AI model configs
-- MCP settings
+@enforce "Maintain a secure, versioned config for Tauri + MCP + AI"
+
+- **.env files** for secrets (encrypt or store in plugin-store)  
+- **Feature Flags** for local AI vs. remote AI toggles  
+- **Tauri conf** for whitelisting external endpoints  
+- **MCP config** for endpoint URIs, tool definitions, resource scoping
 
 ### 5.2 Quality Assurance
-@validate "Ensure comprehensive testing coverage"
+@validate "Ensure broad coverage and protocol compliance"
 
-1. **Testing Strategy**
-   - Automated testing
-   - Security scanning
-   - Performance profiling
-   - UI/UX testing
-   - AI integration testing
+1. **Testing Strategy**  
+   - Automated unit + integration tests on each commit  
+   - `mcp-mock-server` for multi-model scenario testing  
+   - Performance tests with criterion, test concurrency/throughput  
+   - Security scans (cargo-audit, npm-audit, OWASP ZAP)
 
 2. **Review Process**
-   - Code review
-   - Security review
-   - Performance review
-   - Documentation review
+```markdown
+## Code Review Protocol
+1. AI Pre-Check:
+   <!-- cascade-run:
+     - lint-check
+     - vulnerability-scan
+     - style-guide
+   -->
+2. Human Review:
+   - @assign: staff-engineer
+   - SLA: 2hr
+```
+- Security review and performance checks  
+- Documentation review (API, architecture)
+
+---
 
 ## 6. Documentation Plan
-@enforce "Maintain comprehensive documentation"
+@enforce "Maintain comprehensive docs with Cascade guidelines"
 
-1. **Technical Documentation**
-   - API documentation
-   - Security guidelines
-   - AI integration guide
-   - MCP implementation details
+1. **Technical Documentation**  
+   - **API.md**: Tauri commands, MCP endpoints, param schemas  
+   - **Security Guidelines**: Tauri ACL usage, encryption approach  
+   - **AI Integration**: Steps for local inference + remote AI config  
+   - **MCP Implementation**: Tool definitions, resource management, session flow
 
-2. **User Documentation**
-   - Installation guide
-   - User manual
-   - Security best practices
-   - Troubleshooting guide
+2. **User Documentation**  
+   - **Installation Guide**: Cross-platform instructions  
+   - **User Manual**: AIM-inspired chat usage, status indicators, etc.  
+   - **Security Best Practices**: Credential handling, ACL, updates  
+   - **Troubleshooting**: Common errors, logs, known issues
 
 <!-- cascade-run: vulnerability-scan -->
