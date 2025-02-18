@@ -1,477 +1,152 @@
-# API Documentation
+# API Documentation (Draft)
+
+@plan "Define high-level API structure for Tauri-based AIM-inspired desktop application"
 
 ## Document Control
 - **Document Title:** API Documentation
-- **Document Version:** 1.0.0
-- **Date:** 2025-02-14
-- **Status:** Draft
-- **Author:** Cascade AI
+- **Document Version:** 0.1.0 (Draft)
+- **Date:** 2025-02-18
+- **Status:** Preliminary Draft
+- **Author:** Preston Sparks & Cascade AI
+
+<!-- cascade-run: lint-check style-guide -->
+
+> **IMPORTANT**: This is a preliminary draft document. All endpoints, methods, and structures are subject to change once actual code implementation begins. This document serves as a high-level blueprint and will be updated as the codebase evolves.
 
 ## Table of Contents
-1. [Introduction](#introduction)
-2. [Authentication](#authentication)
-3. [Internal APIs](#internal-apis)
-4. [MCP Protocol APIs](#mcp-protocol-apis)
-5. [External APIs](#external-apis)
-6. [WebSocket APIs](#websocket-apis)
-7. [Error Handling](#error-handling)
+1. [Overview](#overview)
+2. [MCP Integration](#mcp-integration)
+3. [Tauri Commands](#tauri-commands)
+4. [External Services](#external-services)
 
-## 1. Introduction
+## 1. Overview
+@enforce "Maintain flexible, high-level API structure"
 
-### 1.1 Purpose
-This document provides comprehensive documentation for all APIs used in the Windsurf Tauri Desktop Application.
+### 1.1 Architecture Overview
+The API architecture will be built around:
+- Tauri commands for desktop integration
+- MCP for AI model interaction
+- Local storage access
+- External service integration
 
-### 1.2 API Overview
-The application uses several types of APIs:
-- Internal Tauri Commands
-- MCP Protocol APIs
-- External REST APIs
-- WebSocket Connections
-- Database Queries
+### 1.2 Authentication
+@plan "To be refined when authentication implementation begins"
+- Token-based authentication
+- Session management
+- Multi-factor support (future)
+- Key management
 
-### 1.3 Common Conventions
-- All timestamps use ISO 8601 format
-- UUIDs are used for unique identifiers
-- HTTP status codes follow standard conventions
-- Authentication uses JWT tokens
-- MCP message format follows protocol specification
+## 2. MCP Integration
+@plan "To be refined when MCP implementation begins"
 
-## 2. Authentication
-
-### 2.1 Login
+### 2.1 Client Operations
 ```typescript
-POST /auth/login
-Content-Type: application/json
-
-Request:
-{
-    "username": string,
-    "password": string,
-    "rememberMe": boolean
-}
-
-Response:
-{
-    "accessToken": string,
-    "refreshToken": string,
-    "expiresAt": string,
-    "user": {
-        "id": string,
-        "username": string,
-        "roles": string[]
-    }
+// Placeholder structure - subject to change
+interface MCPClientOperations {
+    connect(): Promise<void>;
+    executeModel(params: ModelParams): Promise<ModelResult>;
+    accessResource(uri: string): Promise<Resource>;
 }
 ```
 
-### 2.2 Refresh Token
+### 2.2 Resource Management
 ```typescript
-POST /auth/refresh
-Authorization: Bearer <refresh_token>
-
-Response:
-{
-    "accessToken": string,
-    "refreshToken": string,
-    "expiresAt": string
+// Placeholder structure - subject to change
+interface ResourceOperations {
+    discover(): Promise<Resource[]>;
+    access(uri: string): Promise<Resource>;
+    update(uri: string, content: any): Promise<void>;
 }
 ```
 
-### 2.3 Logout
-```typescript
-POST /auth/logout
-Authorization: Bearer <access_token>
+## 3. Tauri Commands
+@plan "To be refined during Tauri implementation"
 
-Response:
-{
-    "success": boolean
-}
-```
-
-## 3. Internal APIs
-
-### 3.1 MCP Client Management
-
-#### 3.1.1 Initialize MCP Client
+### 3.1 System Commands
 ```rust
+// Placeholder structure - subject to change
 #[tauri::command]
-async fn init_mcp_client(config: MCPClientConfig) -> Result<MCPClientHandle, Error> {
-    // Implementation
-}
+async fn system_status() -> Result<SystemStatus, Error>;
 
-// Types
-struct MCPClientConfig {
-    name: String,
-    version: String,
-    capabilities: ClientCapabilities,
-}
-
-struct ClientCapabilities {
-    resources: bool,
-    tools: bool,
-    prompts: bool,
-}
-
-struct MCPClientHandle {
-    id: String,
-    status: ConnectionStatus,
-}
+#[tauri::command]
+async fn app_version() -> Result<Version, Error>;
 ```
 
-#### 3.1.2 Connect to MCP Server
+### 3.2 File Operations
 ```rust
+// Placeholder structure - subject to change
 #[tauri::command]
-async fn connect_mcp_server(
-    client_id: String,
-    server_url: String,
-    transport_type: TransportType
-) -> Result<ServerConnection, Error> {
-    // Implementation
-}
+async fn save_file(path: String, content: Vec<u8>) -> Result<(), Error>;
 
-// Types
-enum TransportType {
-    SSE,
-    Stdio,
-    Custom(String),
-}
-
-struct ServerConnection {
-    id: String,
-    capabilities: ServerCapabilities,
-    status: ConnectionStatus,
-}
-```
-
-### 3.2 Resource Management
-
-#### 3.2.1 List Resources
-```rust
 #[tauri::command]
-async fn list_mcp_resources(
-    client_id: String,
-    filter: Option<ResourceFilter>
-) -> Result<Vec<Resource>, Error> {
-    // Implementation
-}
-
-// Types
-struct ResourceFilter {
-    types: Option<Vec<String>>,
-    tags: Option<Vec<String>>,
-    query: Option<String>,
-}
-
-struct Resource {
-    uri: String,
-    type_: String,
-    name: String,
-    metadata: HashMap<String, Value>,
-}
+async fn read_file(path: String) -> Result<Vec<u8>, Error>;
 ```
 
-#### 3.2.2 Access Resource
-```rust
-#[tauri::command]
-async fn access_mcp_resource(
-    client_id: String,
-    uri: String
-) -> Result<ResourceContent, Error> {
-    // Implementation
-}
+## 4. External Services
+@plan "To be defined based on external service requirements"
 
-// Types
-struct ResourceContent {
-    content: Value,
-    metadata: HashMap<String, Value>,
-    timestamp: DateTime<Utc>,
-}
-```
-
-### 3.3 Tool Management
-
-#### 3.3.1 Execute Tool
-```rust
-#[tauri::command]
-async fn execute_mcp_tool(
-    client_id: String,
-    tool_request: ToolRequest
-) -> Result<ToolResponse, Error> {
-    // Implementation
-}
-
-// Types
-struct ToolRequest {
-    name: String,
-    parameters: Value,
-    timeout: Option<Duration>,
-}
-
-struct ToolResponse {
-    result: Value,
-    metadata: HashMap<String, Value>,
-}
-```
-
-#### 3.3.2 List Tools
-```rust
-#[tauri::command]
-async fn list_mcp_tools(
-    client_id: String,
-    filter: Option<ToolFilter>
-) -> Result<Vec<Tool>, Error> {
-    // Implementation
-}
-
-// Types
-struct ToolFilter {
-    categories: Option<Vec<String>>,
-    capabilities: Option<Vec<String>>,
-}
-
-struct Tool {
-    name: String,
-    description: String,
-    parameters: JSONSchema,
-    capabilities: Vec<String>,
-}
-```
-
-### 3.4 Prompt Management
-
-#### 3.4.1 Register Prompt
-```rust
-#[tauri::command]
-async fn register_mcp_prompt(
-    client_id: String,
-    prompt: PromptDefinition
-) -> Result<PromptHandle, Error> {
-    // Implementation
-}
-
-// Types
-struct PromptDefinition {
-    id: String,
-    template: String,
-    parameters: Value,
-    resources: Vec<String>,
-}
-
-struct PromptHandle {
-    id: String,
-    status: PromptStatus,
-}
-```
-
-#### 3.4.2 Execute Prompt
-```rust
-#[tauri::command]
-async fn execute_mcp_prompt(
-    client_id: String,
-    prompt_id: String,
-    parameters: Value
-) -> Result<PromptResult, Error> {
-    // Implementation
-}
-
-// Types
-struct PromptResult {
-    output: String,
-    metadata: HashMap<String, Value>,
-    resources_used: Vec<String>,
-}
-```
-
-## 4. MCP Protocol APIs
-
-### 4.1 Message Types
-
+### 4.1 AI Model Integration
 ```typescript
-// Base Message
-interface MCPMessage {
-    jsonrpc: "2.0";
-    id?: string | number;
-}
-
-// Request Message
-interface MCPRequest extends MCPMessage {
-    method: string;
-    params: unknown;
-}
-
-// Response Message
-interface MCPResponse extends MCPMessage {
-    result?: unknown;
-    error?: {
-        code: number;
-        message: string;
-        data?: unknown;
-    };
-}
-
-// Notification Message
-interface MCPNotification extends MCPMessage {
-    method: string;
-    params: unknown;
+// Placeholder structure - subject to change
+interface ModelService {
+    query(input: string): Promise<AIResponse>;
+    stream(input: string): AsyncIterator<AIResponse>;
 }
 ```
 
-### 4.2 Transport Protocols
-
-#### 4.2.1 SSE Transport
+### 4.2 Security Services
 ```typescript
-// Connection URL format
-sse://<host>:<port>/<path>?token=<auth_token>
-
-// Message format
-event: <event_type>
-data: <json_message>
-id: <message_id>
-```
-
-#### 4.2.2 Stdio Transport
-```typescript
-// Message format
-Content-Length: <length>
-Content-Type: application/vnd.mcp+json
-
-<json_message>
-```
-
-## 5. External APIs
-
-### 5.1 AI Model Integration
-
-#### 5.1.1 MCP AI Server
-```typescript
-// Server Configuration
-interface MCPAIServer {
-    name: string;
-    version: string;
-    capabilities: {
-        models: string[];
-        tools: Tool[];
-        resources: Resource[];
-    };
-}
-
-// Tool Execution
-interface AIToolRequest {
-    model: string;
-    prompt: string;
-    parameters: Record<string, unknown>;
-    resources: string[];
-}
-
-interface AIToolResponse {
-    result: string;
-    usage: {
-        prompt_tokens: number;
-        completion_tokens: number;
-        total_tokens: number;
-    };
-    metadata: Record<string, unknown>;
+// Placeholder structure - subject to change
+interface SecurityService {
+    encrypt(data: Buffer): Promise<Buffer>;
+    decrypt(data: Buffer): Promise<Buffer>;
 }
 ```
 
-## 6. WebSocket APIs
+## 5. WebSocket Events
+@plan "To be refined during real-time implementation"
 
-### 6.1 Real-time Updates
+### 5.1 Chat Events
 ```typescript
-WebSocket: ws://api/v1/updates
-Authorization: Bearer <access_token>
-
-// Message Types
-interface WebSocketMessage {
-    type: 'agent_status' | 'new_message' | 'typing' | 'crm_update';
-    payload: any;
-}
-
-// Agent Status Update
-{
-    type: 'agent_status',
-    payload: {
-        agent_id: string,
-        status: 'online' | 'offline' | 'busy'
-    }
-}
-
-// New Message
-{
-    type: 'new_message',
-    payload: {
-        message: Message
-    }
-}
-
-// Typing Indicator
-{
-    type: 'typing',
-    payload: {
-        agent_id: string,
-        is_typing: boolean
-    }
-}
-
-// CRM Update
-{
-    type: 'crm_update',
-    payload: {
-        entity_type: 'customer' | 'deal',
-        entity_id: string,
-        update_type: 'created' | 'updated' | 'deleted',
-        data: object
-    }
+// Placeholder structure - subject to change
+interface ChatEvents {
+    onMessage(handler: (msg: Message) => void): void;
+    onStatus(handler: (status: Status) => void): void;
 }
 ```
 
-## 7. Error Handling
-
-### 7.1 Error Format
+### 5.2 System Events
 ```typescript
-interface ApiError {
-    code: string;
-    message: string;
-    details?: object;
-    stack?: string; // Only in development
+// Placeholder structure - subject to change
+interface SystemEvents {
+    onError(handler: (error: Error) => void): void;
+    onUpdate(handler: (update: Update) => void): void;
 }
 ```
 
-### 7.2 Common Error Codes
+## 6. Error Handling
+@enforce "Implement consistent error handling"
+
+### 6.1 Error Codes
 ```typescript
+// Placeholder structure - subject to change
 enum ErrorCode {
-    // Authentication Errors
-    INVALID_CREDENTIALS = 'auth/invalid-credentials',
-    TOKEN_EXPIRED = 'auth/token-expired',
-    UNAUTHORIZED = 'auth/unauthorized',
-    
-    // Resource Errors
-    NOT_FOUND = 'resource/not-found',
-    ALREADY_EXISTS = 'resource/already-exists',
-    
-    // Validation Errors
-    INVALID_INPUT = 'validation/invalid-input',
-    MISSING_FIELD = 'validation/missing-field',
-    
-    // External Service Errors
-    AI_SERVICE_ERROR = 'service/ai-error',
-    CRM_SERVICE_ERROR = 'service/crm-error',
-    
-    // System Errors
-    INTERNAL_ERROR = 'system/internal-error',
-    DATABASE_ERROR = 'system/database-error',
-    NETWORK_ERROR = 'system/network-error'
+    AUTH_FAILED = 'AUTH_FAILED',
+    INVALID_REQUEST = 'INVALID_REQUEST',
+    SERVER_ERROR = 'SERVER_ERROR'
 }
 ```
 
-### 7.3 HTTP Status Codes
-- 200: Success
-- 201: Created
-- 400: Bad Request
-- 401: Unauthorized
-- 403: Forbidden
-- 404: Not Found
-- 409: Conflict
-- 422: Unprocessable Entity
-- 429: Too Many Requests
-- 500: Internal Server Error
-- 503: Service Unavailable
+### 6.2 Error Responses
+```typescript
+// Placeholder structure - subject to change
+interface ErrorResponse {
+    code: ErrorCode;
+    message: string;
+    details?: any;
+}
+```
+
+<!-- cascade-run: vulnerability-scan -->
+
+> **Note**: This document is a draft placeholder. All structures, endpoints, and methods are subject to change. Actual implementation details will be added as the codebase develops.

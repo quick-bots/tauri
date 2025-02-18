@@ -1,11 +1,15 @@
 # Software Design Document (SDD)
 
+@plan "Define technical architecture for Tauri-based AIM-inspired desktop application"
+
 ## Document Control
 - **Document Title:** Software Design Document
-- **Document Version:** 1.0.0
-- **Date:** 2025-02-14
+- **Document Version:** 1.1.0
+- **Date:** 2025-02-18
 - **Status:** Draft
-- **Author:** Cascade AI
+- **Author:** Preston Sparks & Cascade AI
+
+<!-- cascade-run: lint-check style-guide -->
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -18,99 +22,111 @@
 ## 1. Introduction
 
 ### 1.1 Purpose
-This Software Design Document (SDD) provides the architectural and technical specifications for implementing the Windsurf Tauri Desktop Application with MCP integration.
+@validate "Ensure comprehensive technical specification coverage"
+This Software Design Document (SDD) provides the architectural and technical specifications for implementing a cross-platform desktop application using Tauri, featuring AIM-inspired UI/UX and MCP-based AI integration.
 
 ### 1.2 Scope
-This document covers:
+This document details:
 - System architecture and components
-- Data structures and database design
-- Interface specifications
+- Data structures and flows
+- UI/UX specifications
+- AI integration architecture
 - Security implementation
-- Performance considerations
+- Cross-platform considerations
 
 ### 1.3 References
-- [windsurf-setup.md](./windsurf-setup.md) - Project Specification
-- [SRS.md](./SRS.md) - Software Requirements Specification
+- [project-overview.md](../project-overview.md) - Primary Project Specification
+- [cascade-guidelines.md](../windsurf/cascade-guidelines.md) - AI Documentation Guidelines
 
 ## 2. System Architecture
 
 ### 2.1 High-Level Architecture
-```mermaid
+@enforce "Maintain clean architecture with clear boundaries"
+
+``` mermaid
 graph TD
-    A[User Interface] --> B[Tauri Bridge]
-    B --> C[Frontend Layer]
-    B --> D[Backend Layer]
-    
-    subgraph "MCP Layer"
-        MC[MCP Clients]
-        MS[MCP Servers]
-        MT[MCP Transport]
+    subgraph "Desktop Application"
+        UI[AIM-inspired UI] --> TB[Tauri Bridge]
+        TB --> FL[Frontend Layer]
+        TB --> BL[Backend Layer]
     end
     
-    D --> MC
-    MC --> MT
-    MT --> MS
+    subgraph "AI Integration"
+        MC[MCP Clients]
+        MS[MCP Servers]
+        LI[Local Inference]
+        EM[External Models]
+    end
     
-    MS --> E[Local Storage]
-    MS --> F[External Services]
-    MS --> H[AI Processing]
-    C --> G[UI Components]
+    BL --> MC
+    MC --> MS
+    MS --> LI
+    MS --> EM
+    
+    subgraph "Storage & Security"
+        LS[Local Storage]
+        CR[Crypto Operations]
+        SA[Secure Access]
+    end
+    
+    BL --> LS
+    BL --> CR
+    MS --> SA
 ```
 
-### 2.2 Component Overview
+### 2.2 Component Design
 
 #### 2.2.1 Frontend Layer (Next.js)
+@enforce "Implement AIM-inspired UI components"
+
 - **UI Components**
-  - Login Screen
-  - Agent List
+  - Login Screen (AIM-style)
+  - Agent List (Buddy List Window)
   - Chat Windows
+  - Status Indicators
   - Settings Panel
+
 - **State Management**
-  - Zustand stores
-  - React Query cache
+  - Zustand for global state
+  - TanStack Query for data
   - MCP client state
-- **API Integration**
-  - Tauri commands
-  - MCP client operations
-  - Resource access
-  - Tool execution
+
+- **UI Framework**
+  - Tailwind CSS
+  - shadcn/ui components
+  - Framer Motion animations
 
 #### 2.2.2 Backend Layer (Rust)
+@enforce "Implement secure backend services"
+
 - **Core Services**
   - Authentication
   - Message handling
   - Resource management
+  - File operations
   - Tool execution system
-- **MCP Integration**
-  - Server implementations
+  - Crypto operations
+
+- **AI Integration**
+  - MCP server implementation
+  - Local model inference
+  - External model integration
+  - Context management
   - Resource providers
   - Tool providers
   - Transport handlers
-- **External Integrations**
-  - AI model APIs via MCP
-  - CRM systems as resources
-  - Analytics services
 
-#### 2.2.3 MCP Layer
-- **Client Components**
-  - Client lifecycle management
-  - Server connection handling
-  - Resource access
-  - Tool execution
-  - Prompt management
-- **Server Components**
-  - Resource registration
-  - Tool registration
-  - Prompt system
-  - Context management
-- **Transport Layer**
-  - SSE transport
-  - Stdio transport
-  - Custom transports
+- **Security**
+  - Encryption services
+  - Access control
+  - Resource sandboxing
+  - Audit logging
 
 ### 2.3 Technology Stack
 
-#### 2.3.1 Frontend Technologies
+#### 2.3.1 Frontend Stack
+@enforce "Use specified frontend technologies"
+
 - **Framework:** Next.js 14+
 - **Language:** TypeScript 5+
 - **UI Libraries:**
@@ -124,53 +140,53 @@ graph TD
   - Vitest
   - Playwright
 
-#### 2.3.2 Backend Technologies
-- **Framework:** Tauri
-- **Language:** Rust
+#### 2.3.2 Backend Stack
+@enforce "Use specified backend technologies"
+
+- **Framework:** Tauri (latest stable)
+- **Language:** Rust (latest stable)
 - **Libraries:**
-  - tokio
-  - serde
-  - reqwest
+  - tokio async runtime
   - sqlx/rusqlite
   - ring
   - @modelcontextprotocol/sdk
   - mcp-core
+  - tracing
+
 - **Testing:**
   - tokio-test
   - mockall
   - mcp-test-utils
   - mcp-mock-server
 
-#### 2.3.3 MCP Technologies
-- **Core SDK:** @modelcontextprotocol/sdk
-- **Client Libraries:**
-  - mcp-client
-  - mcp-transport
-  - mcp-resources
-- **Server Libraries:**
-  - mcp-server
-  - mcp-tools
-  - mcp-prompts
-- **Testing:**
-  - mcp-test-utils
-  - mcp-mock-server
+#### 2.3.3 AI Integration
+@enforce "Implement standardized AI integration"
+
+- MCP Core SDK
+- ONNX Runtime
+- Rust NLP libraries
+- External model APIs
+- Context management
+
 
 ## 3. Data Design
 
 ### 3.1 Database Schema
+@enforce "Implement secure data storage"
 
-#### 3.1.1 Users Table
+#### 3.1.1 Users
 ```sql
 CREATE TABLE users (
     id UUID PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
+    public_key BYTEA NOT NULL,
     created_at TIMESTAMP NOT NULL,
     last_login TIMESTAMP
 );
 ```
 
-#### 3.1.2 Agents Table
+#### 3.1.2 Agents
 ```sql
 CREATE TABLE agents (
     id UUID PRIMARY KEY,
@@ -178,233 +194,111 @@ CREATE TABLE agents (
     category VARCHAR(50) NOT NULL,
     status VARCHAR(20) NOT NULL,
     capabilities JSONB,
+    encryption_key BYTEA NOT NULL,
     created_at TIMESTAMP NOT NULL
 );
 ```
 
-#### 3.1.3 Messages Table
+#### 3.1.3 Messages
 ```sql
 CREATE TABLE messages (
     id UUID PRIMARY KEY,
     user_id UUID REFERENCES users(id),
     agent_id UUID REFERENCES agents(id),
-    content TEXT NOT NULL,
+    content_encrypted BYTEA NOT NULL,
     timestamp TIMESTAMP NOT NULL,
     metadata JSONB
 );
 ```
 
-### 3.2 Data Flow
+### 3.2 Security Design
+@enforce "Implement comprehensive security measures"
 
-#### 3.2.1 Message Processing
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant F as Frontend
-    participant B as Backend
-    participant DB as Database
-    participant AI as AI Service
+#### 3.2.1 Encryption
+- End-to-end encryption for messages
+- Key management system
+- Secure storage of credentials
+- Resource access encryption
 
-    U->>F: Send Message
-    F->>B: Forward Message
-    B->>DB: Store Message
-    B->>AI: Process Message
-    AI->>B: Return Response
-    B->>DB: Store Response
-    B->>F: Update UI
-    F->>U: Display Response
-```
+### 3.2.2 Authentication
+- Multi-factor authentication
+- Session management
+- Token-based access
+- Secure password storage
+
+### 3.2.3 Resource Access
+- Sandboxed execution
+- Permission management
+- Resource quotas
+- Access logging
 
 ## 4. Interface Design
 
-### 4.1 User Interface Components
+### 4.1 UI Components
+@enforce "Follow AIM-inspired design patterns"
 
-#### 4.1.1 Login Screen
-```typescript
-interface LoginScreenProps {
-    onLogin: (credentials: Credentials) => Promise<void>;
-    onForgotPassword: () => void;
-}
+#### 4.1.1 Login Window
+- Username/password fields
+- "Remember Me" option
+- Status selection
+- Version information
 
-interface Credentials {
-    username: string;
-    password: string;
-    rememberMe: boolean;
-}
-```
-
-#### 4.1.2 Agent List
-```typescript
-interface AgentListProps {
-    agents: Agent[];
-    onAgentSelect: (agent: Agent) => void;
-    onStatusFilter: (status: AgentStatus) => void;
-    mcpServers: MCPServer[];
-    onServerSelect: (server: MCPServer) => void;
-}
-
-interface Agent {
-    id: string;
-    name: string;
-    status: AgentStatus;
-    category: string;
-    lastActive: Date;
-    mcpCapabilities: MCPCapabilities;
-    availableTools: Tool[];
-}
-```
+#### 4.1.2 Buddy List
+- Online/offline indicators
+- Category groups
+- Search/filter
+- Status messages
 
 #### 4.1.3 Chat Window
-```typescript
-interface ChatWindowProps {
-    agent: Agent;
-    messages: Message[];
-    onSendMessage: (content: string) => Promise<void>;
-    onExecuteTool: (tool: Tool, params: unknown) => Promise<void>;
-    onAccessResource: (uri: string) => Promise<Resource>;
-    availableTools: Tool[];
-    availableResources: Resource[];
-}
-
-interface Message {
-    id: string;
-    content: string;
-    sender: string;
-    timestamp: Date;
-    toolExecution?: ToolExecution;
-    resources?: Resource[];
-}
-```
+- Message history
+- Input area
+- Formatting options
+- File transfer UI
 
 ### 4.2 API Interfaces
+@enforce "Implement clean API architecture"
 
-#### 4.2.1 MCP Client Interface
-```rust
-pub trait MCPClient {
-    async fn connect(&self, transport: Box<dyn Transport>) -> Result<(), MCPError>;
-    async fn execute_tool(&self, request: ToolRequest) -> Result<ToolResponse, MCPError>;
-    async fn access_resource(&self, uri: String) -> Result<Resource, MCPError>;
-    async fn list_capabilities(&self) -> Result<Capabilities, MCPError>;
-}
-```
+#### 4.2.1 MCP Integration
+- Client initialization
+- Server connections
+- Resource management
+- Tool execution
+- Context handling
 
-#### 4.2.2 MCP Server Interface
-```rust
-pub trait MCPServer {
-    async fn register_tool(&mut self, tool: Tool) -> Result<(), MCPError>;
-    async fn register_resource(&mut self, resource: Resource) -> Result<(), MCPError>;
-    async fn handle_request(&self, request: Request) -> Result<Response, MCPError>;
-}
-```
+#### 4.2.2 External Services
+- AI model APIs
+- Authentication services
+- Storage services
+- Monitoring services
 
-#### 4.2.3 Resource Provider Interface
-```rust
-pub trait ResourceProvider {
-    async fn list(&self) -> Result<Vec<Resource>, MCPError>;
-    async fn get(&self, uri: String) -> Result<ResourceContent, MCPError>;
-    async fn watch(&self, uri: String) -> Result<ResourceWatcher, MCPError>;
-}
-```
+## 5. Performance Considerations
+@enforce "Maintain optimal performance"
 
-## 5. Component Design
+### 5.1 Optimization
+- Lazy loading
+- Resource caching
+- Connection pooling
+- Memory management
 
-### 5.1 Frontend Components
+### 5.2 Monitoring
+- Performance metrics
+- Resource usage
+- Error tracking
+- Usage analytics
 
-#### 5.1.1 State Management
-```typescript
-interface AppState {
-    user: User | null;
-    activeAgent: Agent | null;
-    agents: Agent[];
-    messages: Record<string, Message[]>;
-    settings: AppSettings;
-    mcp: {
-        clients: MCPClient[];
-        servers: MCPServer[];
-        resources: Resource[];
-        tools: Tool[];
-    };
-}
-```
+## 6. Testing Strategy
+@validate "Ensure comprehensive testing coverage"
 
-#### 5.1.2 MCP Client Manager
-```typescript
-class MCPClientManager {
-    constructor(private transport: Transport) {}
+### 6.1 Test Types
+- Unit tests
+- Integration tests
+- Security tests
+- Performance tests
+- UI/UX tests
 
-    async initializeClient(config: MCPClientConfig): Promise<MCPClient>;
-    async connectToServer(client: MCPClient, server: MCPServer): Promise<void>;
-    async executeToolRequest(request: ToolRequest): Promise<ToolResponse>;
-    async accessResource(uri: string): Promise<Resource>;
-}
-```
+### 6.2 Test Implementation
+- Test frameworks
+- Mock services
+- Test data
+- CI/CD integration
 
-### 5.2 Backend Components
-
-#### 5.2.1 MCP Server Implementation
-```rust
-pub struct MCPServerImpl {
-    name: String,
-    version: String,
-    tools: HashMap<String, Tool>,
-    resources: HashMap<String, Resource>,
-    prompts: HashMap<String, Prompt>,
-}
-
-impl MCPServer for MCPServerImpl {
-    async fn register_tool(&mut self, tool: Tool) -> Result<(), MCPError>;
-    async fn register_resource(&mut self, resource: Resource) -> Result<(), MCPError>;
-    async fn handle_request(&self, request: Request) -> Result<Response, MCPError>;
-}
-```
-
-#### 5.2.2 Resource Manager
-```rust
-pub struct ResourceManager {
-    providers: Vec<Box<dyn ResourceProvider>>,
-    cache: Cache,
-}
-
-impl ResourceManager {
-    pub async fn get_resource(&self, uri: String) -> Result<Resource, ResourceError>;
-    pub async fn list_resources(&self) -> Result<Vec<Resource>, ResourceError>;
-    pub async fn watch_resource(&self, uri: String) -> Result<ResourceWatcher, ResourceError>;
-}
-```
-
-## 6. Security Design
-
-### 6.1 Authentication Flow
-1. **Password Hashing**
-   ```rust
-   use argon2::{self, Config};
-
-   fn hash_password(password: &str) -> Result<String, ArgonError> {
-       let config = Config::default();
-       argon2::hash_encoded(password.as_bytes(), salt, &config)
-   }
-   ```
-
-2. **Token Management**
-```rust
-pub struct MCPServerAuth {
-    pub fn authenticate_client(&self, client: &MCPClient) -> Result<(), AuthError>;
-    pub fn verify_capabilities(&self, capabilities: &Capabilities) -> Result<(), AuthError>;
-}
-```
-
-2. **Resource Access Control**
-```rust
-pub struct MCPAccessControl {
-    pub fn check_resource_access(&self, client: &MCPClient, uri: &str) -> Result<(), AccessError>;
-    pub fn validate_tool_execution(&self, client: &MCPClient, tool: &Tool) -> Result<(), AccessError>;
-}
-```
-
-3. **Tool Execution Security**
-```rust
-pub struct ToolSandbox {
-    pub fn create_execution_environment(&self) -> Result<Environment, SandboxError>;
-    pub fn validate_parameters(&self, params: &Value) -> Result<(), ValidationError>;
-    pub fn cleanup_environment(&self, env: Environment) -> Result<(), CleanupError>;
-}
