@@ -12,7 +12,7 @@
 - **Document Version:** 1.2.0
 - **Date:** 2025-02-18
 - **Status:** Draft
-- **Author:** Preston Sparks & ChatGPT o1
+- **Author:** Preston Sparks
 
 ## Table of Contents
 1. [Introduction](#introduction)  

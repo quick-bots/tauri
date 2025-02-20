@@ -12,7 +12,7 @@
 - **Document Version:** 0.2.0 (Draft)  
 - **Date:** 2025-02-18  
 - **Status:** Preliminary Draft  
-- **Author:** Preston Sparks & ChatGPT o1
+- **Author:** Preston Sparks
 
 > **IMPORTANT**: This document is a **draft**. All endpoints, commands, and structures are **subject to change** once the actual code implementation begins. Use it as a **high-level reference**, and update it incrementally with each development milestone.
 

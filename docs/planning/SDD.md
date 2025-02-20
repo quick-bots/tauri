@@ -9,10 +9,10 @@
 
 ## Document Control
 - **Document Title:** Software Design Document
-- **Document Version:** 1.2.0
+- **Document Version:** 1.3.0
 - **Date:** 2025-02-18
 - **Status:** Draft
-- **Author:** Preston Sparks & ChatGPT o1
+- **Author:** Preston Sparks
 
 ## Table of Contents
 1. [Introduction](#introduction)  
@@ -97,6 +97,369 @@ graph TD
 - **Backend**: Tauri commands (Rust), local AI services, logging  
 - **MCP**: Resource management, prompt context, tool execution  
 - **Storage & Security**: DB queries, cryptographic ops, ACL enforcement
+
+### 2.3 Technical Stack Details
+@enforce "Maintain consistent technology choices across all layers"
+
+#### 2.3.1 Frontend Technologies
+- **Framework**: Next.js with static export
+- **UI Components**: 
+  - Tailwind CSS for styling
+  - shadcn/ui for base components
+  - Framer Motion for AIM-style animations
+- **State Management**: 
+  - Zustand for global state
+  - TanStack Query for data fetching/caching
+- **Type Safety**: TypeScript in strict mode
+
+#### 2.3.2 Backend Technologies
+- **Runtime**: tokio for async operations
+- **Database**: 
+  - sqlx with SQLite for structured data
+  - sled for fast key-value caching
+- **Network**: reqwest for external calls
+- **Serialization**: serde for JSON handling
+- **AI Integration**: mcp_rust_sdk
+
+#### 2.3.3 Transport Protocols
+@enforce "Define clear communication patterns"
+
+1. **Real-time Updates**
+   - Server-Sent Events (SSE) for status updates
+   - WebSocket for chat functionality
+   - stdio for local process communication
+   - HTTP/2 for REST endpoints
+
+2. **Protocol Specifications**
+   ```typescript
+   // SSE Status Update
+   interface StatusUpdate {
+     type: 'agent_status' | 'system_status';
+     data: {
+       id: string;
+       status: string;
+       timestamp: number;
+     }
+   }
+
+   // WebSocket Message
+   interface ChatMessage {
+     type: 'message' | 'typing' | 'read';
+     data: {
+       id: string;
+       content?: string;
+       metadata?: Record<string, unknown>;
+     }
+   }
+   ```
+
+3. **Connection Management**
+   - Automatic reconnection
+   - Session persistence
+   - Heartbeat mechanism
+
+### 2.4 Monitoring & Logging
+@enforce "Implement comprehensive error handling and monitoring"
+
+#### 2.4.1 Monitoring Stack
+- **Application Monitoring**:
+  - Sentry for error tracking
+  - OpenTelemetry for distributed tracing
+  - Custom MCP telemetry
+- **Infrastructure Monitoring**:
+  - Prometheus metrics
+  - Grafana dashboards
+  - Health check endpoints
+- **Performance Monitoring**:
+  - Resource usage tracking
+  - Response time metrics
+  - AI model latency
+
+#### 2.4.2 Logging Strategy
+```typescript
+interface LogEntry {
+  level: 'debug' | 'info' | 'warn' | 'error';
+  component: 'ui' | 'mcp' | 'security' | 'ai';
+  message: string;
+  context: {
+    userId?: string;
+    sessionId: string;
+    resourceId?: string;
+    traceId: string;
+  };
+  metadata: Record<string, unknown>;
+}
+```
+
+### 2.5 Code Review & Quality
+@enforce "Maintain consistent code quality standards"
+
+#### 2.5.1 AI Pre-Check Protocol
+```yaml
+cascade-checks:
+  - lint-check:
+      rules: ['strict', 'security', 'performance']
+  - vulnerability-scan:
+      level: 'high'
+  - style-guide:
+      enforce: ['naming', 'structure', 'docs']
+```
+
+#### 2.5.2 Review Requirements
+1. **Automated Checks**:
+   - Test coverage ≥80%
+   - No security vulnerabilities
+   - Performance regression tests
+   - Type safety verification
+
+2. **Human Review**:
+   - Staff engineer sign-off
+   - 2-hour SLA
+   - Security review for ACL changes
+   - UI/UX review for frontend
+
+#### 2.5.3 Memory Configuration
+```yaml
+attention_zones:
+  - "src-tauri/src/mcp/**/*.rs"
+  - "apps/frontend/src/lib/mcp.ts"
+  - "src-tauri/src/security/*.rs"
+  - "src-tauri/src/ai/*.rs"
+
+suppression_rules:
+  - "legacy/*"
+  - "experimental/*"
+  - "tests/fixtures/*"
+```
+
+### 2.6 Security & Compliance
+@enforce "gdpr-2025"
+
+#### 2.6.1 Security Manifesto
+1. **Encryption Requirements**:
+   - AES-256 for data at rest
+   - TLS 1.3 for transport
+   - Key rotation every 30 days
+
+2. **Access Control**:
+   - Role-based ACL
+   - Resource-level permissions
+   - Session isolation
+
+3. **Audit Requirements**:
+   - Weekly security audits
+   - Access log retention
+   - Incident response plan
+
+4. **GDPR Compliance**:
+   - Data minimization
+   - Right to erasure
+   - Consent management
+   - Cross-border transfers
+
+---
+
+## 2.7 Implementation Standards
+@enforce "Maintain consistent implementation patterns"
+
+#### 2.7.1 State Management
+```typescript
+// Global Store Structure
+interface AppState {
+  auth: {
+    user: User | null;
+    status: 'idle' | 'loading' | 'authenticated' | 'error';
+    permissions: string[];
+  };
+  agents: {
+    list: Agent[];
+    status: Record<string, AgentStatus>;
+    activeChats: string[];
+  };
+  ui: {
+    theme: 'light' | 'dark' | 'system';
+    layout: 'compact' | 'comfortable';
+    notifications: NotificationSettings;
+  };
+  mcp: {
+    connections: Record<string, ConnectionState>;
+    resources: Record<string, ResourceStatus>;
+    context: Record<string, ContextData>;
+  };
+}
+
+// Store Creation Pattern
+const useStore = create<AppState>()(
+  devtools(
+    persist(
+      (set) => ({
+        // Initial state
+      }),
+      {
+        name: 'app-storage',
+        partialize: (state) => ({
+          ui: state.ui,
+          auth: { permissions: state.auth.permissions }
+        })
+      }
+    )
+  )
+);
+```
+
+#### 2.7.2 Performance Budgets
+```yaml
+performance_targets:
+  startup:
+    time_to_interactive: 
+      desktop: 1.5s
+      low_end: 3s
+    initial_bundle: 
+      js: 150KB
+      css: 50KB
+  runtime:
+    memory_usage:
+      idle: 100MB
+      active: 200MB
+    cpu_usage:
+      idle: 1%
+      active: 15%
+    animation:
+      fps: 60
+      jank: <1%
+  network:
+    api_latency: 100ms
+    mcp_latency: 200ms
+    payload_size: 50KB
+```
+
+#### 2.7.3 Accessibility Standards
+@enforce "WCAG 2.1 Level AA compliance"
+
+1. **Keyboard Navigation**:
+   ```typescript
+   // Focus Management
+   interface FocusStrategy {
+     trapFocus: boolean;
+     restoreFocus: boolean;
+     initialFocus?: string;
+   }
+   
+   // Keyboard Shortcuts
+   const SHORTCUTS = {
+     'mod+k': 'command_palette',
+     'mod+j': 'next_chat',
+     'mod+shift+j': 'previous_chat',
+     'alt+a': 'agent_list'
+   } as const;
+   ```
+
+2. **ARIA Implementation**:
+   ```typescript
+   interface AccessibilityProps {
+     role: ARIARole;
+     label: string;
+     description?: string;
+     keyboardShortcut?: string;
+     live?: 'off' | 'polite' | 'assertive';
+   }
+   ```
+
+3. **Color Contrast**:
+   ```css
+   :root {
+     /* WCAG AAA compliant color pairs */
+     --text-primary: #1a1a1a;
+     --text-secondary: #595959;
+     --background-primary: #ffffff;
+     --background-secondary: #f5f5f5;
+     /* Minimum contrast ratio 7:1 */
+   }
+   ```
+
+#### 2.7.4 Internationalization
+@enforce "Full i18n support"
+
+1. **Translation Structure**:
+   ```typescript
+   interface TranslationKey {
+     namespace: 'common' | 'chat' | 'errors' | 'ai';
+     key: string;
+     params?: Record<string, string | number>;
+   }
+   
+   // Usage Pattern
+   const t = useTranslation();
+   t('chat:message.sent', { time: formatTime(date) });
+   ```
+
+2. **Date/Time Handling**:
+   ```typescript
+   interface LocaleConfig {
+     timeZone: string;
+     dateFormat: 'short' | 'medium' | 'long';
+     numberFormat: {
+       decimal: string;
+       thousand: string;
+       precision: number;
+     };
+   }
+   ```
+
+3. **RTL Support**:
+   ```css
+   /* RTL Mixins */
+   @mixin rtl {
+     html[dir='rtl'] & {
+       @content;
+     }
+   }
+   ```
+
+#### 2.7.5 Test Data Strategy
+@enforce "Consistent test data patterns"
+
+1. **Mock Data Generation**:
+   ```typescript
+   interface TestDataConfig {
+     seed: number;
+     locale: string;
+     scenario: 'empty' | 'minimal' | 'full';
+     errorRate: number;
+   }
+   
+   // Factory Pattern
+   class TestDataFactory {
+     static user(override?: Partial<User>): User;
+     static agent(override?: Partial<Agent>): Agent;
+     static chat(override?: Partial<Chat>): Chat;
+     static mcpContext(override?: Partial<MCPContext>): MCPContext;
+   }
+   ```
+
+2. **AI Test Scenarios**:
+   ```yaml
+   ai_test_cases:
+     - name: "Basic Chat Flow"
+       input: "Hello AI"
+       expected_tools: []
+       max_latency: 100
+     - name: "Complex Analysis"
+       input: "Analyze this code"
+       expected_tools: ["code_analysis", "security_check"]
+       max_latency: 2000
+   ```
+
+3. **Snapshot Testing**:
+   ```typescript
+   interface SnapshotConfig {
+     name: string;
+     platform: 'windows' | 'macos' | 'linux';
+     viewport: { width: number; height: number };
+     theme: 'light' | 'dark';
+     locale: string;
+   }
+   ```
 
 ---
 
@@ -1546,7 +1909,7 @@ describe('Multi-Agent Flows', () => {
         const receivedMessages = await receiver.getMessages();
         expect(receivedMessages).to.deep.include(message);
     });
-});
+}
 ```
 
 #### 8.5.3 Error Scenarios
@@ -1583,7 +1946,7 @@ describe('Error Scenarios', () => {
         expect(agent.getState()).to.equal('healthy');
         expect(agent.getLastCheckpoint()).to.not.be.null;
     });
-});
+}
 ```
 
 ---

@@ -12,7 +12,7 @@
 - **Document Version:** 0.2.0 (Draft)  
 - **Date:** 2025-02-18  
 - **Status:** Preliminary Draft  
-- **Author:** Preston Sparks & Cascade AI
+- **Author:** Preston Sparks
 
 > **IMPORTANT**: This is a **draft**. Specific test cases and implementation details will be defined as the codebase evolves. Use this document to guide the **high-level** testing philosophy and approach.
 
