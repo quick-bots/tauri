@@ -19,6 +19,10 @@
 2. [System Overview](#system-overview)  
 3. [Functional Requirements](#functional-requirements)  
 4. [Non-Functional Requirements](#non-functional-requirements)  
+   1. [Performance](#performance)  
+   2. [Security](#security)  
+   3. [Development & Testing](#development--testing)  
+   4. [Resource Management](#resource-management)  
 5. [External Interface Requirements](#external-interface-requirements)  
 6. [System Features](#system-features)
 
@@ -35,10 +39,10 @@ This **Software Requirements Specification (SRS)** defines the **functional** an
 @enforce "Define clear project boundaries"
 
 **Application scope** includes:
-- **Cross-platform** deployment (Windows, macOS, Linux)  
-- **AIM-inspired** chat UI: buddy lists, status icons, real-time messaging  
-- **Local** AI inference + **remote** AI integration via **MCP**  
-- **Security** measures (ACL, encryption, resource isolation)  
+- **Cross-platform** deployment (Windows, macOS, Linux) using Tauri v2 with web technologies
+- **AIM-inspired** chat UI: buddy lists, status icons, real-time messaging
+- **Local** AI inference + **remote** AI integration via **MCP**
+- **Security** measures (ACL, encryption, resource isolation)
 - **Tool** and **resource** management (discovery, access, context)
 
 ### 1.3 Definitions and Acronyms
@@ -55,16 +59,50 @@ This **Software Requirements Specification (SRS)** defines the **functional** an
 ### 2.1 System Context
 @validate "Ensure alignment with Tauri v2 architecture"
 
-The system is a **desktop application** with:
+The system is a **cross-platform desktop application** built with Tauri v2 and web technologies, featuring:
 1. **Local AI** (Rust-based ONNX or NLP) for offline tasks.  
 2. **MCP** calls for remote AI or resource usage.  
-3. **AIM-style** user interface, focusing on chat simplicity and minimal disruption.  
+3. **AIM-style** user interface, following the design specifications in `windsurf-docs/assets`:
+   - Login flow (`AIM_Login_Screen.png`)
+   - Main view/buddy list (`AIM_Contact_List.png`)
+   - Chat window format (`AIM_Chat_Window.png`)
 4. **Security** by design (ACL, encryption, logs).
 
 ### 2.2 System Architecture
 @enforce "Maintain a clear separation of concerns"
 
-**Frontend** (Next.js, static export) → **Tauri Bridge** → **Rust Backend** + **MCP**. The Rust backend handles local AI calls, storage, and bridging to remote AI via the **MCP**. Data is persisted in a local DB (SQLite or similar), with encryption at rest. Tauri v2’s ACL restricts command usage, ensuring resource isolation.
+**Frontend** (Next.js, static export) → **Tauri Bridge** → **Rust Backend** + **MCP**. The Rust backend handles local AI calls, storage, and bridging to remote AI via the **MCP**. Data is persisted in a local DB (SQLite and/or sled), with encryption at rest. Tauri v2's ACL restricts command usage, ensuring resource isolation.
+
+**Core Technologies:**
+
+1. **Frontend Stack**
+   - Next.js with `output: 'export'` for static asset bundling
+   - Tailwind CSS and/or shadcn/ui for UI components
+   - TanStack Query for data fetching/caching
+   - Zustand for global state management
+   - Framer Motion for animations
+   - PDF.js (Mozilla, Apache 2.0 license) for document rendering
+
+2. **Backend Stack**
+   - tokio for async runtime
+   - serde for JSON serialization
+   - reqwest for external calls
+   - mcp_rust_sdk for AI bridging
+   - sqlx / sled for local storage
+   - All dependencies must use permissive licenses (MIT, Apache 2.0, BSD)
+
+3. **Recommended Tauri Plugins**
+   - tauri-plugin-store: Local credential/settings storage
+   - tauri-plugin-sql: SQLite integration
+   - tauri-plugin-updater: Automatic updates
+   - tauri-plugin-log: Centralized logging
+
+Service port configurations follow framework standards:
+- FastAPI services: 8000 (primary), 8001-8003 (supporting services)
+- Redis: 6379
+- RabbitMQ: 5672 (AMQP), 15672 (Management)
+- Prometheus: 9090
+- Grafana: 3000
 
 ---
 
@@ -74,20 +112,23 @@ The system is a **desktop application** with:
 @enforce "Follow AIM design principles"
 
 1. **Login View (FR1)**  
-   - Username/password + “Remember Me”  
+   - Implementation based on `AIM_Login_Screen.png` reference
+   - OAuth2-based authentication flow
    - Version info & Tauri ACL checks  
    - Basic server or AI status indicators
 
 2. **Main View (FR2)**  
+   - Implementation based on `AIM_Contact_List.png` reference
    - AIM-style buddy list  
    - Search/filter for agents  
    - Status icons (online/offline/processing)  
    - Quick actions (chat, edit, remove)
 
 3. **Chat Windows (FR3)**  
+   - Implementation based on `AIM_Chat_Window.png` reference
    - Real-time messaging w/ timestamps  
    - Optional file attachments  
-   - AI “reply” or tool usage via MCP  
+   - AI "reply" or tool usage via MCP  
    - Context/metadata display (e.g., active prompt)
 
 ### 3.2 AI Integration
@@ -114,8 +155,11 @@ The system is a **desktop application** with:
 @enforce "Maintain strong security standards"
 
 1. **Authentication (FR7)**  
-   - Tauri ACL enforcement  
-   - Role-based or user-level permissions  
+   - OAuth2-based authentication flow
+   - Integration with identity providers
+   - Secure token management and refresh
+   - Tauri ACL enforcement
+   - Role-based permissions
    - Secure credential storage
 
 2. **Encryption (FR8)**  
@@ -140,12 +184,14 @@ The system is a **desktop application** with:
    - Chat latency < 100ms  
    - AI tool execution < 500ms  
    - 60 FPS UI updates
+   - Automatic updates < 30s download, < 5s install
 
-2. **Resource Usage (NFR2)**  
-   - Minimal memory overhead  
-   - CPU efficiency for local AI tasks  
-   - Low network usage for remote AI calls  
-   - Storage management (max size or config)
+2. **Update System (NFR2)**
+   - Automatic silent updates via tauri-plugin-updater
+   - Background download and installation
+   - Rollback capability for failed updates
+   - Version control and compatibility checks
+   - Update progress notifications (non-intrusive)
 
 ### 4.2 Security
 @enforce "Implement comprehensive security"
@@ -180,11 +226,107 @@ The system is a **desktop application** with:
    - Familiar buddy list + chat windows  
    - Clear feedback on errors or AI processes  
    - Minimal user friction
+   - UI components using Tailwind CSS and/or shadcn/ui
+   - Smooth animations using Framer Motion
 
 2. **User Experience (NFR8)**  
    - Quick navigation between chat sessions  
    - Real-time status and presence info  
    - Accessible interactions (keyboard shortcuts, etc.)
+   - Global state management using Zustand
+   - Responsive and fluid UI transitions
+
+### 4.5 Testing and Quality Assurance
+@enforce "Maintain comprehensive test coverage"
+
+1. **Frontend Testing (NFR9)**
+   - Unit testing with Vitest
+   - End-to-end testing with Playwright
+   - Component testing for UI elements
+   - Minimum test coverage: 80%
+
+2. **Backend Testing (NFR10)**
+   - Unit testing with tokio-test
+   - Integration testing with mockall
+   - Protocol testing with mcp-mock-server
+   - Performance testing with criterion
+
+3. **CI/CD Requirements (NFR11)**
+   - Automated testing via GitHub Actions
+   - Security scanning (cargo-audit, npm-audit)
+   - OWASP ZAP & MCP Inspector integration
+   - Semantic versioning with semantic-release and cargo-release
+
+### 4.6 MCP Integration Requirements
+@enforce "Follow MCP protocol standards"
+
+1. **Core Components (NFR12)**
+   - MCP Client implementation for AI agent communication
+   - MCP Server setup for local/remote AI resources
+   - Transport layer (SSE, stdio, WebSocket)
+   - Resource system for tool/prompt management
+
+2. **Integration Features (NFR13)**
+   - Standard tool chaining for AI operations
+   - Session-based context isolation
+   - Clear communication protocols
+   - Resource discovery and access control
+
+3. **Security Considerations (NFR14)**
+   - ACL-based command control
+   - Context confidentiality per session
+   - Compliance logging (GDPR, etc.)
+   - Resource access restrictions
+
+### 4.3 Development & Testing
+@enforce "Maintain code quality standards"
+
+1. **Testing Requirements (NFR5)**
+   - Unit Testing: Vitest for TypeScript, tokio-test for Rust
+   - E2E Testing: Playwright for UI flows
+   - Integration Testing: mcp-mock-server for AI interactions
+   - Performance Testing: criterion.rs for benchmarks
+   - Coverage requirements: >80% for critical paths
+
+2. **Development Environment (NFR6)**
+   - VS Code with required extensions:
+     - rust-analyzer for Rust development
+     - Tauri extension for app debugging
+     - ESLint and Prettier for code formatting
+     - GitLens for version control
+   - Development tools:
+     - Node.js 18+ and Rust stable
+     - Docker for containerized testing
+     - Git for version control
+
+3. **CI/CD Pipeline (NFR7)**
+   - GitHub Actions for automated workflows:
+     - Build verification
+     - Test execution
+     - Security scanning
+     - Artifact generation
+   - Versioning:
+     - semantic-release for npm packages
+     - cargo-release for Rust components
+   - Deployment:
+     - Docker-based build environment
+     - Automated release packaging
+     - Platform-specific installers
+
+### 4.4 Resource Management
+@enforce "Implement MCP-based isolation"
+
+1. **MCP Resource Control (NFR8)**
+   - Strict resource isolation between sessions
+   - Tool-level access control via MCP
+   - Resource discovery and registration
+   - Context management for multi-agent scenarios
+
+2. **Resource Monitoring (NFR9)**
+   - Real-time resource usage tracking
+   - Resource allocation limits
+   - Automatic cleanup of unused resources
+   - Resource usage analytics
 
 ---
 
@@ -229,7 +371,7 @@ The system is a **desktop application** with:
 @validate "Ensure feature completeness"
 
 1. **Authentication System**  
-   - Secure login + Tauri ACL  
+   - OAuth2-based authentication flow
    - Session handling, 2FA (future)  
    - Logging for compliance
 
