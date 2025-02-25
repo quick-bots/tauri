@@ -89,23 +89,23 @@ quickbots-desktop-app/
 ## 3. Management Process
 
 ### 3.1 Milestones and Timeline
-@phase "Implement Tauri v2 + Next.js + MCP in sequential phases"
+@phase "Implement Tauri v2.1.0 + Next.js 14.1.0 + MCP v1.3.0-rc2 in sequential phases"
 
 1. **Foundation (Weeks 1–2)**  
-   - Initialize Tauri v2 + Next.js (static export)  
-   - Add `mcp_rust_sdk` to Cargo.toml  
-   - Create minimal “Hello MCP” command  
+   - Initialize Tauri v2.1.0 + Next.js 14.1.0 (static export)  
+   - Add `mcp_rust_sdk v1.3.0-rc2` to Cargo.toml  
+   - Create minimal "Hello MCP" command  
    - Basic AIM-style UI scaffolding (login screen, buddy list layout)
 
 2. **Core Features (Weeks 3–4)**  
    - Implement local AI commands (e.g., ONNX-based text analysis)  
-   - Expand buddy list to show agent statuses via MCP  
+   - Expand buddy list to show agent statuses via MCP v1.3.0-rc2  
    - UI QA: Validate AIM styling against design references:
      - Login screen layout (`docs/windsurf/assets/AIM_Login_Screen.png`)
      - Buddy list components (`docs/windsurf/assets/AIM_Contact_List.png`)
      - Chat window design (`docs/windsurf/assets/AIM_Chat_Window.png`)
-   - Integrate Tauri ACL for security  
-   - Store user preferences or settings with `tauri-plugin-store`
+   - Integrate Tauri v2.1.0 ACL for security  
+   - Store user preferences or settings with `tauri-plugin-store ^0.1.0`
    - Begin tracking success metrics:
      - CRM interaction time baselines
      - Task completion rates

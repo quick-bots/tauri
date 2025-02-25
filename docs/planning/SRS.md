@@ -1,4 +1,4 @@
-@plan "Define requirements for Tauri v2 + Next.js AIM-inspired desktop application with MCP"
+@plan "Define requirements for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
 <!-- cascade-run:
   - lint-check
   - style-guide
@@ -9,10 +9,26 @@
 
 ## Document Control
 - **Document Title:** Software Requirements Specification
-- **Document Version:** 1.2.0
-- **Date:** 2025-02-18
+- **Document Version:** 1.0.0
+- **Parent Document Version:** Project Overview v1.0.0
+- **Date:** 2025-02-25
 - **Status:** Draft
 - **Author:** Preston Sparks
+- **Last Audit:** 2025-02-25
+
+## Changelog
+- **1.0.0** (2025-02-25):
+  - Aligned version with Project Overview v1.0.0
+  - Added explicit framework versions
+  - Updated technology stack with specific versions
+  - Added parent document reference
+  - Added last audit date
+
+- **0.2.0** (2025-02-18):
+  - Initial comprehensive draft
+  - Added functional requirements
+  - Added non-functional requirements
+  - Added technology stack details
 
 ## Table of Contents
 1. [Introduction](#introduction)  
@@ -33,21 +49,22 @@
 ### 1.1 Purpose
 @validate "Ensure comprehensive requirements coverage"
 
-This **Software Requirements Specification (SRS)** defines the **functional** and **non-functional** requirements for a **Tauri v2**-based, **AIM-inspired** desktop application that integrates **local AI** (ONNX, Rust NLP) and **remote AI** (MCP). It guides both human developers and the Cascade AI system in delivering a secure, high-performance chat experience.
+This **Software Requirements Specification (SRS)** defines the **functional** and **non-functional** requirements for a **Tauri v2.1.0**-based, **AIM-inspired** desktop application using **Next.js 14.1.0** that integrates **local AI** (ONNX, Rust NLP) and **remote AI** (MCP v1.3.0-rc2). It guides both human developers and the Cascade AI system in delivering a secure, high-performance chat experience.
 
 ### 1.2 Scope
 @enforce "Define clear project boundaries"
 
 **Application scope** includes:
-- **Cross-platform** deployment (Windows, macOS, Linux) using Tauri v2 with web technologies
-- **AIM-inspired** chat UI: buddy lists, status icons, real-time messaging
-- **Local** AI inference + **remote** AI integration via **MCP**
+- **Cross-platform** deployment (Windows, macOS, Linux) using Tauri v2.1.0 with web technologies
+- **AIM-inspired** chat UI built with Next.js 14.1.0: buddy lists, status icons, real-time messaging
+- **Local** AI inference + **remote** AI integration via **MCP v1.3.0-rc2**
 - **Security** measures (ACL, encryption, resource isolation)
 - **Tool** and **resource** management (discovery, access, context)
 
 ### 1.3 Definitions and Acronyms
-- **Tauri v2**: Framework for secure, cross-platform apps, featuring ACL-based security.  
-- **MCP**: Model Context Protocol for standard AI integration.  
+- **Tauri v2.1.0**: Framework for secure, cross-platform apps, featuring ACL-based security.  
+- **Next.js 14.1.0**: React framework for production-grade web applications.
+- **MCP v1.3.0-rc2**: Model Context Protocol for standard AI integration.  
 - **ONNX**: Open Neural Network Exchange for local model execution.  
 - **AIM**: AOL Instant Messenger (UI/UX inspiration).  
 - **SSE**: Server-Sent Events (one option for real-time messaging).
@@ -57,11 +74,11 @@ This **Software Requirements Specification (SRS)** defines the **functional** an
 ## 2. System Overview
 
 ### 2.1 System Context
-@validate "Ensure alignment with Tauri v2 architecture"
+@validate "Ensure alignment with Tauri v2.1.0 architecture"
 
-The system is a **cross-platform desktop application** built with Tauri v2 and web technologies, featuring:
+The system is a **cross-platform desktop application** built with Tauri v2.1.0 and web technologies, featuring:
 1. **Local AI** (Rust-based ONNX or NLP) for offline tasks.  
-2. **MCP** calls for remote AI or resource usage.  
+2. **MCP v1.3.0-rc2** calls for remote AI or resource usage.  
 3. **AIM-style** user interface, following the design specifications in `windsurf-docs/assets`:
    - Login flow (`AIM_Login_Screen.png`)
    - Main view/buddy list (`AIM_Contact_List.png`)
@@ -71,31 +88,46 @@ The system is a **cross-platform desktop application** built with Tauri v2 and w
 ### 2.2 System Architecture
 @enforce "Maintain a clear separation of concerns"
 
-**Frontend** (Next.js, static export) → **Tauri Bridge** → **Rust Backend** + **MCP**. The Rust backend handles local AI calls, storage, and bridging to remote AI via the **MCP**. Data is persisted in a local DB (SQLite and/or sled), with encryption at rest. Tauri v2's ACL restricts command usage, ensuring resource isolation.
+**Frontend** (Next.js 14.1.0, static export) → **Tauri v2.1.0 Bridge** → **Rust Backend** + **MCP v1.3.0-rc2**. The Rust backend handles local AI calls, storage, and bridging to remote AI via the **MCP**. Data is persisted in a local DB (SQLite and/or sled), with encryption at rest. Tauri v2.1.0's ACL restricts command usage, ensuring resource isolation.
 
 **Core Technologies:**
 
 1. **Frontend Stack**
-   - Next.js with `output: 'export'` for static asset bundling
-   - Tailwind CSS and/or shadcn/ui for UI components
-   - TanStack Query for data fetching/caching
-   - Zustand for global state management
-   - Framer Motion for animations
-   - PDF.js (Mozilla, Apache 2.0 license) for document rendering
+   - Next.js 14.1.0 with `output: 'export'` for static asset bundling
+   - Tailwind CSS ^3.4.0 for styling
+   - shadcn/ui ^1.0.0 for UI components
+   - TanStack Query ^5.0.0 for data fetching/caching
+   - Zustand ^4.5.0 for global state management
+   - Framer Motion ^11.0.0 for animations
+   - TypeScript 5.3.3 in strict mode
+   - PDF.js ^4.0.0 (Mozilla, Apache 2.0 license) for document rendering
 
 2. **Backend Stack**
-   - tokio for async runtime
-   - serde for JSON serialization
-   - reqwest for external calls
-   - mcp_rust_sdk for AI bridging
-   - sqlx / sled for local storage
+   - Tauri v2.1.0 core framework
+   - tokio ^1.35.0 for async runtime
+   - serde ^1.0.195 for JSON serialization
+   - reqwest ^0.11.23 for external calls
+   - mcp_rust_sdk v1.3.0-rc2 for AI bridging
+   - sqlx ^0.7.3 for SQLite integration
+   - sled ^0.34.7 for key-value storage
    - All dependencies must use permissive licenses (MIT, Apache 2.0, BSD)
 
-3. **Recommended Tauri Plugins**
-   - tauri-plugin-store: Local credential/settings storage
-   - tauri-plugin-sql: SQLite integration
-   - tauri-plugin-updater: Automatic updates
-   - tauri-plugin-log: Centralized logging
+3. **Testing Tools**
+   - Frontend:
+     - Vitest ^1.2.0
+     - Playwright ^1.41.0
+     - React Testing Library ^14.1.2
+   - Backend:
+     - tokio-test ^0.4.3
+     - mockall ^0.12.1
+     - criterion ^0.5.1
+     - mcp-mock-server ^1.3.0-rc2
+
+4. **Recommended Tauri Plugins**
+   - tauri-plugin-store ^0.1.0: Local credential/settings storage
+   - tauri-plugin-sql ^0.1.0: SQLite integration
+   - tauri-plugin-updater ^0.1.0: Automatic updates
+   - tauri-plugin-log ^0.1.0: Centralized logging
 
 Service port configurations follow framework standards:
 - FastAPI services: 8000 (primary), 8001-8003 (supporting services)
@@ -140,7 +172,7 @@ Service port configurations follow framework standards:
    - Resource-based caching, low-latency design
 
 2. **External Models (FR5)**  
-   - MCP client for remote AI  
+   - MCP v1.3.0-rc2 client for remote AI  
    - Server discovery + connection  
    - Context-based tool execution  
    - Error handling + fallback logic
@@ -180,14 +212,25 @@ Service port configurations follow framework standards:
 @validate "Ensure optimal user experience"
 
 1. **Response Times (NFR1)**  
-   - App startup < 3s  
-   - Chat latency < 100ms  
-   - AI tool execution < 500ms  
-   - 60 FPS UI updates
-   - Automatic updates < 30s download, < 5s install
+   - Cold start < 2s
+   - Warm start < 1s
+   - Background service initialization < 500ms
+   - Chat message latency < 100ms (P95)
+   - AI request latency < 500ms (P95)
+   - UI interaction latency < 50ms (P95)
 
-2. **Update System (NFR2)**
-   - Automatic silent updates via tauri-plugin-updater
+2. **Resource Usage (NFR2)**
+   - CPU: < 15% at idle, < 50% during AI operations
+   - Memory: < 200MB at idle, < 500MB during AI operations
+   - Disk: < 100MB for app installation (excluding AI models)
+
+3. **Concurrency (NFR3)**
+   - Support 10+ simultaneous chat windows
+   - Handle 5+ concurrent AI requests
+   - Maintain performance with 50+ buddy list entries
+
+4. **Update System (NFR4)**
+   - Automatic silent updates via tauri-plugin-updater ^0.1.0
    - Background download and installation
    - Rollback capability for failed updates
    - Version control and compatibility checks
@@ -206,112 +249,40 @@ Service port configurations follow framework standards:
    - Resource isolation  
    - Regular security audits (cargo-audit, OWASP ZAP)
 
-### 4.3 Reliability
-@validate "Ensure system stability"
-
-1. **Availability (NFR5)**  
-   - Aim for 99.9% uptime  
-   - Graceful error handling + fallback strategies  
-   - Automatic reconnection for remote AI calls
-
-2. **Data Integrity (NFR6)**  
-   - Transaction safety for DB writes  
-   - Backup systems or local snapshots  
-   - Versioning for critical resources (config, AI prompts)
-
-### 4.4 Usability
-@enforce "Maintain intuitive AIM-inspired interface"
-
-1. **Interface Design (NFR7)**  
-   - Familiar buddy list + chat windows  
-   - Clear feedback on errors or AI processes  
-   - Minimal user friction
-   - UI components using Tailwind CSS and/or shadcn/ui
-   - Smooth animations using Framer Motion
-
-2. **User Experience (NFR8)**  
-   - Quick navigation between chat sessions  
-   - Real-time status and presence info  
-   - Accessible interactions (keyboard shortcuts, etc.)
-   - Global state management using Zustand
-   - Responsive and fluid UI transitions
-
-### 4.5 Testing and Quality Assurance
+### 4.3 Development & Testing
 @enforce "Maintain comprehensive test coverage"
 
-1. **Frontend Testing (NFR9)**
-   - Unit testing with Vitest
-   - End-to-end testing with Playwright
-   - Component testing for UI elements
-   - Minimum test coverage: 80%
+1. **Unit Test Coverage (NFR5)**
+   - Frontend (TypeScript): ≥ 80%
+   - Backend (Rust): ≥ 85%
+   - Critical paths: 100%
+   - Coverage measured using:
+     - Frontend: Vitest ^1.2.0 + Istanbul
+     - Backend: cargo-tarpaulin
 
-2. **Backend Testing (NFR10)**
-   - Unit testing with tokio-test
-   - Integration testing with mockall
-   - Protocol testing with mcp-mock-server
-   - Performance testing with criterion
+2. **Integration Test Coverage (NFR6)**
+   - API endpoints: 100%
+   - MCP interactions: ≥ 90%
+   - UI workflows: ≥ 75%
+   - Testing tools:
+     - Playwright ^1.41.0 for UI flows
+     - mcp-mock-server ^1.3.0-rc2 for AI interactions
 
-3. **CI/CD Requirements (NFR11)**
-   - Automated testing via GitHub Actions
-   - Security scanning (cargo-audit, npm-audit)
-   - OWASP ZAP & MCP Inspector integration
-   - Semantic versioning with semantic-release and cargo-release
+3. **End-to-End Coverage (NFR7)**
+   - Core user journeys: 100%
+   - Error scenarios: ≥ 90%
+   - Edge cases: ≥ 70%
+   - Coverage measured using Playwright coverage reports
 
-### 4.6 MCP Integration Requirements
-@enforce "Follow MCP protocol standards"
+4. **Specific Requirements (NFR8)**
+   - Security-critical code: 100%
+   - Data persistence operations: 100%
+   - Error handling paths: ≥ 90%
 
-1. **Core Components (NFR12)**
-   - MCP Client implementation for AI agent communication
-   - MCP Server setup for local/remote AI resources
-   - Transport layer (SSE, stdio, WebSocket)
-   - Resource system for tool/prompt management
-
-2. **Integration Features (NFR13)**
-   - Standard tool chaining for AI operations
-   - Session-based context isolation
-   - Clear communication protocols
-   - Resource discovery and access control
-
-3. **Security Considerations (NFR14)**
-   - ACL-based command control
-   - Context confidentiality per session
-   - Compliance logging (GDPR, etc.)
-   - Resource access restrictions
-
-### 4.3 Development & Testing
-@enforce "Maintain code quality standards"
-
-1. **Testing Requirements (NFR5)**
-   - Unit Testing: Vitest for TypeScript, tokio-test for Rust
-   - E2E Testing: Playwright for UI flows
-   - Integration Testing: mcp-mock-server for AI interactions
-   - Performance Testing: criterion.rs for benchmarks
-   - Coverage requirements: >80% for critical paths
-
-2. **Development Environment (NFR6)**
-   - VS Code with required extensions:
-     - rust-analyzer for Rust development
-     - Tauri extension for app debugging
-     - ESLint and Prettier for code formatting
-     - GitLens for version control
-   - Development tools:
-     - Node.js 18+ and Rust stable
-     - Docker for containerized testing
-     - Git for version control
-
-3. **CI/CD Pipeline (NFR7)**
-   - GitHub Actions for automated workflows:
-     - Build verification
-     - Test execution
-     - Security scanning
-     - Artifact generation
-   - Versioning:
-     - semantic-release for npm packages
-     - cargo-release for Rust components
-   - Deployment:
-     - Docker-based build environment
-     - Automated release packaging
-     - Platform-specific installers
+5. **Performance Testing (NFR9)**
+   - Backend benchmarks using criterion ^0.5.1
+   - Frontend performance using Lighthouse
+   - Custom telemetry for end-to-end measurements
 
 ### 4.4 Resource Management
 @enforce "Implement MCP-based isolation"
