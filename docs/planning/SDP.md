@@ -43,7 +43,7 @@ This plan covers:
 ### 1.3 References
 - [project-overview.md](../project-overview.md) - Main Project Specification  
 - [SDD.md](./SDD.md) - Software Design Document  
-- [cascade-guidelines.md](../windsurf/cascade-guidelines.md) - AI Documentation & Workflow Guidelines  
+- [cascade-guidelines.md](../../.codeium/windsurf/cascade-guidelines.md) - AI Documentation & Workflow Guidelines  
 
 ---
 
@@ -88,22 +88,22 @@ quickbots-desktop-app/
 
 ## 3. Management Process
 
-### 3.1 Milestones and Timeline
+### 3.1 Implementation Phases
 @phase "Implement Tauri v2.1.0 + Next.js 14.1.0 + MCP v1.3.0-rc2 in sequential phases"
 
-1. **Foundation (Weeks 1–2)**  
+1. **Foundation Phase**  
    - Initialize Tauri v2.1.0 + Next.js 14.1.0 (static export)  
    - Add `mcp_rust_sdk v1.3.0-rc2` to Cargo.toml  
    - Create minimal "Hello MCP" command  
    - Basic AIM-style UI scaffolding (login screen, buddy list layout)
 
-2. **Core Features (Weeks 3–4)**  
+2. **Core Features Phase**  
    - Implement local AI commands (e.g., ONNX-based text analysis)  
    - Expand buddy list to show agent statuses via MCP v1.3.0-rc2  
    - UI QA: Validate AIM styling against design references:
-     - Login screen layout (`docs/windsurf/assets/AIM_Login_Screen.png`)
-     - Buddy list components (`docs/windsurf/assets/AIM_Contact_List.png`)
-     - Chat window design (`docs/windsurf/assets/AIM_Chat_Window.png`)
+     - Login screen layout (`docs/designs/assets/AIM_Login_Screen.png`)
+     - Buddy list components (`docs/designs/assets/AIM_Contact_List.png`)
+     - Chat window design (`docs/designs/assets/AIM_Chat_Window.png`)
    - Integrate Tauri v2.1.0 ACL for security  
    - Store user preferences or settings with `tauri-plugin-store ^0.1.0`
    - Begin tracking success metrics:
@@ -111,7 +111,7 @@ quickbots-desktop-app/
      - Task completion rates
      - Error frequency monitoring
 
-3. **AI Integration (Weeks 5–6)**  
+3. **AI Integration Phase**  
    - Connect to external AI models (OpenAI, Anthropic, etc.) via MCP  
    - Context management system (session-based)  
    - Resource discovery and tool execution  
@@ -122,7 +122,7 @@ quickbots-desktop-app/
      - Tauri v2 ACL refinement
      - Audit logging setup
 
-4. **Security Implementation & Optimization (Weeks 7–8)**  
+4. **Security Implementation & Optimization Phase**  
    - Advanced security features:
      - Multi-factor authentication
      - Enhanced encryption protocols
@@ -131,7 +131,7 @@ quickbots-desktop-app/
    - Performance profiling
    - Comprehensive security audits
 
-5. **Testing & Optimization (Weeks 9–10)**  
+5. **Testing & Optimization Phase**  
    - Cross-platform E2E tests (Playwright, mcp-mock-server)  
    - Performance profiling with criterion, flamegraphs  
    - Security auditing (cargo-audit, OWASP ZAP)  
@@ -142,7 +142,7 @@ quickbots-desktop-app/
      - Analyze error rates and user satisfaction
      - Document performance improvements
 
-6. **Deployment (Weeks 11–12)**  
+6. **Deployment Phase**  
    - Build + packaging for Windows, macOS, Linux  
    - Documentation finalization  
    - Automated updates (tauri-plugin-updater)  
@@ -552,7 +552,7 @@ graph TD
      - User satisfaction metrics
      - Error rate tracking
    - UI/UX compliance testing:
-     - Design reference validation against `docs/windsurf/assets`
+     - Design reference validation against `docs/designs/assets`
      - AIM aesthetic consistency checks
      - Cross-platform UI behavior verification
 

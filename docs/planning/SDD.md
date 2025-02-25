@@ -62,7 +62,7 @@ This document addresses:
 
 ### 1.3 References
 - [project-overview.md](../project-overview.md) - Primary Project Specification  
-- [cascade-guidelines.md](../windsurf/cascade-guidelines.md) - Cascade AI Documentation Guidelines  
+- [cascade-guidelines.md](../../.codeium/windsurf/cascade-guidelines.md) - Cascade AI Documentation Guidelines  
 
 ---
 
@@ -2061,19 +2061,19 @@ describe('Error Scenarios', () => {
 @enforce "Maintain design consistency"
 
 ### 11.1 UI Reference Files
-- **Login Screen**: `windsurf/assets/AIM_Login_Screen.png`
+- **Login Screen**: `designs/assets/AIM_Login_Screen.png`
   - Version: 1.0.0
   - Last Updated: 2025-02-19
   - Used for: Login flow implementation
   - Key Elements: Form layout, branding, status indicators
 
-- **Contact List**: `windsurf/assets/AIM_Contact_List.png`
+- **Contact List**: `designs/assets/AIM_Contact_List.png`
   - Version: 1.0.0
   - Last Updated: 2025-02-19
   - Used for: Buddy list implementation
   - Key Elements: Categories, status icons, window chrome
 
-- **Chat Window**: `windsurf/assets/AIM_Chat_Window.png`
+- **Chat Window**: `designs/assets/AIM_Chat_Window.png`
   - Version: 1.0.0
   - Last Updated: 2025-02-19
   - Used for: Chat interface implementation

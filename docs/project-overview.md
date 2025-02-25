@@ -31,7 +31,7 @@ This document consolidates the **latest research** and requirements for building
 8. [Security & Encryption](project-overview.md#security--encryption)  
 9. [Future Considerations](project-overview.md#future-considerations)  
 10. [Success Metrics](project-overview.md#success-metrics)  
-11. [Design Reference Files](windsurf/assets)  
+11. [Design Reference Files](designs/assets)  
 12. [Codeium Windsurf & Cascade AI Integration](project-overview.md#codeium-windsurf--cascade-ai-integration)
 
 ---
@@ -90,7 +90,7 @@ This application will integrate **local AI/ML capabilities** (via Rust-based ONN
 3. **Instant Chat**: typed messages with optional file attachments, timestamping.  
 4. **Additional Views** for CRM records, pipeline tracking, or an admin “God View” for advanced monitoring.
 
-*(Refer to [Design Reference Files](windsurf/assets) for screenshots.)*
+*(Refer to [Design Reference Files](designs/assets) for screenshots.)*
 
 ---
 
@@ -292,7 +292,7 @@ graph TD
 ---
 
 ## 11. Design Reference Files
-The `docs/windsurf/assets` folder contains AIM reference images:
+The `docs/designs/assets` folder contains AIM reference images:
 
 1. **AIM_Login_Screen.png**  
    - Nostalgic login flow, minimal UI.  
