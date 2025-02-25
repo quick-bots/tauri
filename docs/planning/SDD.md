@@ -1,4 +1,4 @@
-@plan "Define technical architecture for Tauri v2 + Next.js AIM-inspired desktop application with MCP"
+@plan "Define technical architecture for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
 <!-- cascade-run:
   - lint-check
   - style-guide
@@ -9,10 +9,26 @@
 
 ## Document Control
 - **Document Title:** Software Design Document
-- **Document Version:** 1.3.0
-- **Date:** 2025-02-18
+- **Document Version:** 1.0.0
+- **Parent Document Version:** Project Overview v1.0.0
+- **Date:** 2025-02-25
 - **Status:** Draft
 - **Author:** Preston Sparks
+- **Last Audit:** 2025-02-25
+
+## Changelog
+- **1.0.0** (2025-02-25):
+  - Aligned version with Project Overview v1.0.0
+  - Added explicit framework versions
+  - Updated technical stack details with specific versions
+  - Added parent document reference
+  - Added last audit date
+
+- **0.3.0** (2025-02-18):
+  - Initial comprehensive draft
+  - Added system architecture details
+  - Added technical stack specifications
+  - Added monitoring and logging strategy
 
 ## Table of Contents
 1. [Introduction](#introduction)  
@@ -34,7 +50,7 @@
 ### 1.1 Purpose
 @validate "Ensure comprehensive technical specification coverage"
 
-This **Software Design Document (SDD)** details the **Tauri v2** + **Next.js** architecture for an **AIM-inspired** cross-platform desktop application with **MCP-based AI integration**. It covers data structures, component design, security, and multi-platform considerations—anchored in the **latest** research (see `project-overview.md`).
+This **Software Design Document (SDD)** details the **Tauri v2.1.0** + **Next.js 14.1.0** architecture for an **AIM-inspired** cross-platform desktop application with **MCP v1.3.0-rc2-based AI integration**. It covers data structures, component design, security, and multi-platform considerations—anchored in the **latest** research (see `project-overview.md`).
 
 ### 1.2 Scope
 This document addresses:
@@ -57,8 +73,8 @@ This document addresses:
 
 ```mermaid
 graph TD
-    subgraph "Desktop App (Tauri v2)"
-        UI[Next.js/AIM UI] --> TB[Tauri Bridge]
+    subgraph "Desktop App (Tauri v2.1.0)"
+        UI[Next.js 14.1.0/AIM UI] --> TB[Tauri Bridge]
         TB --> FL[Frontend Layer (TS)]
         TB --> BL[Backend Layer (Rust)]
     end
@@ -86,10 +102,10 @@ graph TD
     BL --> ACL
 ```
 
-- **Frontend Layer**: Next.js (static export), provides AIM-style UI  
+- **Frontend Layer**: Next.js 14.1.0 (static export), provides AIM-style UI  
 - **Backend Layer**: Rust-based Tauri commands, bridging to MCP client calls  
 - **MCP**: Standard protocol for local AI and external model usage  
-- **Security**: Tauri v2 ACL, encryption, resource sandboxing  
+- **Security**: Tauri v2.1.0 ACL, encryption, resource sandboxing  
 
 ### 2.2 Component Overview
 
@@ -102,26 +118,38 @@ graph TD
 @enforce "Maintain consistent technology choices across all layers"
 
 #### 2.3.1 Frontend Technologies
-- **Framework**: Next.js with static export
+- **Framework**: Next.js 14.1.0 with static export
 - **UI Components**: 
-  - Tailwind CSS for styling
-  - shadcn/ui for base components
-  - Framer Motion for AIM-style animations
+  - Tailwind CSS ^3.4.0 for styling
+  - shadcn/ui ^1.0.0 for base components
+  - Framer Motion ^11.0.0 for AIM-style animations
 - **State Management**: 
-  - Zustand for global state
-  - TanStack Query for data fetching/caching
-- **Type Safety**: TypeScript in strict mode
+  - Zustand ^4.5.0 for global state
+  - TanStack Query ^5.0.0 for data fetching/caching
+- **Type Safety**: TypeScript 5.3.3 in strict mode
 
 #### 2.3.2 Backend Technologies
-- **Runtime**: tokio for async operations
+- **Framework**: Tauri v2.1.0
+- **Runtime**: tokio ^1.35.0 for async operations
 - **Database**: 
-  - sqlx with SQLite for structured data
-  - sled for fast key-value caching
-- **Network**: reqwest for external calls
-- **Serialization**: serde for JSON handling
-- **AI Integration**: mcp_rust_sdk
+  - sqlx ^0.7.3 with SQLite for structured data
+  - sled ^0.34.7 for fast key-value caching
+- **Network**: reqwest ^0.11.23 for external calls
+- **Serialization**: serde ^1.0.195 for JSON handling
+- **AI Integration**: mcp_rust_sdk v1.3.0-rc2
 
-#### 2.3.3 Transport Protocols
+#### 2.3.3 Testing Tools
+- **Frontend**:
+  - Vitest ^1.2.0
+  - Playwright ^1.41.0
+  - React Testing Library ^14.1.2
+- **Backend**:
+  - tokio-test ^0.4.3
+  - mockall ^0.12.1
+  - criterion ^0.5.1
+  - mcp-mock-server ^1.3.0-rc2
+
+#### 2.3.4 Transport Protocols
 @enforce "Define clear communication patterns"
 
 1. **Real-time Updates**
