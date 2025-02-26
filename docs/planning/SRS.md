@@ -1,30 +1,23 @@
-@plan "Define requirements for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-<!-- cascade-run:
-  - lint-check
-  - style-guide
-  - vulnerability-scan
--->
-
 # Software Requirements Specification (SRS)
 
 ## Document Control
 - **Document Title:** Software Requirements Specification
-- **Document Version:** 1.0.0
+- **Document Version:** v1.0.0
 - **Parent Document Version:** Project Overview v1.0.0
-- **Date:** 2025-02-25
+- **Date:** 2025-02-26
 - **Status:** Draft
 - **Author:** Preston Sparks
-- **Last Audit:** 2025-02-25
+- **Last Audit:** 2025-02-26
 
 ## Changelog
-- **1.0.0** (2025-02-25):
+- **v1.0.0** (2025-02-26):
   - Aligned version with Project Overview v1.0.0
   - Added explicit framework versions
   - Updated technology stack with specific versions
   - Added parent document reference
   - Added last audit date
 
-- **0.2.0** (2025-02-18):
+- **v0.2.0** (2025-02-18):
   - Initial comprehensive draft
   - Added functional requirements
   - Added non-functional requirements
@@ -47,12 +40,10 @@
 ## 1. Introduction
 
 ### 1.1 Purpose
-@validate "Ensure comprehensive requirements coverage"
 
 This **Software Requirements Specification (SRS)** defines the **functional** and **non-functional** requirements for a **Tauri v2.1.0**-based, **AIM-inspired** desktop application using **Next.js 14.1.0** that integrates **local AI** (ONNX, Rust NLP) and **remote AI** (MCP v1.3.0-rc2). It guides both human developers and the Cascade AI system in delivering a secure, high-performance chat experience.
 
 ### 1.2 Scope
-@enforce "Define clear project boundaries"
 
 **Application scope** includes:
 - **Cross-platform** deployment (Windows, macOS, Linux) using Tauri v2.1.0 with web technologies
@@ -74,8 +65,6 @@ This **Software Requirements Specification (SRS)** defines the **functional** an
 ## 2. System Overview
 
 ### 2.1 System Context
-@validate "Ensure alignment with Tauri v2.1.0 architecture"
-
 The system is a **cross-platform desktop application** built with Tauri v2.1.0 and web technologies, featuring:
 1. **Local AI** (Rust-based ONNX or NLP) for offline tasks.  
 2. **MCP v1.3.0-rc2** calls for remote AI or resource usage.  
@@ -86,8 +75,6 @@ The system is a **cross-platform desktop application** built with Tauri v2.1.0 a
 4. **Security** by design (ACL, encryption, logs).
 
 ### 2.2 System Architecture
-@enforce "Maintain a clear separation of concerns"
-
 **Frontend** (Next.js 14.1.0, static export) → **Tauri v2.1.0 Bridge** → **Rust Backend** + **MCP v1.3.0-rc2**. The Rust backend handles local AI calls, storage, and bridging to remote AI via the **MCP**. Data is persisted in a local DB (SQLite and/or sled), with encryption at rest. Tauri v2.1.0's ACL restricts command usage, ensuring resource isolation.
 
 **Core Technologies:**
@@ -140,77 +127,113 @@ Service port configurations follow framework standards:
 
 ## 3. Functional Requirements
 
-### 3.1 User Interface
-@enforce "Follow AIM design principles"
+### 3.1 Core Application Requirements
+[REQ-F001] The system shall be implemented as a desktop application using:
+- Tauri v2.1.0 for the desktop framework
+- Next.js 14.1.0 for the frontend framework
 
-1. **Login View (FR1)**  
-   - Implementation based on `AIM_Login_Screen.png` reference
-   - OAuth2-based authentication flow
-   - Version info & Tauri ACL checks  
-   - Basic server or AI status indicators
+[REQ-F002] The application shall implement an AIM-inspired UI/UX design:
+- Login screen following AIM_Login_Screen.png reference
+- Contact list following AIM_Contact_List.png reference
+- Chat windows following AIM_Chat_Window.png reference
 
-2. **Main View (FR2)**  
-   - Implementation based on `AIM_Contact_List.png` reference
-   - AIM-style buddy list  
-   - Search/filter for agents  
-   - Status icons (online/offline/processing)  
-   - Quick actions (chat, edit, remove)
+[REQ-F003] The system shall integrate MCP v1.3.0-rc2 for AI resource management:
+- Handle AI model loading and unloading
+- Manage AI resource allocation
+- Monitor AI performance metrics
 
-3. **Chat Windows (FR3)**  
-   - Implementation based on `AIM_Chat_Window.png` reference
-   - Real-time messaging w/ timestamps  
-   - Optional file attachments  
-   - AI "reply" or tool usage via MCP  
-   - Context/metadata display (e.g., active prompt)
+[REQ-F004] The system shall provide local AI processing capabilities:
+- Process user messages locally when possible
+- Fall back to cloud processing when necessary
+- Maintain consistent response quality across processing modes
 
-### 3.2 AI Integration
-@enforce "Implement standardized AI access"
+[REQ-F005] The system shall implement secure data storage:
+- Encrypt sensitive data at rest
+- Implement secure key management
+- Provide data backup and recovery mechanisms
 
-1. **Local Processing (FR4)**  
-   - ONNX model calls (e.g., text classification)  
-   - Rust NLP or inference libraries  
-   - Resource-based caching, low-latency design
+[REQ-F006] The system shall manage user authentication:
+- Implement secure login/logout flows
+- Maintain user sessions
+- Handle multiple user profiles
 
-2. **External Models (FR5)**  
-   - MCP v1.3.0-rc2 client for remote AI  
-   - Server discovery + connection  
-   - Context-based tool execution  
-   - Error handling + fallback logic
+[REQ-F007] The system shall provide chat window functionality:
+- Support text message exchange
+- Enable file sharing
+- Implement message formatting options
 
-3. **Resource System (FR6)**  
-   - Resource discovery + listing (local or remote)  
-   - Access control + encryption  
-   - State synchronization across sessions  
-   - Tool chaining for advanced tasks
+[REQ-F008] The system shall manage contact lists:
+- Add/remove contacts
+- Organize contacts into groups
+- Show online/offline status
 
-### 3.3 Security Features
-@enforce "Maintain strong security standards"
+[REQ-F009] The system shall handle AI agent management:
+- Initialize AI agents on demand
+- Monitor agent health and performance
+- Gracefully handle agent failures
 
-1. **Authentication (FR7)**  
-   - OAuth2-based authentication flow
-   - Integration with identity providers
-   - Secure token management and refresh
-   - Tauri ACL enforcement
-   - Role-based permissions
-   - Secure credential storage
+[REQ-F010] The system shall maintain message history:
+- Store chat history securely
+- Enable message search
+- Support history export/import
 
-2. **Encryption (FR8)**  
-   - End-to-end message encryption  
-   - Stored data encryption (DB, key vault)  
-   - Transport encryption for remote AI
+### 3.2 Performance Requirements
 
-3. **Access Control (FR9)**  
-   - Resource permissions (view/edit)  
-   - Tool usage restrictions (local vs. remote)  
-   - Audit logging for actions + AI calls
+[REQ-NF001] Chat message latency shall not exceed 100ms (95th percentile)
+
+[REQ-NF002] AI request processing shall complete within 500ms (95th percentile)
+
+[REQ-NF003] UI interactions shall respond within 50ms (95th percentile)
+
+### 3.3 Resource Usage Requirements
+
+[REQ-NF004] CPU usage shall not exceed:
+- 15% during idle operation
+- 50% during AI operations
+
+[REQ-NF005] Memory usage shall not exceed:
+- 200MB during idle operation
+- 500MB during AI operations
+
+[REQ-NF006] Disk usage shall not exceed 100MB (excluding AI models)
+
+### 3.4 Scalability Requirements
+
+[REQ-NF007] The system shall support at least 10 simultaneous chat windows
+
+[REQ-NF008] The system shall handle at least 5 concurrent AI requests
+
+[REQ-NF009] The system shall maintain performance with at least 50 buddy list entries
+
+### 3.5 Startup Performance
+
+[REQ-NF010] The application shall meet the following startup times:
+- Cold start: < 2 seconds
+- Warm start: < 1 second
+- Background service initialization: < 500ms
+
+### 3.6 Testing Requirements
+
+[REQ-NF011] Frontend TypeScript code shall maintain ≥ 80% unit test coverage
+
+[REQ-NF012] Backend Rust code shall maintain ≥ 85% unit test coverage
+
+[REQ-NF013] All API endpoints shall have 100% integration test coverage
+
+[REQ-NF014] All core user journeys shall have 100% E2E test coverage
+
+### 3.7 Compliance Requirements
+
+[REQ-NF015] The system shall maintain GDPR/CCPA compliance:
+- Implement data privacy controls
+- Provide data export/deletion capabilities
+- Maintain audit logs of data access
 
 ---
 
 ## 4. Non-Functional Requirements
 
 ### 4.1 Performance
-@validate "Ensure optimal user experience"
-
 1. **Response Times (NFR1)**  
    - Cold start < 2s
    - Warm start < 1s
@@ -237,8 +260,6 @@ Service port configurations follow framework standards:
    - Update progress notifications (non-intrusive)
 
 ### 4.2 Security
-@enforce "Implement comprehensive security"
-
 1. **Data Protection (NFR3)**  
    - Encrypted local DB (e.g., AES-based)  
    - ACL policy in `tauri.conf.json`  
@@ -250,8 +271,6 @@ Service port configurations follow framework standards:
    - Regular security audits (cargo-audit, OWASP ZAP)
 
 ### 4.3 Development & Testing
-@enforce "Maintain comprehensive test coverage"
-
 1. **Unit Test Coverage (NFR5)**
    - Frontend (TypeScript): ≥ 80%
    - Backend (Rust): ≥ 85%
@@ -285,8 +304,6 @@ Service port configurations follow framework standards:
    - Custom telemetry for end-to-end measurements
 
 ### 4.4 Resource Management
-@enforce "Implement MCP-based isolation"
-
 1. **MCP Resource Control (NFR8)**
    - Strict resource isolation between sessions
    - Tool-level access control via MCP
@@ -304,8 +321,6 @@ Service port configurations follow framework standards:
 ## 5. External Interface Requirements
 
 ### 5.1 User Interfaces
-@enforce "Follow AIM-inspired patterns"
-
 1. **Login Screen**  
    - Basic credentials  
    - Tauri app version + environment info  
@@ -322,8 +337,6 @@ Service port configurations follow framework standards:
    - File attachment + inline AI responses
 
 ### 5.2 Software Interfaces
-@enforce "Implement standard protocols"
-
 1. **MCP Integration**  
    - SSE or WebSocket transport  
    - JSON-based request/response or prompts  
@@ -339,8 +352,6 @@ Service port configurations follow framework standards:
 ## 6. System Features
 
 ### 6.1 Core Features
-@validate "Ensure feature completeness"
-
 1. **Authentication System**  
    - OAuth2-based authentication flow
    - Session handling, 2FA (future)  
@@ -358,8 +369,6 @@ Service port configurations follow framework standards:
    - Tool execution + multi-step prompts
 
 ### 6.2 Advanced Features
-@enforce "Implement enhanced capabilities"
-
 1. **Resource Management**  
    - Discovery + listing (local or remote)  
    - Access control + encryption  

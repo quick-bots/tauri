@@ -1,12 +1,3 @@
-@plan "Tauri v2 + Next.js AIM-Inspired Desktop App"
-<!-- cascade-run:
-  - lint-check
-  - vulnerability-scan
-  - style-guide
--->
-@enforce "Use Tauri v2 security best practices"
-@validate "Ensure consistent architecture with MCP"
-
 # Tauri Desktop Application Project Specification
 
 This document consolidates the **latest research** and requirements for building a **cross-platform desktop application** using **Tauri v2** with a **UI/UX** inspired by **AOL Instant Messenger (AIM)** from the early 2000s. Our approach integrates both **local AI** and **remote AI** via the **Model Context Protocol (MCP)**, ensuring a secure, future-proof architecture. The goal is to provide both **human developers** and **Windsurf Cascade AI** with a cohesive blueprint—from architecture and security considerations to design inspiration—enabling rapid, consistent, and secure development.
@@ -46,11 +37,6 @@ This application will integrate **local AI/ML capabilities** (via Rust-based ONN
 - **Standardized AI integration** using MCP for local/remote model orchestration.  
 - **Security** by design, leveraging Tauri v2’s advanced IPC and ACL-based permissions.  
 - **Future-ready** with modular expansions, tool chaining, and multi-agent support.  
-
-```markdown
-@enforce "TypeScript strict mode"
-@validate "MCP-based resource isolation"
-```
 
 ---
 
@@ -170,10 +156,6 @@ graph TD
 
 ### 4.6.3 Security Considerations
 
-```markdown
-@enforce "Follow ACL in tauri.conf.json"
-@validate "Restrict local resource writes"
-```
 1. **Authentication**: Control Tauri commands with ACL.  
 2. **Context Confidentiality**: Isolate each user session or agent.  
 3. **Compliance**: Use logs for compliance (GDPR, etc.).
@@ -217,15 +199,6 @@ graph TD
 
 ## 7. Implementation Roadmap
 
-```markdown
-@phase "Initialization"
-<!-- cascade-target: project_init -->
-<!-- cascade-run:
-  - test_coverage(>=80%)
-  - vulnerability-scan
--->
-```
-
 1. **Project Initialization**  
    - Scaffold Tauri v2 + Next.js (static export).  
    - Add `mcp_rust_sdk` to `Cargo.toml`.  
@@ -263,8 +236,6 @@ graph TD
 ---
 
 ## 8. Security & Encryption
-
-**@enforce** "gdpr-2025"  
 1. **Authentication**: Tauri ACL, plus possible user logins.  
 2. **Transport Security**: Encrypted websockets or SSE for remote AI.  
 3. **Resource Isolation**: Session-based scoping in MCP.  
@@ -308,50 +279,3 @@ The `docs/designs/assets` folder contains AIM reference images:
 
 ---
 
-## 12. Codeium Windsurf & Cascade AI Integration
-
-### 12.1 AI-Optimized Documentation
-We employ tags like `@plan`, `@phase`, and triggers like `<!-- cascade-run: ... -->`. Use `.windsurfrules` or `memory-config.windsurf` to guide AI coding tasks.
-
-### 12.2 Memory Configuration & Rules
-```yaml
-core_context:
-  attention_zones:
-    - "src-tauri/src/mcp/**/*.rs"
-    - "apps/frontend/src/lib/mcp.ts"
-suppression_rules:
-  - "legacy/v1/*"
-  - "experimental/untested"
-```
-@enforce:
-- "Functional components with hooks"
-- "TypeScript strict mode"
-
-### 12.3 Code Generation & Error Handling Protocols
-```markdown
-## Error Handling Protocol (EHP)
-| Severity  | Cascade Action                   |
-|-----------|----------------------------------|
-| Critical  | <!-- revert-step --> + @alert    |
-| High      | .retry + @senior-review          |
-| Medium    | .retry                           |
-```
-Enforce coverage with `<!-- cascade-enforce: test_coverage(>=80%) -->`.
-
-### 12.4 Review Workflow & Security Manifesto
-```markdown
-## Code Review Protocol
-1. AI Pre-Check:
-   <!-- cascade-run:
-   - lint-check
-   - vulnerability-scan
-   - style-guide
-   -->
-2. Human Review:
-   - @assign: staff-engineer
-   - SLA: 2hr
-
-## Security Manifesto
-<!-- cascade-enforce: gdpr-2025 -->
-- Encryption: <!-- @validate key_rotation -->
-- Access Logs: @audit weekly
