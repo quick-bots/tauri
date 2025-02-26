@@ -1,30 +1,23 @@
-@plan "High-level API blueprint for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-<!-- cascade-run:
-  - lint-check
-  - style-guide
-  - vulnerability-scan
--->
-
 # API Documentation
 
 ## Document Control
 - **Document Title:** API Documentation  
-- **Document Version:** 1.0.0
+- **Document Version:** v1.0.0
 - **Parent Document Version:** Project Overview v1.0.0
-- **Date:** 2025-02-25  
+- **Date:** 2025-02-26  
 - **Status:** Preliminary Draft  
 - **Author:** Preston Sparks
-- **Last Audit:** 2025-02-25
+- **Last Audit:** 2025-02-26
 
 ## Changelog
-- **1.0.0** (2025-02-25):
+- **v1.0.0** (2025-02-26):
   - Aligned version with Project Overview v1.0.0
   - Added explicit framework versions
   - Updated port standards
   - Added parent document reference
   - Added last audit date
 
-- **0.2.0** (2025-02-18):
+- **v0.2.0** (2025-02-18):
   - Initial draft of API documentation
   - Added port standards
   - Added MCP integration details
@@ -43,7 +36,6 @@
 ---
 
 ## 1. Overview
-@enforce "Maintain flexible, AI-friendly API structure"
 
 ### 1.1 Architecture Overview
 The API strategy is **multi-layered**, reflecting:
@@ -54,9 +46,6 @@ The API strategy is **multi-layered**, reflecting:
 - **External services** (e.g., remote AI, security modules)
 
 ### 1.2 Authentication
-@enforce "Implement robust authentication and ACL"
-@validate "Follow ACL in tauri.conf.json"
-@validate "Restrict local resource writes"
 
 - **Token-based** authentication using JWT (JSON Web Tokens)
 - Strong cryptographic standards for data storage/transit
@@ -67,7 +56,6 @@ The API strategy is **multi-layered**, reflecting:
 
 #### 1.2.1 Tauri ACL Configuration
 ```typescript
-// @cite "Following Tauri v2 ACL best practices: https://tauri.app/v2/guides/security/acl"
 interface CommandACL {
   // System commands require elevated privileges
   'api/v1/system/status': ['ADMIN', 'SYSTEM'],
@@ -101,115 +89,157 @@ Following official framework standards:
 
 ---
 
-## 2. MCP Integration
-@enforce "Implement strict context isolation"
+## 2. Core APIs
 
-### 2.1 Context Isolation Requirements
+### 2.1 Desktop Framework APIs
+[REQ-F001] Tauri Command Structure
 ```typescript
-// @version Tauri v2.1.0, MCP v1.3.0-rc2
-interface MCPContext {
-  id: string;
-  securityLevel: 'user' | 'system' | 'agent';
-  resourceQuota: {
-    maxMemory: number;    // in MB
-    maxStorage: number;   // in MB
-    maxConcurrency: number;
-  };
-  allowedOperations: string[];
+interface TauriCommands {
+  // Desktop integration commands
+  initialize(): Promise<void>;
+  getVersion(): Promise<string>;
+  checkUpdates(): Promise<UpdateInfo>;
 }
+```
 
-interface ContextIsolationGuard {
-  validateCrossContextRequest(source: MCPContext, target: MCPContext): Promise<ValidationResult>;
-  auditContextAccess(context: MCPContext, resource: string): Promise<AuditRecord>;
-  enforceIsolationBoundaries(contexts: MCPContext[]): Promise<void>;
+### 2.2 UI/UX Integration
+[REQ-F002] UI Event APIs
+```typescript
+interface UIEvents {
+  // Window management
+  createWindow(type: 'login' | 'buddy' | 'chat'): Promise<WindowHandle>;
+  updateWindow(handle: WindowHandle, props: WindowProps): Promise<void>;
+  closeWindow(handle: WindowHandle): Promise<void>;
 }
+```
 
+### 2.3 AI Integration
+[REQ-F003, REQ-F004] MCP Integration APIs
+```typescript
 interface MCPClient {
-  connect(options: ConnectOptions & { 
-    context: MCPContext,
-    isolationGuard: ContextIsolationGuard 
-  }): Promise<void>;
-  // ... existing operations
+  // AI resource management
+  connect(config: MCPConfig): Promise<void>;
+  loadModel(modelId: string): Promise<void>;
+  processRequest(request: AIRequest): Promise<AIResponse>;
 }
 ```
 
-### 2.2 Resource Discovery Patterns
+### 2.4 Security
+[REQ-F005, REQ-F006] Security APIs
 ```typescript
-interface ResourceDiscovery {
-  scan(): Promise<AvailableResources>;
-  inspect(resource: string): Promise<ResourceMetadata>;
-  validateAccess(context: MCPContext, resource: string): Promise<boolean>;
-}
-
-interface ValidationMarkup {
-  nodes: Array<{
-    id: string;
-    type: 'tool' | 'pipeline' | 'connection';
-    status: 'valid' | 'warning' | 'error';
-    message?: string;
-    visual: {
-      color: string;
-      icon: string;
-      position: { x: number; y: number };
-    };
-  }>;
-  connections: Array<{
-    from: string;
-    to: string;
-    status: 'valid' | 'warning' | 'error';
-    message?: string;
-  }>;
-}
-
-interface ToolChaining {
-  chain(tools: string[]): Promise<Pipeline>;
-  validate(pipeline: Pipeline): Promise<ValidationMarkup>;
-  pipelineDiagram(pipeline: Pipeline): Promise<PipelineVisualization>;
-  execute(pipeline: Pipeline, input: unknown): Promise<unknown>;
-}
-
-interface PipelineVisualization {
-  svg: string;  // SVG markup for pipeline diagram
-  interactive: boolean;
-  annotations: ValidationMarkup;
+interface SecurityAPI {
+  // Data security
+  encrypt(data: Buffer): Promise<EncryptedData>;
+  decrypt(data: EncryptedData): Promise<Buffer>;
+  
+  // Authentication
+  login(credentials: UserCredentials): Promise<Session>;
+  logout(session: Session): Promise<void>;
 }
 ```
 
-### 2.3 Client Operations (Placeholder)
+### 2.5 Communication
+[REQ-F007, REQ-F008] Chat APIs
 ```typescript
-// Example shape - subject to real implementation
-interface MCPClient {
-  connect(options: ConnectOptions): Promise<void>;
-  executeModel(params: ModelParams): Promise<ModelResult>;
-  accessResource(uri: string): Promise<Resource>;
-  listTools(): Promise<string[]>;
+interface ChatAPI {
+  // Message handling
+  sendMessage(message: ChatMessage): Promise<void>;
+  receiveMessage(): Promise<ChatMessage>;
+  
+  // Contact management
+  getContacts(): Promise<Contact[]>;
+  updateContact(contact: Contact): Promise<void>;
 }
 ```
-- **Connect**: Initiates a session with local or remote AI.  
-- **executeModel**: Single or multi-step AI calls.  
-- **accessResource**: Retrieves local/remote resources (files, data, etc.).  
-- **listTools**: Discovers available AI or system tools.
 
-### 2.4 Resource Management
+### 2.6 Management
+[REQ-F009, REQ-F010] System Management APIs
 ```typescript
-// Example shape - subject to real implementation
-interface ResourceOperations {
-  discover(): Promise<Resource[]>;
-  get(uri: string): Promise<Resource>;
-  update(uri: string, content: unknown): Promise<void>;
-  watch(uri: string, callback: (update: ResourceUpdate) => void): void;
+interface ManagementAPI {
+  // Agent management
+  initializeAgent(config: AgentConfig): Promise<Agent>;
+  monitorAgent(agent: Agent): Promise<AgentStatus>;
+  
+  // Message management
+  searchMessages(query: string): Promise<Message[]>;
+  exportHistory(options: ExportOptions): Promise<void>;
 }
 ```
-- **discover**: Lists resources (local or remote).  
-- **get**: Fetches resource content.  
-- **update**: Edits or overwrites resource data.  
-- **watch**: Subscribes to real-time updates.
+
+## 3. Performance APIs
+
+### 3.1 Latency Monitoring
+[REQ-NF001, REQ-NF002, REQ-NF003] Performance Metrics
+```typescript
+interface PerformanceAPI {
+  // Latency tracking
+  trackMessageLatency(): Promise<number>;
+  trackAILatency(): Promise<number>;
+  trackUILatency(): Promise<number>;
+}
+```
+
+### 3.2 Resource Monitoring
+[REQ-NF004, REQ-NF005, REQ-NF006] Resource Metrics
+```typescript
+interface ResourceAPI {
+  // Resource tracking
+  getCPUUsage(): Promise<CPUMetrics>;
+  getMemoryUsage(): Promise<MemoryMetrics>;
+  getDiskUsage(): Promise<DiskMetrics>;
+}
+```
+
+### 3.3 Scalability
+[REQ-NF007, REQ-NF008, REQ-NF009] Scalability APIs
+```typescript
+interface ScalabilityAPI {
+  // System capacity
+  getWindowCount(): Promise<number>;
+  getActiveRequests(): Promise<number>;
+  getContactListMetrics(): Promise<ListMetrics>;
+}
+```
+
+### 3.4 Startup
+[REQ-NF010] Startup Performance
+```typescript
+interface StartupAPI {
+  // Launch metrics
+  getColdStartTime(): Promise<number>;
+  getWarmStartTime(): Promise<number>;
+  getBackgroundInitTime(): Promise<number>;
+}
+```
+
+## 4. Testing APIs
+
+### 4.1 Coverage
+[REQ-NF011, REQ-NF012, REQ-NF013, REQ-NF014] Testing APIs
+```typescript
+interface TestingAPI {
+  // Coverage reporting
+  getFrontendCoverage(): Promise<CoverageReport>;
+  getBackendCoverage(): Promise<CoverageReport>;
+  getIntegrationCoverage(): Promise<CoverageReport>;
+  getE2ECoverage(): Promise<CoverageReport>;
+}
+```
+
+### 4.2 Compliance
+[REQ-NF015] Compliance APIs
+```typescript
+interface ComplianceAPI {
+  // Privacy controls
+  exportUserData(): Promise<UserData>;
+  deleteUserData(): Promise<void>;
+  getAuditLog(): Promise<AuditLog>;
+}
+```
 
 ---
 
 ## 3. Tauri Commands
-@plan "Detailed commands to be defined as Tauri code evolves"
-@cite "Following Tauri v2 Command API documentation: https://tauri.app/v2/guides/features/command"
 
 ### 3.1 Core System Commands
 ```rust
@@ -265,7 +295,6 @@ async fn handle_message(message: ChatMessage) -> Result<MessageResponse, ChatErr
 ---
 
 ## 4. External Services
-@plan "Exact endpoints to be confirmed once remote AI integrations are selected"
 
 ### 4.1 AI Model Services
 ```typescript
@@ -313,7 +342,6 @@ interface SecurityService {
 ---
 
 ## 5. WebSocket Events
-@enforce "Implement consistent real-time event handling"
 
 ### 5.1 Chat Events
 ```typescript
@@ -369,8 +397,6 @@ interface SystemEvents {
 ---
 
 ## 6. Error Handling
-@enforce "Implement consistent error handling across all endpoints"
-@validate "Follow Tauri v2 error handling best practices"
 
 ### 6.1 Standard Error Types
 ```rust
@@ -439,7 +465,4 @@ Standard error codes across all endpoints:
 
 > **Note**:  
 > - **This doc** serves as a **starting blueprint** and **will evolve** alongside actual coding.  
-> - We use `@plan`, `@phase`, `@enforce`, etc. to guide Cascade AI in code generation, testing, and security checks.  
 > - Real endpoints and data structures will be **finalized** once Tauri commands, Next.js components, and MCP servers are concretely defined.  
-
-<!-- cascade-run: vulnerability-scan -->

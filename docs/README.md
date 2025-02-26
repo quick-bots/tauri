@@ -7,7 +7,7 @@ This directory contains comprehensive documentation for the Tauri Desktop Applic
 ### Core Documentation
 
 - [`project-overview.md`](./project-overview.md) - High-level overview of the project, its goals, and architecture
-- [`windsurf/cascade-guidelines.md`](./windsurf/cascade-guidelines.md) - Specific guidelines for Cascade AI's interaction with the project
+- [`windsurf/cascade-guidelines.md`](/.codeium/windsurf/cascade-guidelines.md) - Specific guidelines for Cascade AI's interaction with the project
 
 ### Planning Documentation
 
@@ -48,7 +48,7 @@ Located in [`docs/planning/`](./planning/):
 
 ### Design Assets
 
-Located in [`docs/windsurf/assets/`](./windsurf/assets/):
+Located in [`docs/designs/assets/`](./designs/assets/):
 
 - **AIM_Login_Screen.png** (224,291 bytes)
   - Reference for login flow implementation

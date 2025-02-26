@@ -1,34 +1,24 @@
-@plan "High-level testing strategy for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-<!-- cascade-run:
-  - lint-check
-  - style-guide
-  - vulnerability-scan
--->
-
 # Test Plan
 
 ## Document Control
 - **Document Title:** Test Plan  
-- **Document Version:** 1.0.0  
+- **Document Version:** v1.0.0  
 - **Parent Document Version:** Project Overview v1.0.0
-- **Date:** 2025-02-25  
+- **Date:** 2025-02-26  
 - **Status:** Preliminary Draft  
 - **Author:** Preston Sparks
-- **Last Audit:** 2025-02-25
+- **Last Audit:** 2025-02-26
 
 ## Changelog
-- **1.0.0** (2025-02-25):
+- **v1.0.0** (2025-02-26):
   - Aligned version with Project Overview v1.0.0
   - Added explicit framework versions
   - Added testing tool version requirements
   - Updated performance metrics standards
   - Updated code coverage requirements
   - Standardized framework versions
-- **0.3.0** (2025-02-25):
-  - Aligned with Project Overview v1.0.0
-  - Added performance metrics standards
-  - Updated code coverage requirements
-  - Standardized framework versions
+  - Added parent document reference
+  - Added last audit date
 
 ## Table of Contents
 1. [Overview](#overview)  
@@ -42,7 +32,6 @@
 ---
 
 ## 1. Overview
-@enforce "Define a comprehensive testing approach for Tauri v2.1.0 + MCP"
 
 ### 1.1 Purpose
 This **Test Plan** outlines the strategy to ensure **quality**, **reliability**, and **security** for our **Tauri v2.1.0** desktop application, which integrates **AIM-inspired** UI and **MCP v1.3.0-rc2** for AI functionalities.
@@ -58,37 +47,130 @@ Testing scope includes:
 ---
 
 ## 2. Testing Strategy
-@enforce "Implement thorough testing methodology aligned with Cascade AI guidelines"
 
-### 2.1 Testing Levels
+### 2.1 Core Application Testing
+[REQ-F001] Desktop Framework Testing
+- Verify Tauri v2.1.0 functionality
+- Test Next.js 14.1.0 components
+- Validate cross-platform behavior
 
-1. **Unit Testing**  
-   - **Components**: React components (login, buddy list, chat windows)  
-   - **Rust functions**: Tauri commands, AI or resource logic  
-   - **Security**: Small modules for encryption or ACL checks  
-   - **AI**: Isolated local inference or mock MCP calls
+[REQ-F002] UI/UX Testing
+- Validate against AIM_Login_Screen.png reference
+- Verify AIM_Contact_List.png implementation
+- Test AIM_Chat_Window.png functionality
 
-2. **Integration Testing**  
-   - **Front-Back Integration**: Next.js UI ↔ Tauri commands  
-   - **MCP**: Validate local/remote AI interactions, resource tool usage  
-   - **External Services**: CRM or model APIs (if integrated)  
-   - **State Management**: Confirm data sync across modules
+[REQ-F003, REQ-F004] AI System Testing
+- Test MCP v1.3.0-rc2 integration
+- Validate local AI processing
+- Verify cloud AI fallback
 
-3. **System/End-to-End Testing**  
-   - **Cross-platform** checks (Windows, macOS, Linux)  
-   - **Full user journeys** (login, buddy list, open chat, AI usage)  
-   - **Performance** under load, concurrency tests  
-   - **Security scanning** (ZAP, cargo-audit)
+### 2.2 Feature Testing
 
-4. **Acceptance Testing**  
-   - **User acceptance** (UX validation for AIM style)  
-   - **Compliance** (Security, data protection)  
-   - **Production readiness** (stable builds, auto-updates)
+[REQ-F005, REQ-F006] Security Testing
+- Validate data encryption
+- Test authentication flows
+- Verify secure storage
+
+[REQ-F007, REQ-F008] Communication Testing
+- Test chat functionality
+- Verify contact management
+- Validate real-time updates
+
+[REQ-F009, REQ-F010] Management Testing
+- Test agent initialization
+- Verify message persistence
+- Validate search functionality
+
+### 2.3 Performance Testing
+
+[REQ-NF001] Chat Performance
+- Test message latency (target: < 100ms P95)
+- Verify real-time delivery
+- Measure network overhead
+
+[REQ-NF002] AI Performance
+- Test request latency (target: < 500ms P95)
+- Verify processing efficiency
+- Measure resource usage
+
+[REQ-NF003] UI Performance
+- Test interaction latency (target: < 50ms P95)
+- Verify rendering performance
+- Measure animation smoothness
+
+### 2.4 Resource Testing
+
+[REQ-NF004] CPU Usage Testing
+- Monitor idle usage (target: < 15%)
+- Test AI operation usage (target: < 50%)
+- Verify throttling mechanisms
+
+[REQ-NF005] Memory Testing
+- Monitor idle usage (target: < 200MB)
+- Test AI operation usage (target: < 500MB)
+- Verify memory management
+
+[REQ-NF006] Storage Testing
+- Verify installation size (target: < 100MB)
+- Test data storage efficiency
+- Monitor disk usage patterns
+
+### 2.5 Scalability Testing
+
+[REQ-NF007] Window Management
+- Test 10+ simultaneous chat windows
+- Verify window performance
+- Validate resource sharing
+
+[REQ-NF008] Concurrent Processing
+- Test 5+ concurrent AI requests
+- Verify request queuing
+- Validate resource allocation
+
+[REQ-NF009] List Performance
+- Test 50+ buddy list entries
+- Verify scroll performance
+- Validate memory usage
+
+### 2.6 Startup Testing
+
+[REQ-NF010] Launch Performance
+- Test cold start (target: < 2s)
+- Verify warm start (target: < 1s)
+- Validate background init (target: < 500ms)
+
+### 2.7 Coverage Testing
+
+[REQ-NF011] Frontend Coverage
+- Verify ≥ 80% TypeScript coverage
+- Use Vitest + Istanbul
+- Generate coverage reports
+
+[REQ-NF012] Backend Coverage
+- Verify ≥ 85% Rust coverage
+- Use cargo-tarpaulin
+- Monitor critical paths
+
+[REQ-NF013] Integration Coverage
+- Verify 100% API endpoint coverage
+- Test MCP interactions
+- Validate error handling
+
+[REQ-NF014] E2E Coverage
+- Verify 100% core journey coverage
+- Use Playwright
+- Test error scenarios
+
+### 2.8 Compliance Testing
+
+[REQ-NF015] Privacy Testing
+- Verify GDPR compliance
+- Test CCPA requirements
+- Validate audit logging
 
 ---
 
 ## 3. Test Environment
-@enforce "Maintain consistent, reproducible environments"
 
 ### 3.1 Development & CI/CD
 - **Local** dev environment with Tauri CLI, Node.js LTS, Rust stable  
@@ -103,7 +185,6 @@ Testing scope includes:
 ---
 
 ## 4. Test Categories
-@validate "Ensure broad coverage across functional + non-functional areas"
 
 ### 4.1 Functional Testing
 
@@ -162,7 +243,6 @@ Testing scope includes:
 ---
 
 ## 5. Tools and Frameworks
-@plan "Adjust as codebase matures—AI or test harness expansions may be needed"
 
 ### 5.1 Frontend Testing
 - **Vitest ^1.2.0** for unit tests (React components)  
@@ -192,7 +272,6 @@ Testing scope includes:
 ---
 
 ## 6. Test Documentation
-@enforce "Maintain clear, consistent test documentation"
 
 ### 6.1 Test Cases
 - **Test ID**: Unique identifier  
@@ -210,7 +289,6 @@ Testing scope includes:
 ---
 
 ## 7. Quality Metrics
-@validate "Track key indicators for test coverage, reliability, and performance"
 
 1. **Code Coverage**  
    > **Note**: The following targets are proposed and pending project requirement validation:
@@ -235,6 +313,3 @@ Testing scope includes:
    - Tauri ACL correctly enforced in random penetration tests
 
 ---
-
-> **Note**:  
-> This **Test Plan** is a **living document**. As the codebase expands, we’ll add **specific** test cases, data sets, and environment details. Cascade AI triggers (`@plan`, `@validate`, `@enforce`, `<!-- cascade-run: ... -->`) guide continuous integration and automated QA for a secure, stable, AIM-inspired app.

@@ -1,18 +1,24 @@
-@plan "Define and refine the development approach for Tauri v2, AIM-inspired desktop application with MCP integration"
-<!-- cascade-run:
-  - lint-check
-  - style-guide
-  - vulnerability-scan
--->
-
 # Software Development Plan (SDP)
 
 ## Document Control
 - **Document Title:** Software Development Plan
-- **Document Version:** 1.3.0
-- **Date:** 2025-02-18
+- **Document Version:** v1.0.0
+- **Parent Document Version:** Project Overview v1.0.0
+- **Date:** 2025-03-01
 - **Status:** Draft
 - **Author:** Preston Sparks
+- **Last Audit:** 2025-03-01
+
+## Changelog
+- **v1.0.0** (2025-02-26):
+  - Initial version aligned with Project Overview v1.0.0
+  - Added explicit framework versions
+  - Added development phases
+  - Added success metrics
+  - Added compliance requirements
+- **v1.0.1** (2025-03-01):
+  - Updated document control dates
+  - Standardized version header format
 
 ## Table of Contents
 1. [Introduction](#introduction)  
@@ -27,55 +33,109 @@
 ## 1. Introduction
 
 ### 1.1 Purpose
-@validate "Ensure alignment with Tauri v2, AIM-inspired UI/UX, and MCP integration requirements"
 
-This **Software Development Plan (SDP)** outlines the development approach for a **cross-platform desktop application** built on **Tauri v2** with an **AIM-inspired** UI/UX, and **multi-model AI integration** via the **Model Context Protocol (MCP)**. 
+This **Software Development Plan (SDP)** outlines the development approach for a **cross-platform desktop application** built on **Tauri v2.1.0** with an **AIM-inspired** UI/UX, and **multi-model AI integration** via the **Model Context Protocol (MCP) v1.3.0-rc2**. 
 
 ### 1.2 Scope
-This plan covers:
+[REQ-F001, REQ-F002, REQ-F003, REQ-F004] This plan covers:
 - Cross-platform deployment (Windows, macOS, Linux)  
 - **Local** AI inference (Rust-based ONNX or NLP)  
 - **Remote** AI model integration via MCP  
-- Tauri v2’s **ACL-based** security  
+- Tauri v2.1.0's **ACL-based** security  
 - AIM-inspired UI, real-time chat workflows  
 - Testing, QA, and deployment procedures
 
 ### 1.3 References
 - [project-overview.md](../project-overview.md) - Main Project Specification  
 - [SDD.md](./SDD.md) - Software Design Document  
-- [cascade-guidelines.md](../windsurf/cascade-guidelines.md) - AI Documentation & Workflow Guidelines  
+- [cascade-guidelines.md](../../.codeium/windsurf/cascade-guidelines.md) - AI Documentation & Workflow Guidelines  
 
 ---
 
 ## 2. Project Organization
 
-### 2.1 Project Structure
-@enforce "Maintain consistent directory structure and naming conventions"
+### 2.1 Development Phases
 
-```plaintext
-quickbots-desktop-app/
-├── apps/
-│   └── frontend/         # Next.js (output: 'export'), AIM-inspired UI
-│       ├── components/   # React components
-│       ├── lib/
-│       │   └── mcp.ts    # MCP client calls
-│       ├── styles/       # CSS/Tailwind
-│       └── pages/        # Next.js pages
-├── src-tauri/
-│   ├── src/
-│   │   ├── commands/     # Tauri commands
-│   │   ├── mcp/          # MCP server(s), resource management
-│   │   ├── security/     # ACL, encryption, credential vault
-│   │   ├── ai/           # Local AI integration
-│   │   └── main.rs       # Tauri entry point
-│   └── Cargo.toml
-├── docs/                 # Documentation
-├── tests/                # Test suites, E2E, integration
-└── .windsurfrules        # Cascade AI rules, memory config
-```
+#### Phase 1: Core Infrastructure
+[REQ-F001] Desktop Application Setup
+- Initialize Tauri v2.1.0 project structure
+- Set up Next.js 14.1.0 frontend
+- Configure build pipeline
 
-### 2.2 Roles and Responsibilities
-@enforce "Define clear role boundaries and responsibilities"
+[REQ-F003, REQ-F004] AI Integration Setup
+- Implement MCP v1.3.0-rc2 client
+- Set up local AI processing
+- Configure cloud AI fallback
+
+#### Phase 2: User Interface Implementation
+[REQ-F002] AIM-inspired UI Development
+- Implement login screen from AIM_Login_Screen.png reference
+- Create contact list component from AIM_Contact_List.png reference
+- Develop chat window interface from AIM_Chat_Window.png reference
+
+[REQ-F007, REQ-F008] Core Functionality
+- Implement chat functionality
+- Develop contact management
+- Create real-time updates system
+
+#### Phase 3: Security & Data Management
+[REQ-F005, REQ-F006] Security Implementation
+- Implement data encryption
+- Set up authentication system
+- Configure secure storage
+
+[REQ-F009, REQ-F010] Agent & Message Management
+- Develop agent initialization system
+- Implement message persistence
+- Create search functionality
+
+### 2.2 Performance Goals
+
+#### Latency Targets
+[REQ-NF001, REQ-NF002, REQ-NF003] Response Time Goals
+- Optimize chat message delivery (< 100ms P95)
+- Tune AI request processing (< 500ms P95)
+- Enhance UI responsiveness (< 50ms P95)
+
+#### Resource Management
+[REQ-NF004, REQ-NF005, REQ-NF006] System Resources
+- Implement CPU usage controls (< 15% idle, < 50% AI)
+- Optimize memory management (< 200MB idle, < 500MB AI)
+- Minimize disk usage (< 100MB excl. models)
+
+#### Scalability
+[REQ-NF007, REQ-NF008, REQ-NF009] System Capacity
+- Support 10+ simultaneous chat windows
+- Handle 5+ concurrent AI requests
+- Optimize contact list for 50+ entries
+
+### 2.3 Testing Strategy
+
+#### Unit Testing
+[REQ-NF011, REQ-NF012] Code Coverage
+- Frontend unit tests (≥ 80%)
+- Backend unit tests (≥ 85%)
+- Critical paths (100%)
+
+#### Integration Testing
+[REQ-NF013] API Testing
+- API endpoints (100%)
+- MCP interactions (≥ 90%)
+- UI workflows (≥ 75%)
+
+#### End-to-End Testing
+[REQ-NF014] User Journey Testing
+- Core journeys (100%)
+- Error scenarios (≥ 90%)
+- Edge cases (≥ 70%)
+
+### 2.4 Compliance
+[REQ-NF015] Privacy & Compliance
+- Implement GDPR controls
+- Set up CCPA compliance
+- Create audit logging
+
+### 2.5 Roles and Responsibilities
 
 - **Development Team**: Implements Tauri commands, Next.js UI, and MCP logic  
 - **MCP Specialist**: Oversees AI integration (local + remote), ensures protocol compliance  
@@ -88,536 +148,163 @@ quickbots-desktop-app/
 
 ## 3. Management Process
 
-### 3.1 Milestones and Timeline
-@phase "Implement Tauri v2.1.0 + Next.js 14.1.0 + MCP v1.3.0-rc2 in sequential phases"
+### 3.1 Implementation Phases
 
-1. **Foundation (Weeks 1–2)**  
+1. **Foundation Phase**  
+   [REQ-F001, REQ-F002] Core Setup:
    - Initialize Tauri v2.1.0 + Next.js 14.1.0 (static export)  
    - Add `mcp_rust_sdk v1.3.0-rc2` to Cargo.toml  
    - Create minimal "Hello MCP" command  
-   - Basic AIM-style UI scaffolding (login screen, buddy list layout)
+   - Basic AIM-style UI scaffolding
 
-2. **Core Features (Weeks 3–4)**  
-   - Implement local AI commands (e.g., ONNX-based text analysis)  
-   - Expand buddy list to show agent statuses via MCP v1.3.0-rc2  
-   - UI QA: Validate AIM styling against design references:
-     - Login screen layout (`docs/windsurf/assets/AIM_Login_Screen.png`)
-     - Buddy list components (`docs/windsurf/assets/AIM_Contact_List.png`)
-     - Chat window design (`docs/windsurf/assets/AIM_Chat_Window.png`)
-   - Integrate Tauri v2.1.0 ACL for security  
-   - Store user preferences or settings with `tauri-plugin-store ^0.1.0`
-   - Begin tracking success metrics:
-     - CRM interaction time baselines
-     - Task completion rates
-     - Error frequency monitoring
+2. **Core Features Phase**  
+   [REQ-F003, REQ-F004, REQ-F007, REQ-F008] Feature Implementation:
+   - Implement local AI commands
+   - Expand buddy list functionality
+   - UI QA against design references
+   - Integrate Tauri v2.1.0 ACL
+   - Store user preferences
 
-3. **AI Integration (Weeks 5–6)**  
-   - Connect to external AI models (OpenAI, Anthropic, etc.) via MCP  
-   - Context management system (session-based)  
-   - Resource discovery and tool execution  
-   - "Chat Window" with multi-model support
-   - Implement resource sandboxing for local AI tools
-   - Security hardening:
-     - Encryption standards (ring, AES-based)
-     - Tauri v2 ACL refinement
-     - Audit logging setup
+3. **AI Integration Phase**  
+   [REQ-F003, REQ-F004, REQ-F009] AI Development:
+   - Connect to external AI models via MCP
+   - Implement context management
+   - Set up resource discovery
+   - Configure multi-model support
+   - Implement sandboxing
 
-4. **Security Implementation & Optimization (Weeks 7–8)**  
-   - Advanced security features:
-     - Multi-factor authentication
-     - Enhanced encryption protocols
-     - Extended ACL policies
-   - Resource usage optimization
+4. **Security Implementation Phase**  
+   [REQ-F005, REQ-F006] Security Features:
+   - Multi-factor authentication
+   - Enhanced encryption
+   - Extended ACL policies
+   - Resource optimization
+   - Security audits
+
+5. **Testing & Optimization Phase**  
+   [REQ-NF011, REQ-NF012, REQ-NF013, REQ-NF014] Quality Assurance:
+   - Cross-platform E2E tests
    - Performance profiling
-   - Comprehensive security audits
-
-5. **Testing & Optimization (Weeks 9–10)**  
-   - Cross-platform E2E tests (Playwright, mcp-mock-server)  
-   - Performance profiling with criterion, flamegraphs  
-   - Security auditing (cargo-audit, OWASP ZAP)  
-   - UI/UX refinement (buddy list usability checks)
-   - **Success Metrics & KPIs**:
-     - Measure CRM interaction time reduction
-     - Track task completion rates vs. baselines
-     - Analyze error rates and user satisfaction
-     - Document performance improvements
-
-6. **Deployment (Weeks 11–12)**  
-   - Build + packaging for Windows, macOS, Linux  
-   - Documentation finalization  
-   - Automated updates (tauri-plugin-updater)  
-   - Production readiness checks
-   - Final success metrics report:
-     - Compile all KPI measurements
-     - Generate user satisfaction analysis
-     - Document performance benchmarks
-     - Prepare metrics dashboard for stakeholders
+   - Security auditing
+   - UI/UX refinement
 
 ### 3.2 Risk Management
-@validate "Identify and mitigate potential risks promptly"
 
 1. **Technical Risks**  
-   - Tauri v2 updates or API changes  
-   - Complex MCP usage (multiple AI models)  
-   - Cross-platform UI inconsistencies  
-   - Resource usage for large AI workloads
+   - Tauri v2.1.0 API changes  
+   - MCP v1.3.0-rc2 stability  
+   - Cross-platform issues  
+   - Resource constraints  
 
 2. **Mitigation Strategies**  
-   - Pin Tauri v2 versions or track release notes  
-   - Gradual MCP expansions, frequent testing  
-   - Regular cross-platform checks (macOS, Windows, Linux)  
-   - Caching or streaming for heavy AI tasks
+   - Version pinning  
+   - Incremental testing  
+   - Platform validation  
+   - Resource optimization
 
 ---
 
 ## 4. Technical Process
 
 ### 4.1 Development Environment
-@enforce "Standardize on rust-analyzer, Node.js LTS, Tauri CLI"
 
-- **VS Code** with:
-  - Tauri extension  
-  - rust-analyzer  
-  - ESLint + Prettier  
-- **Rust** stable toolchain  
-- **Node.js** LTS (for Next.js)  
-- **Docker** or VMs for multi-OS testing  
-- **MCP Dev Kit** (mcp_rust_sdk, mcp-mock-server, etc.)
+1. **Core Tools**
+   - VS Code + extensions
+   - Rust stable toolchain
+   - Node.js LTS
+   - Docker/VMs
+   - MCP Dev Kit
+
+2. **Testing Tools**
+   Frontend:
+   - Vitest ^1.2.0
+   - Playwright ^1.41.0
+   - React Testing Library ^14.1.2
+   
+   Backend:
+   - tokio-test ^0.4.3
+   - mockall ^0.12.1
+   - criterion ^0.5.1
+   - mcp-mock-server ^1.3.0-rc2
 
 ### 4.2 Development Standards
-@enforce "Apply code formatting, security scanning, and AI-friendly structure"
 
-1. **Frontend Stack**
-   - Next.js with static export
-   - Tailwind CSS + shadcn/ui for styling
-   - Zustand for state management
-   - Framer Motion for AIM-style animations
-   - TypeScript in strict mode
+1. **Code Quality**
+   - ESLint + Prettier
+   - rust-analyzer
+   - Conventional commits
+   - PR reviews
 
-2. **Backend Stack**
-   - Rust with tokio async runtime
-   - sqlx for SQLite database (local storage)
-   - sled for fast key-value caching
-   - reqwest for external API calls
-   - mcp_rust_sdk for AI integration
+2. **Documentation**
+   - API documentation
+   - Component docs
+   - Test coverage
+   - Security guidelines
 
-3. **Transport Layer**
-   - SSE for real-time updates
-   - WebSocket for bidirectional chat
-   - stdio for local process communication
-   - HTTP/2 for REST endpoints
-
-4. **Testing Tools**
-   - Frontend:
-     - Vitest for unit/integration
-     - Playwright for E2E
-     - React Testing Library
-   - Backend:
-     - tokio-test for async
-     - mockall for mocking
-     - criterion for benchmarks
-   - Protocol:
-     - mcp-mock-server
-     - MCP Test Utils
-
-5. **Success Metrics**
-   Specific targets aligned with project goals:
-   - CRM interaction time reduction: 30% minimum
-   - Task completion rate increase: 25% target
-   - Error frequency reduction: 50% target
-   - User satisfaction score: 4.5/5.0 minimum
-   - System response time: <100ms for 95th percentile
-   - AI context retention: 90% accuracy in extended sessions
-
-### 4.3 Quality Assurance
-@enforce "Implement comprehensive QA processes"
-
-#### 4.3.1 Code Quality Gates
-```yaml
-quality_gates:
-  test_coverage:
-    minimum: 80%
-    critical_paths: 90%
-  security:
-    vulnerability_threshold: 'high'
-    required_scans:
-      - OWASP Top 10
-      - GDPR Compliance
-      - MCP Security
-  performance:
-    ui_response: '<100ms'
-    ai_response: '<2s'
-    memory_usage: '<200MB'
-```
-
-#### 4.3.2 Review Process
-1. **AI Pre-Check**:
-   ```yaml
-   cascade-run:
-     - lint-check
-     - vulnerability-scan
-     - style-guide
-   ```
-
-2. **Human Review**:
-   - Staff engineer review (2hr SLA)
-   - Security review for ACL changes
-   - UI/UX review for frontend changes
-
-3. **Automated Validation**:
-   - CI/CD pipeline checks
-   - Performance regression tests
-   - Cross-platform verification
-
-#### 4.3.3 Error Handling Protocol
-| Severity | Response Time | Action | Escalation |
-|----------|---------------|--------|------------|
-| Critical | Immediate | System halt, alert | Senior team |
-| High | <1 hour | Graceful degradation | Team lead |
-| Medium | <1 day | Log and track | Developer |
-| Low | Next release | Document | None |
-
-### 4.4 Monitoring & Observability
-@enforce "Implement comprehensive monitoring"
-
-1. **Application Monitoring**:
-   - Sentry for error tracking
-   - OpenTelemetry for tracing
-   - Custom MCP telemetry
-   - Health check endpoints
-
-2. **Infrastructure Metrics**:
-   - Prometheus collectors
-   - Grafana dashboards
-   - Resource utilization
-   - Network metrics
-
-3. **Business Metrics**:
-   - User engagement
-   - AI model performance
-   - Error rates
-   - Response times
-
-4. **Logging Strategy**:
-   ```typescript
-   interface AppLog {
-     timestamp: string;
-     level: LogLevel;
-     component: Component;
-     event: string;
-     context: {
-       user?: string;
-       session: string;
-       trace: string;
-     };
-     metadata: Record<string, unknown>;
-   }
-   ```
-
-### 4.5 Compliance & Security
-@enforce "gdpr-2025"
-
-1. **Data Protection**:
-   - Encryption at rest (AES-256)
-   - Secure transport (TLS 1.3)
-   - Key rotation (30 days)
-
-2. **Access Control**:
-   - Role-based permissions
-   - Resource-level ACL
-   - Session management
-
-3. **Audit Requirements**:
-   - Weekly security scans
-   - Access log retention
-   - Incident response
-
-4. **GDPR Compliance**:
-   - Data minimization
-   - Right to erasure
-   - Consent tracking
-   - Cross-border handling
-
-### 4.6 Implementation Standards
-@enforce "Maintain consistent implementation patterns"
-
-#### 4.6.1 Development Workflow
-```yaml
-workflow:
-  feature:
-    - Create feature branch
-    - Implement with TDD
-    - Run local tests
-    - AI pre-check
-    - Create PR
-  bugfix:
-    - Reproduce with test
-    - Fix implementation
-    - Verify fix
-    - Update docs
-  release:
-    - Version bump
-    - Changelog update
-    - Security scan
-    - Cross-platform test
-```
-
-#### 4.6.2 Code Organization
-1. **Frontend Structure**:
-   ```plaintext
-   apps/frontend/
-   ├── components/
-   │   ├── chat/           # Chat-related components
-   │   ├── agents/         # Agent list components
-   │   ├── common/         # Shared components
-   │   └── layouts/        # Page layouts
-   ├── hooks/
-   │   ├── useMCP.ts      # MCP interaction hooks
-   │   ├── useAgent.ts    # Agent management
-   │   └── useAuth.ts     # Authentication
-   ├── stores/
-   │   ├── auth.ts        # Authentication state
-   │   ├── agents.ts      # Agent state
-   │   └── ui.ts          # UI preferences
-   └── utils/
-       ├── mcp/           # MCP utilities
-       ├── testing/       # Test helpers
-       └── i18n/          # Translations
-   ```
-
-2. **Backend Structure**:
-   ```plaintext
-   src-tauri/src/
-   ├── commands/          # Tauri commands
-   │   ├── auth.rs       # Auth commands
-   │   ├── chat.rs       # Chat commands
-   │   └── agents.rs     # Agent commands
-   ├── models/           # Domain models
-   ├── services/         # Business logic
-   └── utils/           # Shared utilities
-   ```
-
-#### 4.6.3 Testing Strategy
-@enforce "Comprehensive test coverage"
-
-1. **Unit Tests**:
-   ```yaml
-   coverage_requirements:
-     commands: 90%
-     services: 85%
-     models: 80%
-     utils: 75%
-   
-   test_patterns:
-     - "**/*.test.ts"     # Frontend tests
-     - "**/*_test.rs"     # Backend tests
-   ```
-
-2. **Integration Tests**:
-   ```yaml
-   integration_suites:
-     mcp:
-       - Resource discovery
-       - Context management
-       - Tool execution
-     ui:
-       - Chat flows
-       - Agent interactions
-       - Settings management
-   ```
-
-3. **E2E Testing**:
-   ```yaml
-   e2e_scenarios:
-     - name: "Full Chat Flow"
-       steps:
-         - Login
-         - Open chat
-         - Send message
-         - Verify response
-     - name: "Agent Management"
-       steps:
-         - List agents
-         - Change status
-         - Verify update
-   ```
-
-4. **Performance Testing**:
-   ```yaml
-   performance_suites:
-     startup:
-       - Cold start time
-       - Resource initialization
-     runtime:
-       - Memory usage
-       - CPU utilization
-     network:
-       - API latency
-       - Websocket performance
-   ```
-
-5. **Security Testing**:
-   ```yaml
-   security_checks:
-     static:
-       - SAST scan
-       - Dependency audit
-       - License check
-     dynamic:
-       - DAST scan
-       - Penetration test
-       - Fuzzing
-   ```
-
-### 4.7 MCP Integration Architecture
-```mermaid
-graph TD
-    subgraph "Desktop Application"
-        UI[Next.js UI Layer]
-        TB[Tauri Bridge]
-        MC[MCP Client]
-        LA[Local AI Engine]
-    end
-    
-    subgraph "External Services"
-        MS[MCP Servers]
-        RA[Remote AI Models]
-        CR[CRM Integration]
-    end
-    
-    UI <--> TB
-    TB <--> MC
-    MC <--> LA
-    MC <--> MS
-    MS <--> RA
-    MS <--> CR
-```
-
-1. **Bidirectional Communication Flow**:
-   - UI ↔ Tauri Bridge: Event-driven IPC
-   - Bridge ↔ MCP Client: Secure command channels
-   - MCP Client ↔ Services: Encrypted WebSocket/SSE
-
-2. **Resource Management**:
-   - Session-based isolation
-   - Sandboxed tool execution
-   - Strict ACL enforcement
-
-3. **Data Privacy & GDPR Compliance**:
-   - Audit logging of all MCP interactions
-   - User data encryption at rest
-   - Configurable data retention policies
-   - Clear data processing documentation
-   - User consent management
-   - Right to erasure support
-
-### 4.8 Build Process
-@enforce "Implement secure build pipeline with AI-friendly triggers"
-
-1. **Development Build**  
-   - Next.js dev mode (`npm run dev`)  
-   - Tauri dev server (`cargo tauri dev`)  
-   - Mock AI or minimal local AI commands  
-   - Potential `.retry` steps if build fails
-
-2. **Production Build**  
-   - `npm run build && npm run export` for Next.js  
-   - `cargo tauri build` for platform binaries  
-   - CSP + ACL checks in `tauri.conf.json`  
-   - Minimization and code signing (optional)
+3. **Security**
+   - ACL policies
+   - Encryption
+   - Audit logging
+   - Compliance checks
 
 ---
 
 ## 5. Supporting Process
 
 ### 5.1 Configuration Management
-@enforce "Maintain a secure, versioned config for Tauri + MCP + AI"
 
-- **.env files** for secrets (encrypt or store in plugin-store)  
-- **Feature Flags** for local AI vs. remote AI toggles  
-- **Tauri conf** for whitelisting external endpoints  
-- **MCP config** for endpoint URIs, tool definitions, resource scoping
+1. **Version Control**
+   - Git + GitHub
+   - Semantic versioning
+   - Change tracking
+   - Release notes
+
+2. **Environment Config**
+   - .env management
+   - Feature flags
+   - ACL policies
+   - MCP settings
 
 ### 5.2 Quality Assurance
-@validate "Ensure broad coverage and protocol compliance"
 
-1. **Testing Strategy**  
-   - Automated unit + integration tests on each commit  
-   - `mcp-mock-server` for multi-model scenario testing  
-   - Performance tests with criterion, test concurrency/throughput  
-   - Security scans (cargo-audit, npm-audit, OWASP ZAP)
-   - Success metrics validation:
-     - CRM interaction time reduction
-     - Task completion improvement
-     - User satisfaction metrics
-     - Error rate tracking
-   - UI/UX compliance testing:
-     - Design reference validation against `docs/windsurf/assets`
-     - AIM aesthetic consistency checks
-     - Cross-platform UI behavior verification
+1. **Testing Approach**
+   - TDD/BDD
+   - Integration tests
+   - E2E validation
+   - Performance tests
 
-2. **Review Process**
-```markdown
-## Code Review Protocol
-1. **Automated Pre-Check**:
-   <!-- run:
-     - lint-check
-     - vulnerability-scan
-     - style-guide
-     - design-check
-     - schedule-realignment
-     - metric-check
-     - design-assets-check
-   -->
-   - Automated documentation linting
-   - Security vulnerability scanning
-   - Style guide compliance checks
-   - AIM UI test case validation
-   - Security task scheduling verification
-   - Success metrics tracking validation
-   - Design reference compliance checks
-
-2. **Human Review**:
-   - Staff engineer or documentation lead review
-   - Verify AIM style descriptions and security phasing
-   - Confirm success metrics integration
-   - Validate design reference usage
-   @assign: staff-engineer
-   @sla: 2hr
-
-3. **Final Validation**:
-   - Confirm all AUDIT REPORT gaps are addressed
-   - Verify alignment with project-overview.md
-   - Check all design references are properly cited
-   - Ensure security measures are properly phased
-
-## Error Handling Protocol (EHP)
-| Severity  | Action                          |
-|-----------|---------------------------------|
-| Critical  | <!-- revert-step --> + @alert   |
-| High      | .retry + @senior-review         |
-| Medium    | .retry                          |
-
-- **Critical**: Security tasks missing, requires revert and alert
-- **High**: Incomplete referencing, requires retry and senior review
-- **Medium**: Minor issues, automatic retry
-```
+2. **Monitoring**
+   - Error tracking
+   - Performance metrics
+   - Usage analytics
+   - Security alerts
 
 ---
 
 ## 6. Documentation Plan
-@enforce "Maintain comprehensive docs with Cascade guidelines"
 
-1. **Technical Documentation**  
-   - **API.md**: Tauri commands, MCP endpoints, param schemas  
-   - **Security Guidelines**: Tauri ACL usage, encryption approach  
-   - **AI Integration**: Steps for local inference + remote AI config  
-   - **MCP Implementation**: Tool definitions, resource management, session flow
+### 6.1 Technical Documentation
+1. **API Documentation**
+   - Tauri commands
+   - MCP endpoints
+   - Error handling
+   - Security protocols
 
-2. **User Documentation**  
-   - **Installation Guide**: Cross-platform instructions  
-   - **User Manual**: AIM-inspired chat usage, status indicators, etc.  
-   - **Security Best Practices**: Credential handling, ACL, updates  
-   - **Troubleshooting**: Common errors, logs, known issues
+2. **Development Guides**
+   - Setup instructions
+   - Coding standards
+   - Testing guides
+   - Deployment procedures
 
-<!-- cascade-run: vulnerability-scan -->
+### 6.2 User Documentation
+1. **Installation Guide**
+   - System requirements
+   - Setup steps
+   - Configuration
+   - Troubleshooting
+
+2. **User Guide**
+   - Feature overview
+   - Usage instructions
+   - FAQs
+   - Support contacts

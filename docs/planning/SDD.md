@@ -1,10 +1,3 @@
-@plan "Define technical architecture for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-<!-- cascade-run:
-  - lint-check
-  - style-guide
-  - vulnerability-scan
--->
-
 # Software Design Document (SDD)
 
 ## Document Control
@@ -48,7 +41,6 @@
 ## 1. Introduction
 
 ### 1.1 Purpose
-@validate "Ensure comprehensive technical specification coverage"
 
 This **Software Design Document (SDD)** details the **Tauri v2.1.0** + **Next.js 14.1.0** architecture for an **AIM-inspired** cross-platform desktop application with **MCP v1.3.0-rc2-based AI integration**. It covers data structures, component design, security, and multi-platform considerations—anchored in the **latest** research (see `project-overview.md`).
 
@@ -62,657 +54,124 @@ This document addresses:
 
 ### 1.3 References
 - [project-overview.md](../project-overview.md) - Primary Project Specification  
-- [cascade-guidelines.md](../windsurf/cascade-guidelines.md) - Cascade AI Documentation Guidelines  
+- [cascade-guidelines.md](../../.codeium/windsurf/cascade-guidelines.md) - Cascade AI Documentation Guidelines  
 
 ---
 
 ## 2. System Architecture
 
-### 2.1 High-Level Architecture
-@enforce "Maintain clear boundaries for Tauri, Next.js, and MCP-based AI"
-
-```mermaid
-graph TD
-    subgraph "Desktop App (Tauri v2.1.0)"
-        UI[Next.js 14.1.0/AIM UI] --> TB[Tauri Bridge]
-        TB --> FL[Frontend Layer (TS)]
-        TB --> BL[Backend Layer (Rust)]
-    end
-
-    subgraph "AI Integration via MCP"
-        MC[MCP Client (Rust/TS)]
-        MS[MCP Servers (Local & Remote)]
-        LI[Local Inference]
-        RM[Remote Models]
-    end
-
-    BL --> MC
-    MC --> MS
-    MS --> LI
-    MS --> RM
-
-    subgraph "Storage & Security"
-        DB[Local DB/Key-Value Store]
-        VA[Vault/Encrypted Storage]
-        ACL[ACL Permissions]
-    end
-
-    BL --> DB
-    BL --> VA
-    BL --> ACL
-```
-
-- **Frontend Layer**: Next.js 14.1.0 (static export), provides AIM-style UI  
-- **Backend Layer**: Rust-based Tauri commands, bridging to MCP client calls  
-- **MCP**: Standard protocol for local AI and external model usage  
-- **Security**: Tauri v2.1.0 ACL, encryption, resource sandboxing  
-
-### 2.2 Component Overview
-
-- **Frontend**: Chat windows, buddy list, login, settings  
-- **Backend**: Tauri commands (Rust), local AI services, logging  
-- **MCP**: Resource management, prompt context, tool execution  
-- **Storage & Security**: DB queries, cryptographic ops, ACL enforcement
-
-### 2.3 Technical Stack Details
-@enforce "Maintain consistent technology choices across all layers"
-
-#### 2.3.1 Frontend Technologies
-- **Framework**: Next.js 14.1.0 with static export
-- **UI Components**: 
-  - Tailwind CSS ^3.4.0 for styling
-  - shadcn/ui ^1.0.0 for base components
-  - Framer Motion ^11.0.0 for AIM-style animations
-- **State Management**: 
-  - Zustand ^4.5.0 for global state
-  - TanStack Query ^5.0.0 for data fetching/caching
-- **Type Safety**: TypeScript 5.3.3 in strict mode
-
-#### 2.3.2 Backend Technologies
-- **Framework**: Tauri v2.1.0
-- **Runtime**: tokio ^1.35.0 for async operations
-- **Database**: 
-  - sqlx ^0.7.3 with SQLite for structured data
-  - sled ^0.34.7 for fast key-value caching
-- **Network**: reqwest ^0.11.23 for external calls
-- **Serialization**: serde ^1.0.195 for JSON handling
-- **AI Integration**: mcp_rust_sdk v1.3.0-rc2
-
-#### 2.3.3 Testing Tools
-- **Frontend**:
-  - Vitest ^1.2.0
-  - Playwright ^1.41.0
-  - React Testing Library ^14.1.2
-- **Backend**:
-  - tokio-test ^0.4.3
-  - mockall ^0.12.1
-  - criterion ^0.5.1
-  - mcp-mock-server ^1.3.0-rc2
-
-#### 2.3.4 Transport Protocols
-@enforce "Define clear communication patterns"
-
-1. **Real-time Updates**
-   - Server-Sent Events (SSE) for status updates
-   - WebSocket for chat functionality
-   - stdio for local process communication
-   - HTTP/2 for REST endpoints
-
-2. **Protocol Specifications**
-   ```typescript
-   // SSE Status Update
-   interface StatusUpdate {
-     type: 'agent_status' | 'system_status';
-     data: {
-       id: string;
-       status: string;
-       timestamp: number;
-     }
-   }
-
-   // WebSocket Message
-   interface ChatMessage {
-     type: 'message' | 'typing' | 'read';
-     data: {
-       id: string;
-       content?: string;
-       metadata?: Record<string, unknown>;
-     }
-   }
-   ```
-
-3. **Connection Management**
-   - Automatic reconnection
-   - Session persistence
-   - Heartbeat mechanism
-
-### 2.4 Monitoring & Logging
-@enforce "Implement comprehensive error handling and monitoring"
-
-#### 2.4.1 Monitoring Stack
-- **Application Monitoring**:
-  - Sentry for error tracking
-  - OpenTelemetry for distributed tracing
-  - Custom MCP telemetry
-- **Infrastructure Monitoring**:
-  - Prometheus metrics
-  - Grafana dashboards
-  - Health check endpoints
-- **Performance Monitoring**:
-  - Resource usage tracking
-  - Response time metrics
-  - AI model latency
-
-#### 2.4.2 Logging Strategy
-```typescript
-interface LogEntry {
-  level: 'debug' | 'info' | 'warn' | 'error';
-  component: 'ui' | 'mcp' | 'security' | 'ai';
-  message: string;
-  context: {
-    userId?: string;
-    sessionId: string;
-    resourceId?: string;
-    traceId: string;
-  };
-  metadata: Record<string, unknown>;
-}
-```
-
-### 2.5 Code Review & Quality
-@enforce "Maintain consistent code quality standards"
-
-#### 2.5.1 AI Pre-Check Protocol
-```yaml
-cascade-checks:
-  - lint-check:
-      rules: ['strict', 'security', 'performance']
-  - vulnerability-scan:
-      level: 'high'
-  - style-guide:
-      enforce: ['naming', 'structure', 'docs']
-```
-
-#### 2.5.2 Review Requirements
-1. **Automated Checks**:
-   - Test coverage ≥80%
-   - No security vulnerabilities
-   - Performance regression tests
-   - Type safety verification
-
-2. **Human Review**:
-   - Staff engineer sign-off
-   - 2-hour SLA
-   - Security review for ACL changes
-   - UI/UX review for frontend
-
-#### 2.5.3 Memory Configuration
-```yaml
-attention_zones:
-  - "src-tauri/src/mcp/**/*.rs"
-  - "apps/frontend/src/lib/mcp.ts"
-  - "src-tauri/src/security/*.rs"
-  - "src-tauri/src/ai/*.rs"
-
-suppression_rules:
-  - "legacy/*"
-  - "experimental/*"
-  - "tests/fixtures/*"
-```
-
-### 2.6 Security & Compliance
-@enforce "gdpr-2025"
-
-#### 2.6.1 Security Manifesto
-1. **Encryption Requirements**:
-   - AES-256 for data at rest
-   - TLS 1.3 for transport
-   - Key rotation every 30 days
-
-2. **Access Control**:
-   - Role-based ACL
-   - Resource-level permissions
-   - Session isolation
-
-3. **Audit Requirements**:
-   - Weekly security audits
-   - Access log retention
-   - Incident response plan
-
-4. **GDPR Compliance**:
-   - Data minimization
-   - Right to erasure
-   - Consent management
-   - Cross-border transfers
-
----
-
-## 2.7 Implementation Standards
-@enforce "Maintain consistent implementation patterns"
-
-#### 2.7.1 State Management
-```typescript
-// Global Store Structure
-interface AppState {
-  auth: {
-    user: User | null;
-    status: 'idle' | 'loading' | 'authenticated' | 'error';
-    permissions: string[];
-  };
-  agents: {
-    list: Agent[];
-    status: Record<string, AgentStatus>;
-    activeChats: string[];
-  };
-  ui: {
-    theme: 'light' | 'dark' | 'system';
-    layout: 'compact' | 'comfortable';
-    notifications: NotificationSettings;
-  };
-  mcp: {
-    connections: Record<string, ConnectionState>;
-    resources: Record<string, ResourceStatus>;
-    context: Record<string, ContextData>;
-  };
-}
-
-// Store Creation Pattern
-const useStore = create<AppState>()(
-  devtools(
-    persist(
-      (set) => ({
-        // Initial state
-      }),
-      {
-        name: 'app-storage',
-        partialize: (state) => ({
-          ui: state.ui,
-          auth: { permissions: state.auth.permissions }
-        })
-      }
-    )
-  )
-);
-```
-
-#### 2.7.2 Performance Budgets
-```yaml
-performance_targets:
-  startup:
-    time_to_interactive: 
-      desktop: 1.5s
-      low_end: 3s
-    initial_bundle: 
-      js: 150KB
-      css: 50KB
-  runtime:
-    memory_usage:
-      idle: 100MB
-      active: 200MB
-    cpu_usage:
-      idle: 1%
-      active: 15%
-    animation:
-      fps: 60
-      jank: <1%
-  network:
-    api_latency: 100ms
-    mcp_latency: 200ms
-    payload_size: 50KB
-```
-
-#### 2.7.3 Accessibility Standards
-@enforce "WCAG 2.1 Level AA compliance"
-
-1. **Keyboard Navigation**:
-   ```typescript
-   // Focus Management
-   interface FocusStrategy {
-     trapFocus: boolean;
-     restoreFocus: boolean;
-     initialFocus?: string;
-   }
-   
-   // Keyboard Shortcuts
-   const SHORTCUTS = {
-     'mod+k': 'command_palette',
-     'mod+j': 'next_chat',
-     'mod+shift+j': 'previous_chat',
-     'alt+a': 'agent_list'
-   } as const;
-   ```
-
-2. **ARIA Implementation**:
-   ```typescript
-   interface AccessibilityProps {
-     role: ARIARole;
-     label: string;
-     description?: string;
-     keyboardShortcut?: string;
-     live?: 'off' | 'polite' | 'assertive';
-   }
-   ```
-
-3. **Color Contrast**:
-   ```css
-   :root {
-     /* WCAG AAA compliant color pairs */
-     --text-primary: #1a1a1a;
-     --text-secondary: #595959;
-     --background-primary: #ffffff;
-     --background-secondary: #f5f5f5;
-     /* Minimum contrast ratio 7:1 */
-   }
-   ```
-
-#### 2.7.4 Internationalization
-@enforce "Full i18n support"
-
-1. **Translation Structure**:
-   ```typescript
-   interface TranslationKey {
-     namespace: 'common' | 'chat' | 'errors' | 'ai';
-     key: string;
-     params?: Record<string, string | number>;
-   }
-   
-   // Usage Pattern
-   const t = useTranslation();
-   t('chat:message.sent', { time: formatTime(date) });
-   ```
-
-2. **Date/Time Handling**:
-   ```typescript
-   interface LocaleConfig {
-     timeZone: string;
-     dateFormat: 'short' | 'medium' | 'long';
-     numberFormat: {
-       decimal: string;
-       thousand: string;
-       precision: number;
-     };
-   }
-   ```
-
-3. **RTL Support**:
-   ```css
-   /* RTL Mixins */
-   @mixin rtl {
-     html[dir='rtl'] & {
-       @content;
-     }
-   }
-   ```
-
-#### 2.7.5 Test Data Strategy
-@enforce "Consistent test data patterns"
-
-1. **Mock Data Generation**:
-   ```typescript
-   interface TestDataConfig {
-     seed: number;
-     locale: string;
-     scenario: 'empty' | 'minimal' | 'full';
-     errorRate: number;
-   }
-   
-   // Factory Pattern
-   class TestDataFactory {
-     static user(override?: Partial<User>): User;
-     static agent(override?: Partial<Agent>): Agent;
-     static chat(override?: Partial<Chat>): Chat;
-     static mcpContext(override?: Partial<MCPContext>): MCPContext;
-   }
-   ```
-
-2. **AI Test Scenarios**:
-   ```yaml
-   ai_test_cases:
-     - name: "Basic Chat Flow"
-       input: "Hello AI"
-       expected_tools: []
-       max_latency: 100
-     - name: "Complex Analysis"
-       input: "Analyze this code"
-       expected_tools: ["code_analysis", "security_check"]
-       max_latency: 2000
-   ```
-
-3. **Snapshot Testing**:
-   ```typescript
-   interface SnapshotConfig {
-     name: string;
-     platform: 'windows' | 'macos' | 'linux';
-     viewport: { width: number; height: number };
-     theme: 'light' | 'dark';
-     locale: string;
-   }
-   ```
-
----
-
-## 3. Data Design
-
-### 3.1 Database Schema
-@enforce "Implement secure data storage patterns"
-
-#### 3.1.1 Users
-```sql
-CREATE TABLE users (
-    id UUID PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    role VARCHAR(20) NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    last_login TIMESTAMP
-);
-```
-
-#### 3.1.2 Agents
-```sql
-CREATE TABLE agents (
-    id UUID PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    category VARCHAR(50) NOT NULL,
-    status VARCHAR(20) NOT NULL,
-    capabilities JSONB,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-#### 3.1.3 Messages
-@enforce "Follow MCP data model standards"
-```sql
-CREATE TABLE messages (
-    id UUID PRIMARY KEY,
-    conversation_id UUID NOT NULL,
-    sender_type VARCHAR(20) NOT NULL CHECK (sender_type IN ('user', 'agent', 'system')),
-    sender_id UUID NOT NULL,
-    content_encrypted BYTEA NOT NULL,
-    content_hash VARCHAR(64) NOT NULL,
-    context_id UUID,
-    thread_id UUID,
-    parent_id UUID REFERENCES messages(id),
-    timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    metadata JSONB,
-    FOREIGN KEY (sender_id) 
-        REFERENCES CASE 
-            WHEN sender_type = 'user' THEN users(id)
-            WHEN sender_type = 'agent' THEN agents(id)
-        END,
-    FOREIGN KEY (context_id) REFERENCES mcp_contexts(id),
-    FOREIGN KEY (conversation_id) REFERENCES conversations(id)
-);
-
-CREATE TABLE mcp_contexts (
-    id UUID PRIMARY KEY,
-    type VARCHAR(50) NOT NULL,
-    data JSONB NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    expires_at TIMESTAMP
-);
-
-CREATE TABLE conversations (
-    id UUID PRIMARY KEY,
-    title VARCHAR(255),
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    metadata JSONB
-);
-
-CREATE INDEX idx_messages_conversation ON messages(conversation_id);
-CREATE INDEX idx_messages_thread ON messages(thread_id);
-CREATE INDEX idx_messages_context ON messages(context_id);
-CREATE INDEX idx_messages_timestamp ON messages(timestamp);
-```
-
-### 3.2 Data Flows
-@validate "Demonstrate how MCP, Tauri, and DB interact"
-
-**Chat Flow**:
-1. UI triggers a chat message → Tauri command → Rust backend  
-2. Rust calls MCP if AI processing is needed → returns AI response  
-3. Message content is encrypted/stored in DB  
-4. UI updates with new message or AI output  
-
-**Agent Status Flow**:
-1. UI polls or receives push updates from Rust  
-2. Rust fetches agent statuses via MCP (local/remote)  
-3. Database updates status or logs events  
-4. UI buddy list re-renders with fresh statuses  
-
----
-
-## 4. Interface Design
-
-### 4.1 UI Components
-@enforce "Use AIM-inspired design metaphors"
-
-#### 4.1.1 Login Window
-@validate "Match AIM_Login_Screen.png reference"
-
-- **Visual Elements**:
-  - AIM-style logo and branding
-  - Username/password fields with "Remember Me"
-  - Connection status indicator
-  - Version information (bottom-right)
-  - "Sign On" primary button
-  - Optional "Setup" button for preferences
-
-- **Animations**:
-  - Smooth fade-in on window open
-  - Connection status pulse animation
-  - Loading indicator during sign-in
-
-#### 4.1.2 Buddy List
-@validate "Match AIM_Contact_List.png reference"
-
-- **Window Chrome**:
-  - Compact title bar with minimize/maximize/close
-  - Menu bar (File, Edit, People, etc.)
-  - Status dropdown (Available, Away, etc.)
-
-- **List Components**:
-  - Collapsible categories (Buddies, Co-workers, Bots)
-  - Status icons with presence animations:
-    - Online: Green dot with subtle pulse
-    - Away: Yellow idle icon
-    - Offline: Gray icon
-    - AI Processing: Blue thinking animation
-  - Agent capabilities shown as mini-icons
-  - Warning icons for agents with errors
-
-- **Interactions**:
-  - Double-click to open chat
-  - Right-click for context menu
-  - Drag-and-drop for category organization
-  - Tooltip previews on hover
-
-#### 4.1.3 Chat Window
-@validate "Match AIM_Chat_Window.png reference"
-
-- **Window Layout**:
-  - Title bar with agent name and status
-  - Message history area with timestamps
-  - Input area with formatting options
-  - Status bar (typing indicator, character count)
-
-- **Message Formatting**:
-  - System messages in italics
-  - User messages right-aligned
-  - Agent messages left-aligned
-  - Inline code blocks with syntax highlighting
-  - Support for basic text formatting (bold, italic)
-
-- **Interactive Elements**:
-  - File drop zone for attachments
-  - Code snippet expansion/collapse
-  - Thread reply indicators
-  - Reaction emoji support
-  - Progress bars for long operations
-
-- **Animations**:
-  - Smooth message transitions
-  - Typing indicator animation
-  - AI "thinking" state animation
-  - Unread message bounce effect
-  - Window minimize/maximize animations
-
-### 4.2 Responsive Behavior
-@enforce "Maintain AIM-style layout at all resolutions"
-
-- **Window Scaling**:
-  - Minimum sizes matching AIM defaults:
-    - Login: 400x300
-    - Buddy List: 200x500
-    - Chat: 350x400
-  - Proportional scaling of UI elements
-  - Grid-snap window positioning
-
-- **Multi-Window Management**:
-  - Chat windows cascade by default
-  - Window position memory
-  - Optional docking support
-  - Multi-monitor awareness
-
-### 4.3 Accessibility Features
-@enforce "Ensure universal usability"
-
-- **Keyboard Navigation**:
-  - Tab order matching AIM patterns
-  - Shortcut keys for common actions
-  - Focus indicators
-
-- **Screen Reader Support**:
-  - ARIA labels for all interactive elements
-  - Status announcements
-  - Message history navigation
-
-- **Visual Adjustments**:
-  - High contrast mode
-  - Adjustable font sizes
-  - Customizable color schemes
-  - Animation reduction option
-
-### 4.4 API Interfaces
-@enforce "Implement Tauri commands + MCP calls"
-
-#### 4.4.1 Tauri Commands
-- `#[tauri::command] fn mcp_invoke(...) -> Result<...>`  
-- `#[tauri::command] fn send_message(...) -> ...`  
-- `#[tauri::command] fn get_agent_status(...) -> ...`  
-
-#### 4.4.2 MCP Endpoints
-- **Resource system**: Access local DB or remote files  
-- **Tool system**: Handle local inference or remote model calls  
-- **Prompt management**: Manage multi-step AI dialogues
+### 2.1 Desktop Application Framework
+[REQ-F001] The system architecture is built on:
+- Tauri v2.1.0 for native desktop capabilities
+- Next.js 14.1.0 for frontend development
+- SQLite for local data persistence
+
+### 2.2 User Interface Design
+[REQ-F002] The UI/UX implementation follows the AIM-inspired design:
+- Login screen (`AIM_Login_Screen.png`)
+- Contact list (`AIM_Contact_List.png`)
+- Chat windows (`AIM_Chat_Window.png`)
+
+### 2.3 AI Resource Management
+[REQ-F003, REQ-F004] The AI system architecture:
+- MCP v1.3.0-rc2 integration for resource management
+- Local AI processing with ONNX runtime
+- Cloud AI fallback mechanism
+- Performance monitoring and metrics collection
+
+### 2.4 Data Security
+[REQ-F005] Data security architecture:
+- AES-256 encryption for data at rest
+- Secure key management via OS keychain
+- Automated backup system with encryption
+
+### 2.5 Authentication System
+[REQ-F006] User authentication design:
+- OAuth2 implementation
+- Session management with JWT
+- Multi-profile support architecture
+
+### 2.6 Chat System
+[REQ-F007] Chat functionality design:
+- WebSocket-based real-time messaging
+- File transfer system with chunking
+- Rich text message formatting
+
+### 2.7 Contact Management
+[REQ-F008] Contact system architecture:
+- SQLite-based contact storage
+- Group management system
+- Real-time status updates via WebSocket
+
+### 2.8 AI Agent System
+[REQ-F009] AI agent architecture:
+- Dynamic agent initialization
+- Health monitoring system
+- Fault tolerance mechanisms
+
+### 2.9 Message Management
+[REQ-F010] Message persistence design:
+- Encrypted SQLite storage
+- Full-text search implementation
+- Import/export system with encryption
+
+## 3. Performance Architecture
+
+### 3.1 Latency Optimization
+[REQ-NF001, REQ-NF002, REQ-NF003] The system implements:
+- Message queue optimization for < 100ms chat latency
+- AI request pipeline for < 500ms processing
+- React optimization for < 50ms UI response
+
+### 3.2 Resource Management
+[REQ-NF004, REQ-NF005, REQ-NF006] Resource usage controls:
+- CPU throttling mechanisms
+- Memory management system
+- Disk usage optimization
+
+### 3.3 Scalability Design
+[REQ-NF007, REQ-NF008, REQ-NF009] Architecture supports:
+- Multi-window management system
+- Concurrent AI request handling
+- Efficient contact list rendering
+
+### 3.4 Performance Optimization
+[REQ-NF010] Startup optimization includes:
+- Lazy loading system
+- Resource preloading
+- Background initialization
+
+## 4. Testing Architecture
+
+### 4.1 Test Coverage Design
+[REQ-NF011, REQ-NF012] Unit testing architecture:
+- Frontend testing with Vitest
+- Backend testing with cargo-test
+- Coverage reporting pipeline
+
+### 4.2 Integration Testing
+[REQ-NF013] API testing framework:
+- Comprehensive endpoint testing
+- Mock server implementation
+- Automated test generation
+
+### 4.3 End-to-End Testing
+[REQ-NF014] E2E test architecture:
+- Playwright test framework
+- User journey simulation
+- Automated UI testing
+
+### 4.4 Compliance Testing
+[REQ-NF015] GDPR/CCPA compliance architecture:
+- Data privacy controls
+- User data management
+- Audit logging system
 
 ---
 
 ## 5. Component Design
 
 ### 5.1 Developer Experience & Tooling
-@enforce "Maintain consistent development environment"
 
 #### 5.1.1 IDE Setup
 - **VS Code** (recommended)
@@ -728,7 +187,6 @@ CREATE INDEX idx_messages_timestamp ON messages(timestamp);
     - Test Explorer UI
 
 #### 5.1.2 Testing Framework
-@validate "Ensure comprehensive test coverage"
 
 - **Frontend Testing**:
   - Vitest for unit/integration tests
@@ -742,10 +200,8 @@ CREATE INDEX idx_messages_timestamp ON messages(timestamp);
   - criterion for performance benchmarking
 
 #### 5.1.3 CI/CD Pipeline
-@enforce "Automated quality checks and deployments"
 
 #### 5.3 CI/CD Pipeline
-@enforce "Implement comprehensive CI/CD workflow"
 
 #### 5.3.1 GitHub Actions Workflow
 ```yaml
@@ -982,7 +438,6 @@ export const deploymentConfig = {
 ```
 
 ### 5.2 Frontend Components
-@enforce "Adopt Next.js with static export"
 
 - **LoginScreen**  
   - Manages user credentials and Tauri handshake  
@@ -998,7 +453,6 @@ export const deploymentConfig = {
   - Displays typing or AI “thinking” indicators
 
 ### 5.3 Backend Components
-@enforce "Use Rust for local AI, Tauri commands, and MCP bridging"
 
 - **Command Handlers**  
   - `#[tauri::command] fn mcp_invoke(...) -> Result<...>`  
@@ -1020,7 +474,6 @@ export const deploymentConfig = {
 ## 6. Security Design
 
 ### 6.1 Encryption Standards
-@enforce "Use Tauri v2 native cryptographic modules"
 
 #### 6.1.1 Backend Encryption
 ```rust
@@ -1094,7 +547,6 @@ async function sendSecureMessage(content: string) {
 ```
 
 ### 6.2 Access Control Model
-@enforce "Implement Tauri v2 ACL-based permissions"
 
 ```json
 // tauri.conf.json
@@ -1118,7 +570,6 @@ async function sendSecureMessage(content: string) {
 ```
 
 ### 6.3 Resource Access Control
-@validate "Ensure proper resource isolation"
 
 1. **File System Access**
    - Restricted to application directory
@@ -1136,7 +587,6 @@ async function sendSecureMessage(content: string) {
    - Rate limiting for API calls
 
 ### 6.4 Audit Logging
-@enforce "Implement GDPR/CCPA compliant logging"
 
 #### 6.4.1 Log Retention
 ```rust
@@ -1234,7 +684,6 @@ async function quarterlyComplianceReport() {
 ```
 
 ### 6.5 Security Protocols
-@enforce "Follow security best practices"
 
 1. **Authentication**
    - Multi-factor authentication support
@@ -1256,7 +705,6 @@ async function quarterlyComplianceReport() {
 ## 7. Developer Experience & Testing
 
 ### 7.1 Testing Protocols
-@enforce "Implement comprehensive testing protocols"
 
 - **Unit Testing**: Test individual components in isolation  
 - **Integration Testing**: Test interactions between components  
@@ -1264,14 +712,12 @@ async function quarterlyComplianceReport() {
 - **Performance Benchmarking**: Measure performance under load
 
 ### 7.2 CI/CD Best Practices
-@validate "Ensure automated quality checks and deployments"
 
 - **Automated Testing**: Run tests on every push and PR  
 - **Code Review**: Review code changes before merging  
 - **Automated Deployments**: Deploy to production after successful testing
 
 ### 7.3 Error Handling
-@enforce "Implement comprehensive error management"
 
 #### 7.3.1 Error Classification
 ```typescript
@@ -1359,12 +805,6 @@ impl ErrorAlert {
         alert
     }
 
-    fn notify_senior_team(&self) {
-        // Implementation for senior team notification
-        #[cfg(debug_assertions)]
-        println!("@alert: Senior review required for error {}", self.error_code);
-    }
-
     async fn monitor_sla(&self, sla_minutes: i64) {
         let deadline = self.timestamp + chrono::Duration::minutes(sla_minutes);
         
@@ -1377,17 +817,10 @@ impl ErrorAlert {
             }
         }
     }
-
-    async fn escalate(&self, reason: &str) {
-        // Implementation for error escalation
-        #[cfg(debug_assertions)]
-        println!("@alert: Error {} escalated: {}", self.error_code, reason);
-    }
 }
 ```
 
 ### 7.4 Error Handling
-@enforce "Implement comprehensive error management"
 
 #### 7.4.1 Error Classification
 ```typescript
@@ -1475,12 +908,6 @@ impl ErrorAlert {
         alert
     }
 
-    fn notify_senior_team(&self) {
-        // Implementation for senior team notification
-        #[cfg(debug_assertions)]
-        println!("@alert: Senior review required for error {}", self.error_code);
-    }
-
     async fn monitor_sla(&self, sla_minutes: i64) {
         let deadline = self.timestamp + chrono::Duration::minutes(sla_minutes);
         
@@ -1493,22 +920,14 @@ impl ErrorAlert {
             }
         }
     }
-
-    async fn escalate(&self, reason: &str) {
-        // Implementation for error escalation
-        #[cfg(debug_assertions)]
-        println!("@alert: Error {} escalated: {}", self.error_code, reason);
-    }
 }
 ```
 
 ---
 
 ## 8. AI Integration
-@enforce "Implement AI components according to specifications"
 
 ### 8.1 Cascade AI Integration
-@validate "Ensure proper AI directive implementation"
 
 #### 8.1.1 Memory Configuration
 ```yaml
@@ -1529,7 +948,6 @@ core_context:
 ```
 
 #### 8.1.2 Code Generation Protocols
-@enforce "Follow AI code generation best practices"
 
 ```rust
 // AI-assisted code generation handler
@@ -1556,7 +974,6 @@ async fn generate_code(
 ```
 
 ### 8.2 Model Context Protocol (MCP)
-@enforce "Implement MCP for AI resource management"
 
 #### 8.2.1 Resource Management
 ```rust
@@ -1588,7 +1005,6 @@ impl MCPResourceManager {
 ```
 
 #### 8.2.2 Error Handling Protocol
-@validate "Implement comprehensive error handling"
 
 ```rust
 #[derive(Debug, Serialize)]
@@ -1620,7 +1036,6 @@ impl AIError {
 ```
 
 ### 8.3 Local AI Implementation
-@enforce "Note: This section contains pseudocode for reference"
 
 > **IMPORTANT**: The following section contains pseudocode and architectural guidelines for future local AI implementation. The actual implementation details, model specifications, and integration patterns will be updated once the local AI component development begins. This serves as a reference framework only.
 
@@ -1648,7 +1063,6 @@ impl LocalInference {
 ```
 
 ### 8.3 AI Testing & Validation
-@enforce "Implement AI testing protocols"
 
 1. **Unit Tests**
    ```rust
@@ -1698,7 +1112,6 @@ impl LocalInference {
    ```
 
 ### 8.4 AI-Optimized Documentation
-@enforce "Implement AI-friendly documentation standards"
 
 #### 8.4.1 Documentation Structure
 ```yaml
@@ -1727,11 +1140,6 @@ documentation:
       - language_tag: required
       - line_numbers: optional
       - validation_directives: required
-    
-    validation_directives:
-      - @validate
-      - @enforce
-      - @block-on-failure
 ```
 
 #### 8.4.2 AI Processing Guidelines
@@ -1848,7 +1256,6 @@ impl DocMemoryManager {
 ```
 
 ### 8.5 MCP Testing
-@enforce "Implement MCP mock server tests"
 
 #### 8.5.1 Mock Server Setup
 ```typescript
@@ -1980,7 +1387,6 @@ describe('Error Scenarios', () => {
 ---
 
 ## 9. Future Considerations
-@enforce "Plan for future enhancements"
 
 ### 9.1 Technical Roadmap
 - **Enhanced AI Capabilities**
@@ -2022,7 +1428,6 @@ describe('Error Scenarios', () => {
   - Advanced visualization tools
 
 ## 10. Success Metrics
-@validate "Track implementation progress and quality"
 
 ### 10.1 Performance Metrics
 - **Response Time**
@@ -2058,22 +1463,21 @@ describe('Error Scenarios', () => {
   - Documentation updates < 24h
 
 ## 11. Design Reference Files
-@enforce "Maintain design consistency"
 
 ### 11.1 UI Reference Files
-- **Login Screen**: `windsurf/assets/AIM_Login_Screen.png`
+- **Login Screen**: `designs/assets/AIM_Login_Screen.png`
   - Version: 1.0.0
   - Last Updated: 2025-02-19
   - Used for: Login flow implementation
   - Key Elements: Form layout, branding, status indicators
 
-- **Contact List**: `windsurf/assets/AIM_Contact_List.png`
+- **Contact List**: `designs/assets/AIM_Contact_List.png`
   - Version: 1.0.0
   - Last Updated: 2025-02-19
   - Used for: Buddy list implementation
   - Key Elements: Categories, status icons, window chrome
 
-- **Chat Window**: `windsurf/assets/AIM_Chat_Window.png`
+- **Chat Window**: `designs/assets/AIM_Chat_Window.png`
   - Version: 1.0.0
   - Last Updated: 2025-02-19
   - Used for: Chat interface implementation
