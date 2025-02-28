@@ -1,5 +1,5 @@
 # Documentation Consistency Report
-Generated: 2025-02-26T14:39:31.809595
+Generated: 2025-02-28T07:29:26.088539
 
 ## Version Analysis
 | Document | Version |
@@ -13,11 +13,11 @@ Generated: 2025-02-26T14:39:31.809595
 ## Coverage Summary
 | Document | Terms Coverage | Phrases Coverage | Requirements Coverage |
 |----------|----------------|------------------|---------------------|
-| SRS | 32.68% | 0.78% | 100.0% |
-| SDD | 56.03% | 62.5% | 100.0% |
-| SDP | 30.35% | 8.59% | 96.0% |
-| TestPlan | 28.92% | 6.25% | 100.0% |
-| API | 35.41% | 21.88% | 100.0% |
+| SRS | 33.16% | 0.0% | 100.0% |
+| SDD | 55.75% | 74.63% | 100.0% |
+| SDP | 29.99% | 1.49% | 96.0% |
+| TestPlan | 28.14% | 0.0% | 100.0% |
+| API | 34.87% | 23.88% | 100.0% |
 
 ## Detailed Analysis
 
@@ -37,8 +37,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Actions`
 - `Actual`
 - `Additional`
-- `Adjust`
-- `Adopt`
 - `Agent`
 - `AgentConfig`
 - `AgentError`
@@ -48,11 +46,9 @@ Generated: 2025-02-26T14:39:31.809595
 - `AgentThinkingStatus`
 - `Animation`
 - `AppUpdate`
-- `Apply`
 - `Approach`
 - `Appropriate`
 - `Article`
-- `As`
 - `Asset`
 - `Assets`
 - `Assurance`
@@ -134,7 +130,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `DATA`
 - `DateTime`
 - `Debug`
-- `Define`
 - `Dependency`
 - `Deploy`
 - `Deployment`
@@ -184,7 +179,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Essential`
 - `Event`
 - `Evolution`
-- `Exact`
 - `Example`
 - `Execute`
 - `Executes`
@@ -204,7 +198,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Flow`
 - `Flows`
 - `Fn`
-- `Follow`
 - `Following`
 - `Form`
 - `Format`
@@ -250,7 +243,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `INVALID_REQUEST`
 - `IPC`
 - `ISO`
-- `Identify`
 - `Implementation`
 - `Implements`
 - `Import`
@@ -404,7 +396,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Resources`
 - `Responsibilities`
 - `Responsive`
-- `Restrict`
 - `Restricted`
 - `Result`
 - `Retention`
@@ -440,7 +431,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `SecurityViolation`
 - `Self`
 - `Semantic`
-- `Senior`
 - `Sentry`
 - `Separate`
 - `Serialize`
@@ -455,7 +445,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Sprint`
 - `Staging`
 - `Standard`
-- `Standardize`
 - `Standards`
 - `StartupAPI`
 - `Steps`
@@ -497,7 +486,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Tokenizer`
 - `Tokens`
 - `Tooling`
-- `Track`
 - `Tree`
 - `Troubleshooting`
 - `Tune`
@@ -533,7 +521,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Vulnerabilities`
 - `Vulnerability`
 - `WARNING`
-- `We`
 - `Web`
 - `WebAssembly`
 - `Where`
@@ -547,83 +534,25 @@ Generated: 2025-02-26T14:39:31.809595
 #### Missing Phrases
 - "2.0.0-alpha"
 - "Access system files"
-- "Adjust as codebase matures—AI or test harness expansions may be needed"
-- "Adopt Next.js with static export"
-- "Apply code formatting, security scanning, and AI-friendly structure"
-- "Automated quality checks and deployments"
 - "Buddy not found: {0}"
 - "Chat operation failed: {0}"
 - "Create API endpoint"
 - "Create a simple React component"
-- "Define a comprehensive testing approach for Tauri v2.1.0 + MCP"
-- "Define and refine the development approach for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "Define clear role boundaries and responsibilities"
-- "Define technical architecture for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "Detailed commands to be defined as Tauri code evolves"
-- "Ensure alignment with Tauri v2.1.0, AIM-inspired UI/UX, and MCP v1.3.0-rc2 integration requirements"
-- "Ensure automated quality checks and deployments"
-- "Ensure broad coverage across functional + non-functional areas"
-- "Ensure comprehensive technical specification coverage"
-- "Ensure comprehensive test coverage"
-- "Ensure comprehensive testing"
-- "Ensure proper AI directive implementation"
-- "Ensure proper resource isolation"
-- "Exact endpoints to be confirmed once remote AI integrations are selected"
-- "Follow ACL in tauri.conf.json"
-- "Follow AI code generation best practices"
-- "Follow Tauri v2 error handling best practices"
-- "Follow security best practices"
-- "Following Tauri v2 ACL best practices: https://tauri.app/v2/guides/security/acl"
-- "Following Tauri v2 Command API documentation: https://tauri.app/v2/guides/features/command"
 - "Hello MCP"
-- "High-level API blueprint for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "High-level testing strategy for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "Identify and mitigate potential risks promptly"
-- "Implement AI components according to specifications"
-- "Implement AI testing protocols"
-- "Implement AI-friendly documentation standards"
-- "Implement GDPR/CCPA compliant logging"
-- "Implement MCP for AI resource management"
-- "Implement MCP mock server tests"
-- "Implement Tauri v2 ACL-based permissions"
-- "Implement Tauri v2.1.0 + Next.js 14.1.0 + MCP v1.3.0-rc2 in sequential phases"
-- "Implement comprehensive CI/CD workflow"
-- "Implement comprehensive error handling"
-- "Implement comprehensive error management"
-- "Implement comprehensive testing protocols"
-- "Implement consistent error handling across all endpoints"
-- "Implement consistent real-time event handling"
-- "Implement robust authentication and ACL"
-- "Implement thorough testing methodology aligned with Cascade AI guidelines"
 - "Implementation"
 - "Invalid context: {0}"
 - "Invalid message format: {0}"
 - "Local AI implementation pending"
 - "MCP operation failed: {0}"
-- "Maintain clear, consistent test documentation"
-- "Maintain comprehensive documentation"
-- "Maintain consistent development environment"
-- "Maintain consistent, reproducible environments"
-- "Maintain design consistency"
-- "Maintain flexible, AI-friendly API structure"
-- "Maintain secure, versioned config"
-- "Note: This section contains pseudocode for reference"
 - "Overview"
 - "Permission denied: {0}"
-- "Plan for future enhancements"
 - "Resource access denied: {0}"
 - "Resource not found: {0}"
 - "Resource quota exceeded: {0}"
-- "Restrict local resource writes"
 - "SLA breach"
-- "Standardize on rust-analyzer, Node.js LTS, Tauri CLI"
 - "System operation failed: {0}"
 - "Testing"
-- "Track implementation progress and quality"
-- "Track key indicators for test coverage, reliability, and performance"
 - "Unknown error code"
-- "Use Rust for local AI, Tauri commands, and MCP bridging"
-- "Use Tauri v2 native cryptographic modules"
 - "[CARD]"
 - "[EMAIL]"
 - "[PHONE]"
@@ -685,7 +614,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Acronyms`
 - `Add`
 - `Additional`
-- `Adjust`
 - `AgentConfig`
 - `AgentError`
 - `AgentResponse`
@@ -695,10 +623,8 @@ Generated: 2025-02-26T14:39:31.809595
 - `Anthropic`
 - `Apache`
 - `AppUpdate`
-- `Apply`
 - `Approach`
 - `Appropriate`
-- `As`
 - `Assurance`
 - `AsyncGenerator`
 - `AuditLog`
@@ -776,7 +702,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `ErrorResponse`
 - `Event`
 - `Events`
-- `Exact`
 - `Exchange`
 - `Executes`
 - `Execution`
@@ -815,7 +740,7 @@ Generated: 2025-02-26T14:39:31.809595
 - `INVALID_REQUEST`
 - `IPC`
 - `ISO`
-- `Identify`
+- `Implement`
 - `Implements`
 - `Include`
 - `Incremental`
@@ -847,6 +772,7 @@ Generated: 2025-02-26T14:39:31.809595
 - `MIT`
 - `Machine`
 - `Main`
+- `Maintain`
 - `Maintains`
 - `Malformed`
 - `Manage`
@@ -898,6 +824,7 @@ Generated: 2025-02-26T14:39:31.809595
 - `Permission`
 - `Phase`
 - `Phases`
+- `Plan`
 - `Plugins`
 - `Poly1305`
 - `Port`
@@ -929,7 +856,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `ResourceAPI`
 - `Resources`
 - `Responsibilities`
-- `Restrict`
 - `Returns`
 - `Risk`
 - `Risks`
@@ -958,7 +884,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Stack`
 - `Staging`
 - `Standard`
-- `Standardize`
 - `Standardized`
 - `StartupAPI`
 - `Steps`
@@ -998,6 +923,7 @@ Generated: 2025-02-26T14:39:31.809595
 - `Unique`
 - `UpdateInfo`
 - `Usability`
+- `Use`
 - `UserCredentials`
 - `UserData`
 - `VMs`
@@ -1006,7 +932,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Vulnerabilities`
 - `Vulnerability`
 - `Warm`
-- `We`
 - `Where`
 - `WindowHandle`
 - `WindowProps`
@@ -1015,48 +940,17 @@ Generated: 2025-02-26T14:39:31.809595
 - `Zustand`
 
 #### Missing Phrases
-- "Adjust as codebase matures—AI or test harness expansions may be needed"
-- "Apply code formatting, security scanning, and AI-friendly structure"
 - "Buddy not found: {0}"
 - "Chat operation failed: {0}"
-- "Define a comprehensive testing approach for Tauri v2.1.0 + MCP"
-- "Define and refine the development approach for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "Define clear role boundaries and responsibilities"
-- "Detailed commands to be defined as Tauri code evolves"
-- "Ensure alignment with Tauri v2.1.0, AIM-inspired UI/UX, and MCP v1.3.0-rc2 integration requirements"
-- "Ensure broad coverage across functional + non-functional areas"
-- "Ensure comprehensive requirements coverage"
-- "Ensure comprehensive testing"
-- "Exact endpoints to be confirmed once remote AI integrations are selected"
-- "Follow ACL in tauri.conf.json"
-- "Follow Tauri v2 error handling best practices"
-- "Following Tauri v2 ACL best practices: https://tauri.app/v2/guides/security/acl"
-- "Following Tauri v2 Command API documentation: https://tauri.app/v2/guides/features/command"
 - "Hello MCP"
-- "High-level API blueprint for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "High-level testing strategy for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "Identify and mitigate potential risks promptly"
-- "Implement Tauri v2.1.0 + Next.js 14.1.0 + MCP v1.3.0-rc2 in sequential phases"
-- "Implement consistent error handling across all endpoints"
-- "Implement consistent real-time event handling"
-- "Implement robust authentication and ACL"
-- "Implement thorough testing methodology aligned with Cascade AI guidelines"
 - "Invalid context: {0}"
 - "Invalid message format: {0}"
 - "MCP operation failed: {0}"
-- "Maintain clear, consistent test documentation"
-- "Maintain comprehensive documentation"
-- "Maintain consistent, reproducible environments"
-- "Maintain flexible, AI-friendly API structure"
-- "Maintain secure, versioned config"
 - "Permission denied: {0}"
 - "Resource access denied: {0}"
 - "Resource not found: {0}"
 - "Resource quota exceeded: {0}"
-- "Restrict local resource writes"
-- "Standardize on rust-analyzer, Node.js LTS, Tauri CLI"
 - "System operation failed: {0}"
-- "Track key indicators for test coverage, reliability, and performance"
 - "api/v1/chat/buddies"
 - "api/v1/chat/messages"
 - "api/v1/mcp/models"
@@ -1086,8 +980,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Actions`
 - `Actual`
 - `Additional`
-- `Adjust`
-- `Adopt`
 - `Advanced`
 - `AgentConfig`
 - `AgentError`
@@ -1104,7 +996,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Appropriate`
 - `Architecture`
 - `Article`
-- `As`
 - `Asset`
 - `Assets`
 - `AsyncGenerator`
@@ -1137,6 +1028,7 @@ Generated: 2025-02-26T14:39:31.809595
 - `Builder`
 - `CARD`
 - `CCPAMetrics`
+- `CLI`
 - `CONTEXT_ERROR`
 - `CPUMetrics`
 - `CRITICAL`
@@ -1229,7 +1121,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Event`
 - `Events`
 - `Evolution`
-- `Exact`
 - `Example`
 - `Exchange`
 - `Execute`
@@ -1250,7 +1141,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Flow`
 - `Flows`
 - `Fn`
-- `Follow`
 - `Following`
 - `Form`
 - `Format`
@@ -1337,6 +1227,7 @@ Generated: 2025-02-26T14:39:31.809595
 - `MCPResourceManager`
 - `MIT`
 - `Machine`
+- `Maintain`
 - `Malformed`
 - `Manage`
 - `ManagementAPI`
@@ -1462,7 +1353,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `ResourceAPI`
 - `ResourceExhausted`
 - `Responsive`
-- `Restrict`
 - `Restricted`
 - `Result`
 - `Retention`
@@ -1497,7 +1387,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `SecurityService`
 - `SecurityViolation`
 - `Self`
-- `Senior`
 - `Sent`
 - `Sentry`
 - `Separate`
@@ -1556,7 +1445,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Tokens`
 - `Tool`
 - `Tooling`
-- `Track`
 - `Tree`
 - `Type`
 - `TypeScript`
@@ -1591,7 +1479,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Vulnerability`
 - `WARNING`
 - `Warm`
-- `We`
 - `Web`
 - `WebAssembly`
 - `WebSocket`
@@ -1608,73 +1495,24 @@ Generated: 2025-02-26T14:39:31.809595
 #### Missing Phrases
 - "2.0.0-alpha"
 - "Access system files"
-- "Adjust as codebase matures—AI or test harness expansions may be needed"
-- "Adopt Next.js with static export"
-- "Automated quality checks and deployments"
 - "Buddy not found: {0}"
 - "Chat operation failed: {0}"
 - "Create API endpoint"
 - "Create a simple React component"
-- "Define a comprehensive testing approach for Tauri v2.1.0 + MCP"
-- "Define technical architecture for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "Detailed commands to be defined as Tauri code evolves"
-- "Ensure automated quality checks and deployments"
-- "Ensure broad coverage across functional + non-functional areas"
-- "Ensure comprehensive requirements coverage"
-- "Ensure comprehensive technical specification coverage"
-- "Ensure comprehensive test coverage"
-- "Ensure proper AI directive implementation"
-- "Ensure proper resource isolation"
-- "Exact endpoints to be confirmed once remote AI integrations are selected"
-- "Follow ACL in tauri.conf.json"
-- "Follow AI code generation best practices"
-- "Follow Tauri v2 error handling best practices"
-- "Follow security best practices"
-- "Following Tauri v2 ACL best practices: https://tauri.app/v2/guides/security/acl"
-- "Following Tauri v2 Command API documentation: https://tauri.app/v2/guides/features/command"
-- "High-level API blueprint for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "High-level testing strategy for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "Implement AI components according to specifications"
-- "Implement AI testing protocols"
-- "Implement AI-friendly documentation standards"
-- "Implement GDPR/CCPA compliant logging"
-- "Implement MCP for AI resource management"
-- "Implement MCP mock server tests"
-- "Implement Tauri v2 ACL-based permissions"
-- "Implement comprehensive CI/CD workflow"
-- "Implement comprehensive error handling"
-- "Implement comprehensive error management"
-- "Implement comprehensive testing protocols"
-- "Implement consistent error handling across all endpoints"
-- "Implement consistent real-time event handling"
-- "Implement robust authentication and ACL"
-- "Implement thorough testing methodology aligned with Cascade AI guidelines"
 - "Implementation"
 - "Invalid context: {0}"
 - "Invalid message format: {0}"
 - "Local AI implementation pending"
 - "MCP operation failed: {0}"
-- "Maintain clear, consistent test documentation"
-- "Maintain consistent development environment"
-- "Maintain consistent, reproducible environments"
-- "Maintain design consistency"
-- "Maintain flexible, AI-friendly API structure"
-- "Note: This section contains pseudocode for reference"
 - "Overview"
 - "Permission denied: {0}"
-- "Plan for future enhancements"
 - "Resource access denied: {0}"
 - "Resource not found: {0}"
 - "Resource quota exceeded: {0}"
-- "Restrict local resource writes"
 - "SLA breach"
 - "System operation failed: {0}"
 - "Testing"
-- "Track implementation progress and quality"
-- "Track key indicators for test coverage, reliability, and performance"
 - "Unknown error code"
-- "Use Rust for local AI, Tauri commands, and MCP bridging"
-- "Use Tauri v2 native cryptographic modules"
 - "[CARD]"
 - "[EMAIL]"
 - "[PHONE]"
@@ -1742,7 +1580,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Acronyms`
 - `Action`
 - `Add`
-- `Adopt`
 - `Agent`
 - `AgentConfig`
 - `AgentError`
@@ -1754,7 +1591,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Anthropic`
 - `Apache`
 - `AppUpdate`
-- `Apply`
 - `Approach`
 - `Appropriate`
 - `Architecture`
@@ -1795,6 +1631,7 @@ Generated: 2025-02-26T14:39:31.809595
 - `Capabilities`
 - `Capacity`
 - `Cargo`
+- `Cascade`
 - `Centralized`
 - `Certificate`
 - `ChaCha20`
@@ -1897,7 +1734,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Event`
 - `Events`
 - `Evolution`
-- `Exact`
 - `Example`
 - `Exchange`
 - `Execute`
@@ -1917,7 +1753,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Flow`
 - `Flows`
 - `Fn`
-- `Follow`
 - `Following`
 - `Form`
 - `Format`
@@ -1952,6 +1787,7 @@ Generated: 2025-02-26T14:39:31.809595
 - `HashMap`
 - `Health`
 - `Hello`
+- `High`
 - `Human`
 - `IDE`
 - `IMPORTANT`
@@ -1959,7 +1795,7 @@ Generated: 2025-02-26T14:39:31.809595
 - `INVALID_REQUEST`
 - `IPC`
 - `ISO`
-- `Identify`
+- `Implement`
 - `Implementation`
 - `Implements`
 - `Import`
@@ -2008,6 +1844,7 @@ Generated: 2025-02-26T14:39:31.809595
 - `MCPResourceManager`
 - `MIT`
 - `Machine`
+- `Maintain`
 - `Maintains`
 - `Malformed`
 - `Manage`
@@ -2099,6 +1936,7 @@ Generated: 2025-02-26T14:39:31.809595
 - `Provide`
 - `Pseudocode`
 - `Public`
+- `QA`
 - `QUOTA_EXCEEDED`
 - `Query`
 - `Quick`
@@ -2127,7 +1965,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Resources`
 - `Responsibilities`
 - `Responsive`
-- `Restrict`
 - `Restricted`
 - `Result`
 - `Retention`
@@ -2168,7 +2005,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `SecurityViolation`
 - `Self`
 - `Semantic`
-- `Senior`
 - `Sent`
 - `Sentry`
 - `Separate`
@@ -2189,7 +2025,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Sprint`
 - `Stack`
 - `Standard`
-- `Standardize`
 - `Standards`
 - `StartupAPI`
 - `Store`
@@ -2264,7 +2099,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Voice`
 - `WARNING`
 - `Warm`
-- `We`
 - `Web`
 - `WebAssembly`
 - `WebSocket`
@@ -2280,76 +2114,25 @@ Generated: 2025-02-26T14:39:31.809595
 #### Missing Phrases
 - "2.0.0-alpha"
 - "Access system files"
-- "Adopt Next.js with static export"
-- "Apply code formatting, security scanning, and AI-friendly structure"
-- "Automated quality checks and deployments"
 - "Buddy not found: {0}"
 - "Chat operation failed: {0}"
 - "Create API endpoint"
 - "Create a simple React component"
-- "Define and refine the development approach for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "Define clear role boundaries and responsibilities"
-- "Define technical architecture for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "Detailed commands to be defined as Tauri code evolves"
-- "Ensure alignment with Tauri v2.1.0, AIM-inspired UI/UX, and MCP v1.3.0-rc2 integration requirements"
-- "Ensure automated quality checks and deployments"
-- "Ensure comprehensive requirements coverage"
-- "Ensure comprehensive technical specification coverage"
-- "Ensure comprehensive test coverage"
-- "Ensure comprehensive testing"
-- "Ensure proper AI directive implementation"
-- "Ensure proper resource isolation"
-- "Exact endpoints to be confirmed once remote AI integrations are selected"
-- "Follow ACL in tauri.conf.json"
-- "Follow AI code generation best practices"
-- "Follow Tauri v2 error handling best practices"
-- "Follow security best practices"
-- "Following Tauri v2 ACL best practices: https://tauri.app/v2/guides/security/acl"
-- "Following Tauri v2 Command API documentation: https://tauri.app/v2/guides/features/command"
 - "Hello MCP"
-- "High-level API blueprint for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "Identify and mitigate potential risks promptly"
-- "Implement AI components according to specifications"
-- "Implement AI testing protocols"
-- "Implement AI-friendly documentation standards"
-- "Implement GDPR/CCPA compliant logging"
-- "Implement MCP for AI resource management"
-- "Implement MCP mock server tests"
-- "Implement Tauri v2 ACL-based permissions"
-- "Implement Tauri v2.1.0 + Next.js 14.1.0 + MCP v1.3.0-rc2 in sequential phases"
-- "Implement comprehensive CI/CD workflow"
-- "Implement comprehensive error handling"
-- "Implement comprehensive error management"
-- "Implement comprehensive testing protocols"
-- "Implement consistent error handling across all endpoints"
-- "Implement consistent real-time event handling"
-- "Implement robust authentication and ACL"
 - "Implementation"
 - "Invalid context: {0}"
 - "Invalid message format: {0}"
 - "Local AI implementation pending"
 - "MCP operation failed: {0}"
-- "Maintain comprehensive documentation"
-- "Maintain consistent development environment"
-- "Maintain design consistency"
-- "Maintain flexible, AI-friendly API structure"
-- "Maintain secure, versioned config"
-- "Note: This section contains pseudocode for reference"
 - "Overview"
 - "Permission denied: {0}"
-- "Plan for future enhancements"
 - "Resource access denied: {0}"
 - "Resource not found: {0}"
 - "Resource quota exceeded: {0}"
-- "Restrict local resource writes"
 - "SLA breach"
-- "Standardize on rust-analyzer, Node.js LTS, Tauri CLI"
 - "System operation failed: {0}"
 - "Testing"
-- "Track implementation progress and quality"
 - "Unknown error code"
-- "Use Rust for local AI, Tauri commands, and MCP bridging"
-- "Use Tauri v2 native cryptographic modules"
 - "[CARD]"
 - "[EMAIL]"
 - "[PHONE]"
@@ -2414,18 +2197,14 @@ Generated: 2025-02-26T14:39:31.809595
 - `Actual`
 - `Add`
 - `Additional`
-- `Adjust`
-- `Adopt`
 - `Advanced`
 - `AgentState`
 - `Animation`
 - `Anthropic`
 - `Apache`
 - `Application`
-- `Apply`
 - `Approach`
 - `Article`
-- `As`
 - `Asset`
 - `Assets`
 - `Assurance`
@@ -2460,6 +2239,7 @@ Generated: 2025-02-26T14:39:31.809595
 - `Capabilities`
 - `Capacity`
 - `Cargo`
+- `Cascade`
 - `Cases`
 - `Categories`
 - `Centralized`
@@ -2498,7 +2278,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `DATA`
 - `DB`
 - `DateTime`
-- `Define`
 - `Definitions`
 - `Dependency`
 - `Deploy`
@@ -2507,6 +2286,7 @@ Generated: 2025-02-26T14:39:31.809595
 - `Design`
 - `Designer`
 - `Desired`
+- `Detailed`
 - `Dev`
 - `DevOps`
 - `Develop`
@@ -2538,7 +2318,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Engineer`
 - `Enhance`
 - `Enhanced`
-- `Ensure`
 - `Enterprise`
 - `Environment`
 - `Err`
@@ -2600,10 +2379,11 @@ Generated: 2025-02-26T14:39:31.809595
 - `HashMap`
 - `Health`
 - `Hello`
+- `High`
 - `ID`
 - `IDE`
 - `INFO`
-- `Identify`
+- `Implement`
 - `Implementation`
 - `Implements`
 - `Import`
@@ -2649,6 +2429,7 @@ Generated: 2025-02-26T14:39:31.809595
 - `MCPResourceManager`
 - `MIT`
 - `Main`
+- `Maintain`
 - `Maintains`
 - `Manages`
 - `Map`
@@ -2800,7 +2581,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `SecurityViolation`
 - `Self`
 - `Semantic`
-- `Senior`
 - `Sent`
 - `Separate`
 - `Serialize`
@@ -2819,7 +2599,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Sprint`
 - `Stack`
 - `Staging`
-- `Standardize`
 - `Standardized`
 - `Steps`
 - `Storage`
@@ -2855,7 +2634,6 @@ Generated: 2025-02-26T14:39:31.809595
 - `Tool`
 - `Tooling`
 - `Tools`
-- `Track`
 - `Tree`
 - `Troubleshooting`
 - `Tune`
@@ -2902,62 +2680,15 @@ Generated: 2025-02-26T14:39:31.809595
 #### Missing Phrases
 - "2.0.0-alpha"
 - "Access system files"
-- "Adjust as codebase matures—AI or test harness expansions may be needed"
-- "Adopt Next.js with static export"
-- "Apply code formatting, security scanning, and AI-friendly structure"
-- "Automated quality checks and deployments"
 - "Create API endpoint"
 - "Create a simple React component"
-- "Define a comprehensive testing approach for Tauri v2.1.0 + MCP"
-- "Define and refine the development approach for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "Define clear role boundaries and responsibilities"
-- "Define technical architecture for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "Ensure alignment with Tauri v2.1.0, AIM-inspired UI/UX, and MCP v1.3.0-rc2 integration requirements"
-- "Ensure automated quality checks and deployments"
-- "Ensure broad coverage across functional + non-functional areas"
-- "Ensure comprehensive requirements coverage"
-- "Ensure comprehensive technical specification coverage"
-- "Ensure comprehensive test coverage"
-- "Ensure comprehensive testing"
-- "Ensure proper AI directive implementation"
-- "Ensure proper resource isolation"
-- "Follow AI code generation best practices"
-- "Follow security best practices"
 - "Hello MCP"
-- "High-level testing strategy for Tauri v2.1.0 + Next.js 14.1.0 AIM-inspired desktop application with MCP v1.3.0-rc2"
-- "Identify and mitigate potential risks promptly"
-- "Implement AI components according to specifications"
-- "Implement AI testing protocols"
-- "Implement AI-friendly documentation standards"
-- "Implement GDPR/CCPA compliant logging"
-- "Implement MCP for AI resource management"
-- "Implement MCP mock server tests"
-- "Implement Tauri v2 ACL-based permissions"
-- "Implement Tauri v2.1.0 + Next.js 14.1.0 + MCP v1.3.0-rc2 in sequential phases"
-- "Implement comprehensive CI/CD workflow"
-- "Implement comprehensive error handling"
-- "Implement comprehensive error management"
-- "Implement comprehensive testing protocols"
-- "Implement thorough testing methodology aligned with Cascade AI guidelines"
 - "Implementation"
 - "Local AI implementation pending"
-- "Maintain clear, consistent test documentation"
-- "Maintain comprehensive documentation"
-- "Maintain consistent development environment"
-- "Maintain consistent, reproducible environments"
-- "Maintain design consistency"
-- "Maintain secure, versioned config"
-- "Note: This section contains pseudocode for reference"
 - "Overview"
-- "Plan for future enhancements"
 - "SLA breach"
-- "Standardize on rust-analyzer, Node.js LTS, Tauri CLI"
 - "Testing"
-- "Track implementation progress and quality"
-- "Track key indicators for test coverage, reliability, and performance"
 - "Unknown error code"
-- "Use Rust for local AI, Tauri commands, and MCP bridging"
-- "Use Tauri v2 native cryptographic modules"
 - "[CARD]"
 - "[EMAIL]"
 - "[PHONE]"
