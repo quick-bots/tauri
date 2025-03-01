@@ -1,131 +1,126 @@
-# Documentation
+# Documentation System
 
 ## Documentation Structure
 
-This directory contains comprehensive documentation for the Tauri Desktop Application. The documentation is organized into the following sections:
+The Tauri Desktop Application documentation is now organized using a comprehensive documentation system. This documentation system provides consistent structure, templates, workflows, and automated validation to ensure high-quality, accurate documentation.
+
+## Key Documentation Components
 
 ### Core Documentation
 
-- [`project-overview.md`](./project-overview.md) - High-level overview of the project, its goals, and architecture
-- [`windsurf/cascade-guidelines.md`](/.codeium/windsurf/cascade-guidelines.md) - Specific guidelines for Cascade AI's interaction with the project
+- [Project Overview](./project-overview.md) - High-level overview of the project, its goals, and architecture
+- [Index](./index.md) - Documentation home page with navigation to all sections
 
 ### Planning Documentation
 
-Located in [`docs/planning/`](./planning/):
+Located in [planning/](./planning/):
 
 1. **[SRS.md](./planning/SRS.md)** - Software Requirements Specification
-   - Functional and non-functional requirements
-   - System features and constraints
-   - MCP integration requirements
-   - External interface requirements
-
 2. **[SDD.md](./planning/SDD.md)** - Software Design Document
-   - System architecture and components
-   - Data structures and database design
-   - Interface specifications
-   - MCP implementation details
-   - Security design
-
 3. **[API.md](./planning/API.md)** - API Documentation
-   - Internal Tauri commands
-   - MCP Protocol APIs
-   - External service integrations
-   - WebSocket APIs
-   - Error handling
-
 4. **[SDP.md](./planning/SDP.md)** - Software Development Plan
-   - Development approach and timeline
-   - Project organization
-   - Technical processes
-   - Testing strategy
-   - Documentation standards
-
 5. **[TestPlan.md](./planning/TestPlan.md)** - Test Plan
-   - Testing strategy and methodology
-   - Test cases and scenarios
-   - Performance testing
-   - Security testing
+
+### Traceability System
+
+Located in [traceability/](./traceability/):
+
+1. **[requirement_ids.md](./traceability/requirement_ids.md)** - List of all requirement IDs
+2. **[traceability_matrix.md](./traceability/traceability_matrix.md)** - Matrix mapping requirements to implementation
+3. **[consistency_report.md](./traceability/consistency_report.md)** - Report on documentation consistency
+4. **[gap_analysis.md](./traceability/gap_analysis.md)** - Analysis of documentation gaps and action items
 
 ### Design Assets
 
-Located in [`docs/designs/assets/`](./designs/assets/):
+Located in [designs/](./designs/):
 
-- **AIM_Login_Screen.png** (224,291 bytes)
-  - Reference for login flow implementation
-  - UI layout and components
-  - Visual styling guide
+- **[assets.md](./designs/assets.md)** - Overview of design assets with implementation guidelines
+- **assets/** - Directory containing design reference images
 
-- **AIM_Contact_List.png** (31,522 bytes)
-  - Main view/buddy list reference
-  - Agent list layout
-  - Status indicator design
-  - Category organization
+### Documentation Templates
 
-- **AIM_Chat_Window.png** (34,328 bytes)
-  - Chat interface reference
-  - Message layout
-  - Input area design
-  - Tool integration placement
+Located in [templates/](./templates/):
 
+1. **[document_template.md](./templates/document_template.md)** - Standard template for all documents
+2. **[review_template.md](./templates/review_template.md)** - Template for document reviews
+3. **[update_workflow.md](./templates/update_workflow.md)** - Process for updating documentation
+4. **[review_schedule.md](./templates/review_schedule.md)** - Schedule for regular document reviews
+5. **[ai_review_template.md](./templates/ai_review_template.md)** - Template for AI-assisted reviews
 
----
+### Scripts and Automation
 
-<br>
-<br>
+Located in [scripts/](./scripts/):
 
-# Cascade Guidelines
+1. **[doc_consistency.py](./scripts/doc_consistency.py)** - Script to check documentation consistency
+2. **[traceability_matrix.py](./scripts/traceability_matrix.py)** - Script to generate and validate traceability
 
-## Documentation Priority Order
+### System Upgrade Documentation
 
-When working with this codebase, Cascade AI should review documentation in the following order:
+Located in [doc-system-upgrade/](./doc-system-upgrade/):
 
-1. `cascade-guidelines.md` - For understanding interaction parameters
-2. `project-overview.md` - For high-level context
-3. `SRS.md` - For understanding requirements
-4. `SDD.md` - For implementation details
-5. `API.md` - For interface specifications
-6. Other documents as needed
+1. **[documentation-system-upgrade.md](./doc-system-upgrade/documentation-system-upgrade.md)** - Overview of the documentation system upgrade
+2. **[documentation-upgrade-plan.md](./doc-system-upgrade/documentation-upgrade-plan.md)** - Detailed implementation plan
 
-## Key Implementation Notes
+## Documentation Workflows
 
-1. **MCP Integration**
-   - All AI interactions follow the Model Context Protocol
-   - Refer to SDD.md for detailed MCP architecture
-   - Check API.md for MCP-specific endpoints
+### Creating New Documentation
 
-2. **UI Implementation**
-   - Follow AIM-inspired design while incorporating modern practices
-   - Use design assets as reference for layout and styling
-   - Maintain consistent look and feel across all views
+1. Copy the appropriate template from the [templates/](./templates/) directory
+2. Add metadata including version, date, and requirement IDs
+3. Follow the structure in the template
+4. Run consistency checks using the scripts
+5. Submit for review following the [update workflow](./templates/update_workflow.md)
 
-3. **Security Considerations**
-   - Implement MCP security best practices
-   - Follow authentication flow in SDD.md
-   - Adhere to access control specifications
+### Updating Existing Documentation
 
-4. **Testing Requirements**
-   - Follow test cases in TestPlan.md
-   - Ensure MCP compliance testing
-   - Validate against UI reference designs
+1. Follow the process in [update_workflow.md](./templates/update_workflow.md)
+2. Run consistency checks after updates
+3. Update the traceability matrix if needed
+4. Update metadata including version and date
+5. Submit for review
 
-## Document Updates
+### Reviewing Documentation
 
-When updating documentation:
-1. Maintain consistent formatting
-2. Update related documents when making changes
-3. Keep cross-references accurate
-4. Preserve MCP compliance requirements
+1. Follow the review process in [review_template.md](./templates/review_template.md)
+2. Regular reviews are scheduled according to [review_schedule.md](./templates/review_schedule.md)
+3. AI-assisted reviews use the [ai_review_template.md](./templates/ai_review_template.md)
 
-## Version Control
+## Documentation Standards
+
+### Version Control
 
 This documentation follows semantic versioning:
 - Major version: Significant architectural changes
 - Minor version: Feature additions or updates
 - Patch version: Bug fixes and minor updates
 
+### Metadata
+
+All documents should include metadata headers with:
+- Title
+- Version
+- Creation date
+- Last updated date
+- Status
+- Authors
+- Reviewers (if applicable)
+- Requirement IDs (if applicable)
+
+### Requirement Referencing
+
+Requirements should be referenced using the format REQ-XXX-### where:
+- XXX indicates the requirement type (FUN, NFR, UI, SEC, etc.)
+- ### is a three-digit number
+
+## Automated Documentation
+
+The documentation system includes GitHub Actions workflows that:
+1. Validate documentation builds
+2. Run consistency checks
+3. Verify traceability
+4. Deploy documentation to GitHub Pages
 
 ---
 
-
-Current Version: 1.0.0
-Last Updated: 2025-02-17
+*Current Version: 1.0.0*  
+*Last Updated: 2025-02-28*

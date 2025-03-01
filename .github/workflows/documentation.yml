@@ -1,0 +1,76 @@
+name: Documentation
+
+on:
+  push:
+    branches: [main, feat/doc-system-upgrade]
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - '.github/workflows/documentation.yml'
+
+jobs:
+  documentation-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install mkdocs mkdocs-material pymdown-extensions mkdocs-mermaid2-plugin
+          
+      - name: Check documentation build
+        run: mkdocs build --strict
+        
+      - name: Check directory structure
+        run: |
+          ls -la docs/
+          
+      # Temporarily disabled until scripts are fully implemented
+      # - name: Run consistency check
+      #   run: |
+      #     cd docs/scripts
+      #     python doc_consistency.py
+      #     
+      # - name: Verify traceability matrix
+      #   run: |
+      #     cd docs/scripts
+      #     python traceability_matrix.py --verify
+          
+  documentation-deploy:
+    needs: documentation-check
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feat/doc-system-upgrade')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install mkdocs mkdocs-material pymdown-extensions mkdocs-mermaid2-plugin
+          
+      - name: Build documentation
+        run: mkdocs build
+        
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          destination_dir: docs
+          commit_message: 'Deploy documentation update'
