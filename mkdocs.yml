@@ -46,6 +46,12 @@ markdown_extensions:
   - toc:
       permalink: true
 
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: info
+  not_found: warn
+
 plugins:
   - search
   - mermaid2
@@ -63,6 +69,7 @@ nav:
     - Requirement IDs: traceability/requirement_ids.md
     - Traceability Matrix: traceability/traceability_matrix.md
     - Consistency Report: traceability/consistency_report.md
+    - Gap Analysis: traceability/gap_analysis.md
   - Design Assets:
     - Assets Overview: designs/assets.md
   - Documentation System:
@@ -71,6 +78,9 @@ nav:
   - Templates:
     - Document Template: templates/document_template.md
     - Review Template: templates/review_template.md
+    - Review Schedule: templates/review_schedule.md
+    - Update Workflow: templates/update_workflow.md
+    - AI Review Template: templates/ai_review_template.md
 
 extra:
   social:

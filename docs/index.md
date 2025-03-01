@@ -41,7 +41,7 @@ For developers new to this project:
 
 If you're updating or adding to this documentation:
 
-1. Follow the document templates in the [Templates](templates/) section
+1. Follow the document templates in the Templates section
 2. Ensure all requirements have proper IDs and are included in the traceability matrix
 3. Run the consistency checking tools to validate cross-document integrity
 4. Submit documentation updates through the standard PR process
