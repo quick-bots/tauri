@@ -1,0 +1,125 @@
+{
+  "$schema": "..\\node_modules/@tauri-apps/cli\\schema.json",
+  "build": {
+    "beforeBuildCommand": "npm run build",
+    "beforeDevCommand": "npm run dev",
+    "devPath": "http://localhost:1420",
+    "distDir": "../dist",
+    "withGlobalTauri": true
+  },
+  "package": {
+    "productName": "Tauri Application",
+    "version": "0.1.0"
+  },
+  "plugins": {
+    "updater": {
+      "active": true,
+      "endpoints": [
+        "https://example.com/updater/{{target}}/{{arch}}/{{current_version}}"
+      ],
+      "pubkey": ""
+    },
+    "store": {
+      "active": true
+    },
+    "sql": {
+      "active": true,
+      "database_path": "$APP_DIR/database/app.db"
+    },
+    "log": {
+      "active": true,
+      "logDir": "logs"
+    }
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false,
+      "shell": {
+        "all": false,
+        "execute": false,
+        "open": true,
+        "scope": [],
+        "sidecar": false
+      },
+      "dialog": {
+        "all": false,
+        "ask": true,
+        "confirm": true,
+        "message": true,
+        "open": true,
+        "save": true
+      },
+      "fs": {
+        "all": false,
+        "exists": true,
+        "readFile": true,
+        "readDir": true,
+        "writeFile": true,
+        "createDir": true,
+        "removeDir": true,
+        "removeFile": true,
+        "scope": ["$APP/*", "$RESOURCE/*"]
+      },
+      "window": {
+        "all": false,
+        "center": true,
+        "close": true,
+        "create": true,
+        "hide": true,
+        "maximize": true,
+        "minimize": true,
+        "setFocus": true,
+        "setTitle": true,
+        "show": true,
+        "startDragging": true,
+        "unmaximize": true,
+        "unminimize": true
+      }
+    },
+    "bundle": {
+      "active": true,
+      "category": "DeveloperTool",
+      "copyright": "",
+      "deb": {
+        "depends": []
+      },
+      "externalBin": [],
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
+      "identifier": "com.tauri.dev",
+      "longDescription": "",
+      "macOS": {
+        "entitlements": null,
+        "exceptionDomain": "",
+        "frameworks": [],
+        "providerShortName": null,
+        "signingIdentity": null
+      },
+      "resources": [],
+      "shortDescription": "",
+      "targets": "all",
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": ""
+      }
+    },
+    "security": {
+      "csp": null
+    },
+    "windows": [
+      {
+        "fullscreen": false,
+        "height": 600,
+        "resizable": true,
+        "title": "Tauri Application",
+        "width": 800
+      }
+    ]
+  }
+}

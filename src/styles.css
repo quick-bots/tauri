@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  color: #0f0f0f;
+  background-color: #f6f6f6;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Custom AIM-inspired styles */
+.aim-window {
+  @apply bg-white border border-gray-400 rounded-md shadow-md;
+  @apply flex flex-col;
+}
+
+.aim-window-header {
+  @apply bg-blue-600 text-white p-2 flex justify-between items-center;
+  @apply rounded-t-md;
+}
+
+.aim-window-body {
+  @apply p-4;
+}
+
+.aim-button {
+  @apply px-4 py-2 bg-blue-500 text-white rounded-md;
+  @apply hover:bg-blue-600 active:bg-blue-700;
+}
+
+.aim-input {
+  @apply border border-gray-300 rounded-md px-3 py-2;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.aim-buddy-list {
+  @apply w-64 h-screen bg-white border-r border-gray-200;
+}
+
+.aim-buddy-category {
+  @apply bg-gray-100 text-gray-700 font-bold p-2 cursor-pointer;
+}
+
+.aim-buddy-item {
+  @apply px-3 py-2 flex items-center hover:bg-gray-100 cursor-pointer;
+}
+
+.aim-status {
+  @apply w-3 h-3 rounded-full mr-2;
+}
+
+.aim-status-online {
+  @apply bg-green-500;
+}
+
+.aim-status-away {
+  @apply bg-yellow-500;
+}
+
+.aim-status-offline {
+  @apply bg-gray-400;
+}
+
+.aim-chat-window {
+  @apply fixed bg-white border border-gray-300 shadow-lg;
+  @apply rounded-md w-96 h-96;
+}
+
+.aim-chat-messages {
+  @apply p-3 overflow-y-auto flex-grow;
+  @apply border-t border-b border-gray-200;
+}
+
+.aim-message {
+  @apply mb-2 p-2 rounded-md max-w-[80%];
+}
+
+.aim-message-user {
+  @apply bg-blue-100 ml-auto;
+}
+
+.aim-message-other {
+  @apply bg-gray-100;
+}
+
+.aim-chat-input {
+  @apply p-2 flex;
+}
+
+.app-container {
+  @apply flex h-screen bg-gray-100;
+}
