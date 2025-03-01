@@ -1,84 +1,516 @@
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: 0.75s;
+/* Base app styling */
+:root {
+  /* Brand colors */
+  --qb-blue: #0078d7;
+  --qb-light-blue: #0096ff;
+  --qb-dark-blue: #005fa3;
+  --qb-yellow: #ffb900; 
+  --qb-green: #107c10;
+  --qb-red: #d13438;
+  --qb-gray: #767676;
+  --qb-light-gray: #f2f2f2;
+  --qb-bg: #ececec;
+  --qb-border: #cccccc;
+  --qb-text: #333333;
+  --qb-header: #1a1a1a;
+  --qb-focus-shadow: rgba(0, 120, 215, 0.25);
+  --qb-header-gradient: linear-gradient(to bottom, #0087e9, #0065b8);
+  --qb-font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
+  
+  /* Design system variables */
+  --qb-window-radius: 8px;
+  --qb-component-radius: 6px;
+  
+  /* Spacing system - using REM for scalability */
+  --qb-space-xxs: 0.25rem;
+  --qb-space-xs: 0.5rem;
+  --qb-space-sm: 0.75rem;
+  --qb-space-md: 1rem;
+  --qb-space-lg: 1.5rem;
+  --qb-space-xl: 2rem;
+  --qb-space-xxl: 3rem;
+  
+  /* Component sizing */
+  --qb-sidebar-width: 260px;
+  --qb-header-height: 40px;
+  
+  /* Exact login form dimensions */
+  --qb-login-width: 400px;
+  --qb-login-height: 600px;
 }
 
-.logo.tauri:hover {
-  filter: drop-shadow(0 0 2em #24c8db);
+/* CSS Reset specifically designed for desktop applications */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.row {
+/* Handle high DPI displays */
+@media (-webkit-device-pixel-ratio: 2), (resolution >= 192dpi) {
+  html {
+    /* Subtle adjustments for Retina displays */
+    font-size: 15px; /* Slightly smaller base font size */
+  }
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-family: var(--qb-font-primary);
+  position: relative;
+  font-size: 16px; /* Base font size for REM calculations */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #222;
+  line-height: 1.5;
+}
+
+/* Ensure window edges are respected in Tauri context */
+:root, body, #root {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  max-height: 100vh;
+  max-width: 100vw;
+}
+
+/* Main container with exact dimensions to match the window size */
+.app-container {
+  width: 100%;
+  height: 100%;
+  max-width: 100vw; 
+  max-height: 100vh;
+  min-width: 400px;
+  min-height: 500px;
+  background-color: var(--qb-bg);
   display: flex;
-  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Links styling */
 a {
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  color: var(--qb-blue);
+  text-decoration: none;
 }
 
 a:hover {
-  color: #535bf2;
+  color: var(--qb-light-blue);
+  text-decoration: underline;
 }
 
-h1 {
-  text-align: center;
+/* AIM-inspired components styling */
+.aim-window {
+  border-radius: var(--qb-window-radius);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background-color: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+  position: relative;
 }
 
-input,
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
+.aim-window-header {
+  background: linear-gradient(135deg, #1e90ff, #0069c0);
+  color: white;
+  padding: 14px 20px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: move;
+  -webkit-app-region: drag; /* For Tauri/Electron */
+  user-select: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.aim-window-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+}
+
+.header-icon {
+  font-size: 22px;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.aim-window-header h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+.aim-window-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  background-color: #333;
+  color: white;
+}
+
+/* Form elements */
+input, button {
+  border-radius: var(--qb-component-radius);
+  border: 1px solid var(--qb-border);
+  padding: 12px 16px;
+  font-size: 15px;
   font-family: inherit;
-  color: #0f0f0f;
-  background-color: #ffffff;
-  transition: border-color 0.25s;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
 }
 
-button {
-  cursor: pointer;
+/* All inputs styling */
+.aim-input {
+  width: 100%;
+  background-color: white;
+  border: 1px solid #c0c0c0;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+  color: #333;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  padding: 10px 12px;
+  margin-bottom: 4px;
 }
 
-button:hover {
-  border-color: #396cd8;
-}
-button:active {
-  border-color: #396cd8;
-  background-color: #e8e8e8;
+.aim-input::placeholder {
+  color: #666;
+  opacity: 0.9;
+  font-weight: normal;
 }
 
-input,
-button {
+.aim-input:hover {
+  border-color: #999;
+}
+
+.aim-input:focus {
+  border-color: var(--qb-blue);
+  box-shadow: 0 0 0 2px var(--qb-focus-shadow);
   outline: none;
 }
 
-#greet-input {
-  margin-right: 5px;
+/* Button styling */
+.aim-button {
+  background-color: var(--qb-blue);
+  color: white;
+  border: none;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 12px 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: var(--qb-component-radius);
 }
 
+.aim-button:hover {
+  background-color: #0069c0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.aim-button:active {
+  background-color: var(--qb-dark-blue);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+
+/* BuddyList styling */
+.aim-buddy-list {
+  border-right: 1px solid var(--qb-border);
+  background-color: white;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  min-width: 260px;
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  flex-shrink: 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+/* Ensure content area takes remaining width */
+.aim-content-area {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Login form specific styling */
+.login-form-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, #f8f9fa, #eaedf0);
+  overflow-y: auto;
+}
+
+/* Welcome text styling */
+.welcome-text {
+  font-size: 36px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 24px;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  letter-spacing: -0.5px;
+  background: linear-gradient(to right, #ffffff, #e0e0e0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 2s infinite linear;
+  background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+
+/* Login form styling with consistent spacing */
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin-bottom: 8px;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.remember-me input[type="checkbox"] {
+  accent-color: var(--qb-blue);
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  margin-right: 8px;
+}
+
+.remember-me span {
+  font-size: 14px;
+  color: #e0e0e0;
+}
+
+.forgot-password {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4dabff;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.forgot-password:hover {
+  color: #7bc2ff;
+  text-decoration: underline;
+}
+
+.form-submit {
+  width: 100%;
+  margin-top: 16px;
+  padding-bottom: 8px;
+}
+
+.form-submit .aim-button {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+}
+
+.aim-buddy-category {
+  background-color: var(--qb-light-gray);
+  padding: 6px 10px;
+  font-weight: bold;
+  border-bottom: 1px solid var(--qb-border);
+  cursor: pointer;
+  user-select: none;
+}
+
+.aim-buddy-item {
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.aim-buddy-item:hover {
+  background-color: var(--qb-light-gray);
+}
+
+.aim-status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.aim-status-online {
+  background-color: var(--qb-green);
+  box-shadow: 0 0 4px var(--qb-green);
+}
+
+.aim-status-away {
+  background-color: var(--qb-yellow);
+  box-shadow: 0 0 4px var(--qb-yellow);
+}
+
+.aim-status-offline {
+  background-color: var(--qb-gray);
+}
+
+/* Chat window styling */
+.aim-chat-window {
+  position: absolute;
+  border-radius: var(--qb-window-radius);
+  border: 1px solid var(--qb-border);
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  resize: both;
+  
+  /* Default dimensions that maintain design proportions */
+  width: 480px;
+  height: 580px;
+  
+  /* Prevent windows from becoming too large */
+  max-width: calc(100% - var(--qb-space-md));
+  max-height: calc(100% - var(--qb-space-md));
+  
+  /* Keep windows inside viewport */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+}
+
+.aim-chat-messages {
+  background-color: white;
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 400px;
+}
+
+.aim-message {
+  max-width: 80%;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  position: relative;
+  word-wrap: break-word;
+}
+
+.aim-message-user {
+  background-color: #e1f5fe;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.aim-message-other {
+  background-color: #f5f5f5;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.aim-chat-input {
+  display: flex;
+  padding: 8px;
+  border-top: 1px solid var(--qb-border);
+  background-color: var(--qb-light-gray);
+}
+
+/* Dark mode support */
 @media (prefers-color-scheme: dark) {
   :root {
-    color: #f6f6f6;
-    background-color: #2f2f2f;
+    --qb-bg: #2b2b2b;
+    --qb-border: #444444;
+    --qb-text: #e0e0e0;
+    --qb-header: #ffffff;
+    --qb-light-gray: #3a3a3a;
   }
-
-  a:hover {
-    color: #24c8db;
+  
+  .aim-window,
+  .aim-buddy-list,
+  .aim-chat-messages {
+    background-color: #333333;
+    color: var(--qb-text);
   }
-
-  input,
-  button {
+  
+  .aim-input {
+    background-color: #444444;
     color: #ffffff;
-    background-color: #0f0f0f98;
+    border-color: #555555;
   }
-  button:active {
-    background-color: #0f0f0f69;
+  
+  .aim-message-user {
+    background-color: #1e3a5f;
+  }
+  
+  .aim-message-other {
+    background-color: #3a3a3a;
+  }
+  
+  .aim-chat-input {
+    background-color: #2a2a2a;
   }
 }

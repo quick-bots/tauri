@@ -15,33 +15,29 @@ export function Login({ onLogin }: LoginProps) {
   };
   
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="login-form-container">
       <motion.div 
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.3 }}
-        className="aim-window w-96"
+        initial={{ scale: 0.95, opacity: 0, y: 10 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+        style={{ width: 'var(--qb-login-width)', height: 'var(--qb-login-height)' }}
+        className="aim-window max-w-md mx-auto shadow-xl"
       >
         <div className="aim-window-header">
-          <h2 className="text-lg font-bold">Tauri App Sign In</h2>
+          <h2 className="text-xl font-bold tracking-wide">
+            <span className="header-icon">⚡</span>
+            <span>Quick-Bots Desktop</span>
+          </h2>
         </div>
         
         <div className="aim-window-body">
-          <div className="flex justify-center mb-4">
-            <img 
-              src="/aim-logo.png" 
-              alt="AIM Logo" 
-              className="w-32 h-32"
-              onError={(e) => {
-                // Fallback if image doesn't exist
-                e.currentTarget.src = "https://placehold.co/128x128?text=AIM";
-              }}
-            />
+          <div className="flex justify-center mb-8">
+            <h1 className="welcome-text">Welcome!</h1>
           </div>
           
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="username" className="block text-gray-700 mb-1">
+          <form onSubmit={handleSubmit} className="login-form">
+            <div className="form-group">
+              <label htmlFor="username" className="form-label">
                 Screen Name
               </label>
               <input
@@ -49,14 +45,14 @@ export function Login({ onLogin }: LoginProps) {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Screen Name"
-                className="aim-input w-full"
+                placeholder="Enter your screen name"
+                className="aim-input"
                 required
               />
             </div>
             
-            <div>
-              <label htmlFor="password" className="block text-gray-700 mb-1">
+            <div className="form-group">
+              <label htmlFor="password" className="form-label">
                 Password
               </label>
               <input
@@ -64,27 +60,27 @@ export function Login({ onLogin }: LoginProps) {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                className="aim-input w-full"
+                placeholder="Enter your password"
+                className="aim-input"
                 required
               />
             </div>
             
-            <div className="flex justify-between items-center">
-              <label className="flex items-center">
-                <input type="checkbox" className="mr-2" />
-                <span className="text-sm">Remember Me</span>
+            <div className="form-options">
+              <label className="remember-me">
+                <input type="checkbox" />
+                <span>Remember Me</span>
               </label>
               
-              <a href="#" className="text-sm text-blue-600">
+              <a href="#" className="forgot-password">
                 Forgot Password?
               </a>
             </div>
             
-            <div>
+            <div className="form-submit">
               <button 
                 type="submit" 
-                className="aim-button w-full"
+                className="aim-button"
               >
                 Sign In
               </button>

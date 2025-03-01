@@ -1,6 +1,79 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/schema.json",
-  "productName": "Tauri Application",
-  "version": "0.1.0",
-  "identifier": "com.tauri.dev"
+  "build": {
+    "beforeBuildCommand": "npm run build",
+    "beforeDevCommand": "npm run dev",
+    "devPath": "http://localhost:4321",
+    "distDir": "../src/dist"
+  },
+  "package": {
+    "productName": "Quick-Bots Desktop",
+    "version": "0.1.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false,
+      "shell": {
+        "open": true
+      },
+      "window": {
+        "all": true
+      },
+      "process": {
+        "exit": true
+      }
+    },
+    "bundle": {
+      "active": true,
+      "category": "DeveloperTool",
+      "copyright": "",
+      "deb": {
+        "depends": []
+      },
+      "externalBin": [],
+      "icon": [
+        "icons/icon.png"
+      ],
+      "identifier": "com.tauri.application",
+      "longDescription": "",
+      "macOS": {
+        "entitlements": null,
+        "exceptionDomain": "",
+        "frameworks": [],
+        "providerShortName": null,
+        "signingIdentity": null
+      },
+      "resources": [],
+      "shortDescription": "",
+      "targets": "all",
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": ""
+      }
+    },
+    "security": {
+      "csp": null
+    },
+    "updater": {
+      "active": false
+    },
+    "windows": [
+      {
+        "fullscreen": false,
+        "height": 600,
+        "width": 400,
+        "minWidth": 400, 
+        "minHeight": 600,
+        "resizable": true,
+        "title": "Quick-Bots Desktop",
+        "decorations": true,
+        "center": true,
+        "transparent": false,
+        "visible": false,
+        "skipTaskbar": false,
+        "hiddenTitle": false
+      }
+    ]
+  }
 }
