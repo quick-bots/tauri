@@ -1,0 +1,80 @@
+site_name: Tauri Desktop Application
+site_description: Documentation for the Tauri Desktop Application
+site_author: Tauri Project Team
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.critic
+  - admonition
+  - footnotes
+  - attr_list
+  - md_in_html
+  - def_list
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+  - mermaid2
+
+nav:
+  - Home: index.md
+  - Project Overview: project-overview.md
+  - Planning Documents:
+    - Software Requirements Specification: planning/SRS.md
+    - Software Design Document: planning/SDD.md
+    - Software Development Plan: planning/SDP.md
+    - API Documentation: planning/API.md
+    - Test Plan: planning/TestPlan.md
+  - Traceability:
+    - Requirement IDs: traceability/requirement_ids.md
+    - Traceability Matrix: traceability/traceability_matrix.md
+    - Consistency Report: traceability/consistency_report.md
+  - Design Assets:
+    - Assets Overview: designs/assets.md
+  - Documentation System:
+    - Upgrade Plan: doc-system-upgrade/documentation-upgrade-plan.md
+    - System Upgrade: doc-system-upgrade/documentation-system-upgrade.md
+  - Templates:
+    - Document Template: templates/document_template.md
+    - Review Template: templates/review_template.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/quick-bots/tauri
+  version:
+    provider: mike
